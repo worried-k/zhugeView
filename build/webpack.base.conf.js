@@ -52,7 +52,10 @@ module.exports = {
         loader: 'url-loader',
         options: {
           publicPath: function (url) {
-            return url.replace('theme-default/', '')
+            if (process.env.NODE_ENV === 'lib') {
+              url = url.replace('theme-default/', '')
+            }
+            return url
           },
           limit: 10,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
@@ -62,6 +65,12 @@ module.exports = {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          publicPath: function (url) {
+            if (process.env.NODE_ENV === 'lib') {
+              url = url.replace('theme-default/', '')
+            }
+            return url
+          },
           limit: 10,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
@@ -70,6 +79,12 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          publicPath: function (url) {
+            if (process.env.NODE_ENV === 'lib') {
+              url = url.replace('theme-default/', '')
+            }
+            return url
+          },
           limit: 10,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
