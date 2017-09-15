@@ -18,16 +18,25 @@ baseWebpackConfig.output = {
   filename: '[name].js',
   libraryTarget: 'umd'
 }
-baseWebpackConfig.plugins = [
-  new CleanWebpackPlugin(['lib']),
-  // http://vuejs.github.io/vue-loader/en/workflow/production.html
-  new webpack.DefinePlugin({
-    'process.env': env
-  }),
-  // extract css into its own file
-  new ExtractTextPlugin({
-    filename: 'theme-default/[name].css'
-  }),
-]
+var webpackConfig = merge(baseWebpackConfig, {
+  module: {
+    rules: utils.styleLoaders({
+      sourceMap: config.lib.productionSourceMap,
+      extract: true
+    })
+  },
+  plugins: [
+    new CleanWebpackPlugin(['lib']),
+    // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    new webpack.DefinePlugin({
+      'process.env': env
+    }),
+    // extract css into its own file
+    new ExtractTextPlugin({
+      filename: 'theme-default/[name].css'
+    }),
+  ]
+})
 
-module.exports = baseWebpackConfig
+
+module.exports = webpackConfig
