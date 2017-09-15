@@ -51,6 +51,9 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
+          publicPath: function (url) {
+            return url.replace('theme-default/', '')
+          },
           limit: 10,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }

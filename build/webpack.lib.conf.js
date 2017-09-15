@@ -33,7 +33,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: 'theme-default/[name].css'
+      filename: utils.assetsPath('[name].css')
     }),
   ]
 })
