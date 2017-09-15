@@ -9,16 +9,16 @@ var CleanWebpackPlugin = require('clean-webpack-plugin')
 
 var env = config.lib.env
 
-baseWebpackConfig.entry = {
-  main: './src/index.js',
-  panel: './src/components/panel/index.js'
-}
-baseWebpackConfig.output = {
-  path: path.resolve(__dirname, '../lib'),
-  filename: '[name].js',
-  libraryTarget: 'umd'
-}
 var webpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    main: './src/index.js',
+    panel: './src/components/panel/index.js'
+  },
+  output: {
+    path: path.resolve(__dirname, '../lib'),
+    filename: '[name].js',
+    libraryTarget: 'umd'
+  },
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.lib.productionSourceMap,
