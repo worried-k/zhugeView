@@ -5,9 +5,9 @@
   "author": "kangpeng",
   "license": "MIT",
   "scripts": {
-    "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build-example": "node build/build-example.js",
+    "dev": "npm start",
+    "build-doc": "node build/build-doc.js",
     "build-lib": "node build/build-lib.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
@@ -94,7 +94,7 @@
     "not ie <= 8"
   ],
   "directories": {
-    "example": "examples",
+    "docs": "docs",
     "lib": "lib",
     "test": "test"
   },

@@ -4,7 +4,7 @@ var baseWebpackConfig = require('./webpack.base.conf')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    app: './examples/main.js'
+    app: './docs/main.js'
   },
   output: {
     path: config.build.assetsRoot,

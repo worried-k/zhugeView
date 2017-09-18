@@ -3,7 +3,7 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
-var exampleWebpackConfig = require('./webpack.example.conf')
+var docWebpackConfig = require('./webpack.doc.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
@@ -13,7 +13,7 @@ var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
-var webpackConfig = merge(exampleWebpackConfig, {
+var webpackConfig = merge(docWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -54,7 +54,7 @@ var webpackConfig = merge(exampleWebpackConfig, {
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: config.build.index,
-      template: 'examples/pages/index.html',
+      template: 'docs/pages/index.html',
       inject: true,
       minify: {
         removeComments: true,

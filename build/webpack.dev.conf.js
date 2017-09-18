@@ -2,16 +2,16 @@ var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
 var merge = require('webpack-merge')
-var exampleWebpackConfig = require('./webpack.example.conf')
+var docWebpackConfig = require('./webpack.doc.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 // add hot-reload related code to entry chunks
-Object.keys(exampleWebpackConfig.entry).forEach(function (name) {
-  exampleWebpackConfig.entry[name] = ['./build/dev-client'].concat(exampleWebpackConfig.entry[name])
+Object.keys(docWebpackConfig.entry).forEach(function (name) {
+  docWebpackConfig.entry[name] = ['./build/dev-client'].concat(docWebpackConfig.entry[name])
 })
 
-module.exports = merge(exampleWebpackConfig, {
+module.exports = merge(docWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
   },
@@ -26,7 +26,7 @@ module.exports = merge(exampleWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      template: 'examples/pages/index.html',
+      template: 'docs/pages/index.html',
       inject: true,
       chunks: ['app']
     }),
