@@ -1,7 +1,9 @@
-import Panel from './components/panel/index.js'
+import Button from './components/button/index.js'
+import ButtonGroup from './components/buttonGroup/index.js'
 
 const components = [
-  Panel
+  Button,
+  ButtonGroup
 ]
 
 const install = function (Vue) {
@@ -12,5 +14,6 @@ const install = function (Vue) {
 
 export default {
   install,
-  Panel
+  Button,
+  ButtonGroup
 }

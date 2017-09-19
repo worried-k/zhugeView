@@ -6,7 +6,6 @@ import router from './router'
 import zhugeView from '../src'
 
 Vue.config.productionTip = false
-
 Vue.use(zhugeView)
 
 /* eslint-disable no-new */

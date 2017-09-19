@@ -33,6 +33,14 @@ module.exports = {
         options: vueLoaderConfig
       },
       {
+        test: /\.svg$/,
+        include: [resolve('src/assets/img/icons')],
+        use: [
+          'svg-sprite-loader',
+          'svgo-loader'
+        ]
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [resolve('src'), resolve('test')]
@@ -40,6 +48,7 @@ module.exports = {
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
+        exclude: [resolve('src/assets/img/icons')],
         options: {
           publicPath: function (url) {
             if (process.env.NODE_ENV === 'lib') {
