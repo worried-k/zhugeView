@@ -1,5 +1,7 @@
 import Button from './components/button/index.js'
 import ButtonGroup from './components/buttonGroup/index.js'
+import './assets/styles/reset.sass'
+import './assets/icons/iconfont.css'
 
 const components = [
   Button,

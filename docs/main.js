@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import zhugeView from '../src'
+import demoPanel from './components/demoPanel'
 
 Vue.config.productionTip = false
 Vue.use(zhugeView)
+Vue.component('demo-panel', demoPanel)
 
 /* eslint-disable no-new */
 new Vue({
