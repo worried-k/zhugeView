@@ -42,7 +42,6 @@ export default {
     initGroupData () {
       this.groupData = []
       let obj = null
-      let hasActivated = false
       if (this.data && this.data.length) {
         this.data.map((item) => {
           if (util.isObject(item)) {
@@ -51,7 +50,6 @@ export default {
               icon: item.icon,
               activated: !!item.activated
             }
-            if (item.activated) hasActivated = true
           } else {
             obj = {
               value: item,
@@ -60,9 +58,6 @@ export default {
           }
           this.groupData.push(obj)
         })
-        if (!hasActivated) {
-          this.groupData[0].activated = true
-        }
       }
     },
     onClick (item) {
