@@ -9,16 +9,16 @@
 npm install
 
 # serve with hot reload at localhost:8080
-npm run dev
+npm start
 
 # serve with hot reload at localhost:8080
-npm run test1
+npm run dev
 
-# build for production with minification
-npm run build
+# build for production of lib
+npm run build-lib
 
-# build for production and view the bundle analyzer report
-npm run build --report
+# build for production of doc
+npm run build-doc
 
 # run unit tests
 npm run unit
