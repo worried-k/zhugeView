@@ -12,7 +12,7 @@ npm install
 npm run dev
 
 # serve with hot reload at localhost:8080
-npm run test
+npm run test1
 
 # build for production with minification
 npm run build
