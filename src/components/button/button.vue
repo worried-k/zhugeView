@@ -51,6 +51,9 @@ export default {
       if (this.size && this.size !== 'normal') {
         result.push(`${mainClass}--${this.size}`)
       }
+      if (!this.$slots.default) {
+        result.push(`${mainClass}--icon`)
+      }
       return result
     },
     iconClassArr () {

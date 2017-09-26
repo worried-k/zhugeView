@@ -78,6 +78,10 @@ module.exports = {
           limit: 10,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.md$/,
+        loader: 'raw-loader'
       }
     ]
   }

@@ -58,7 +58,7 @@
     <demo-panel
       title="diabled属性"
       subtitle="设置button为diabled状态"
-      jsFiddleName='pn991qk2'>
+      jsFiddleName='7j9pmnqz'>
       <zg-button
         :disabled="true"
         @click="onClick"
@@ -73,7 +73,7 @@
     <demo-panel
       title="icon属性"
       subtitle="为button增加 组件内置 或 自定义 的icon图标"
-      jsFiddleName='pn991qk2'>
+      jsFiddleName='pa2ckgu3'>
       <zg-button theme="border" icon="add" @click="onClick" size="small"></zg-button>
       <zg-button theme="border" icon="add" @click="onClick"></zg-button>
       <zg-button theme="border" icon="add" @click="onClick">add</zg-button>
@@ -94,13 +94,18 @@
         :data="['1',{value: '2', icon: 'add'}]">
       </zg-button-group>
     </demo-panel>
-
+    <doc-markdown :doc="attrDoc"></doc-markdown>
   </div>
 </template>
 <script>
-
+import attrDoc from "./doc.md"
 export default {
   name: 'buttonDemo',
+  data () {
+    return {
+      attrDoc: attrDoc
+    }
+  },
   methods: {
     onClick (e) {
       console.log(e.target)
