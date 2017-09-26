@@ -1,0 +1,25 @@
+@mixin prefix($property, $value)
+  @each $prefix in (webkit moz)
+    #{'-' + $prefix + '-' + $property}: $value
+  #{$property}: $value
+
+@mixin prefixValue($property, $value)
+  @each $prefix in (webkit moz)
+    #{$property}: #{'-' + $prefix + '-' + $value}
+  #{$property}: $value
+
+@mixin keyframes ($name)
+  @-webkit-keyframes #{$name}
+    @content
+  @-moz-keyframes #{$name}
+    @content
+  @-ms-keyframes #{$name}
+    @content
+  @keyframes #{$name}
+    @content
+
+@mixin animation ($stuff )
+  -webkit-animation: $stuff
+  -moz-animation: $stuff
+  -ms-animation: $stuff
+  animation: $stuff
