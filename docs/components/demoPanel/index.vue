@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import jsFiddle from "../../common/jsFiddle"
 export default {
   name: 'demoPanel',
   props: {
@@ -25,7 +26,7 @@ export default {
       type: String,
       default: ''
     },
-    jsFiddleUrl: String
+    jsFiddleName: String
   },
   data () {
     return {
@@ -41,23 +42,16 @@ export default {
     }
   },
   created () {
-    window.addEventListener("message", this.onMessage, false)
-  },
-  beforeDestroy () {
-    window.removeEventListener("message", this.onMessage)
+    jsFiddle.addMessageListener({
+      slug: this.jsFiddleName,
+      callback: this.onMessage
+    })
   },
   methods: {
-    onMessage (event) {
-      let eventName = event.data[0]
-      let data = event.data[1] || {}
-      if (eventName === 'embed' || eventName === 'resultsFrame') {
-        let height = data.height || 310
-        let slug = data.slug
-        if (slug && this.jsFiddleUrl.indexOf(slug) >= 0) {
-          this.iframeHeight = height + 40
-          this.showCodeView()
-        }
-      }
+    onMessage (height) {
+      height = parseInt(height) || 310
+      this.iframeHeight = height + 40
+      this.showCodeView()
     },
     showCodeView () {
       this.jsFiddleStyle.height = this.iframeHeight + 3 + 'px'
@@ -71,7 +65,7 @@ export default {
       this.showJsFiddle = !this.showJsFiddle
       if (this.showJsFiddle) {
         if (!this.showJsFiddleUrl) {
-          this.showJsFiddleUrl = this.jsFiddleUrl
+          this.showJsFiddleUrl = `//jsfiddle.net/worriedk/${this.jsFiddleName}/embedded/js,html/`
         }
         if (this.iframeHeight) {
           this.showCodeView()

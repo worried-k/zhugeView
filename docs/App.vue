@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -11,9 +13,11 @@ export default {
 </script>
 
 <style lang="sass">
+@import "../src/assets/styles/constants"
 @import "./assets/styles/reset.sass"
 #app
   width: 100%
   height: 100%
-  overflow: auto
+  overflow: hidden
+  font-family: $font-family
 </style>

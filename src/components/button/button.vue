@@ -4,28 +4,32 @@
     :type="nativeType"
     :disabled="disabled"
     :class="buttonClass">
-      <span><i :class="['icon-' + icon]" v-if="icon"></i><slot></slot></span>
+      <i :class="iconClassArr" v-if="iconClassArr.length"></i><span><slot></slot></span>
     </button>
 </template>
 <script>
 export default {
   name: 'ZgButton',
   props: {
-    type: {
+    type: { // 可选值为：normal、submit、reset、primary、danger、secondary、successs或空
       type: String,
       default: ''
     },
-    size: String,
+    size: String, // 可选值为：small、noraml、large或空
     theme: {
       type: String,
       default: ''
     },
-    icon: {
+    icon: { // 内置icon文件的名称
+      type: String,
+      default: ''
+    },
+    iconClass: { // 自定义class的字符串
       type: String,
       default: ''
     },
     disabled: Boolean,
-    nativeType: {
+    nativeType: { // 可选值为：button、submit、reset
       type: String,
       default: 'button'
     }
@@ -46,6 +50,19 @@ export default {
       }
       if (this.size && this.size !== 'normal') {
         result.push(`${mainClass}--${this.size}`)
+      }
+      return result
+    },
+    iconClassArr () {
+      let result = []
+      if (this.icon) {
+        result.push('icon-' + this.icon)
+      }
+      if (this.iconClass) {
+        result.push(this.iconClass)
+      }
+      if ((this.icon || this.iconClass) && this.$slots.default) {
+        result.push('zg-icon-padding')
       }
       return result
     }

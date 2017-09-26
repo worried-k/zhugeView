@@ -7,7 +7,9 @@
         </li>
       </ul>
     </div>
-    <router-view class="content"></router-view>
+    <keep-alive>
+      <router-view class="content"></router-view>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -53,13 +55,14 @@ export default {
   height: 100%
   display: flex
   flex-direction: row
-  overflow: auto
   .left-guide
     width: 250px
     height: 100%
     border-right: 1px solid #D1D1D1
     background: #FAFAFA
     text-align: center
+    ul li
+      list-style: none
     .router-link
       height: 40px
       line-height: 40px
@@ -77,7 +80,6 @@ export default {
     .is-active
       color: #0EA1EB
   .content
-    height: 100%
     width: 100%
     padding: 15px 15px 30px 15px
     overflow: auto

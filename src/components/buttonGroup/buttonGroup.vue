@@ -4,6 +4,7 @@
       :style="btnStyle"
       :class="[{activated: item.activated}]"
       :icon="item.icon"
+      :iconClass="item.iconClass"
       @click="onClick(item)">
       {{item.value}}
     </zg-button>
@@ -15,8 +16,16 @@ import button from '../button/button.vue'
 export default {
   name: 'ZgButtonGroup',
   props: {
+    /* 可为字符串数组 和 对象数组，对象数组事例如下：
+    [{
+      value: '按钮名称',
+      icon: '内置icon名称', --可选
+      iconClass: '自定义icon的class', --可选
+      activated: boolean --可选
+    }]
+    */
     data: Array,
-    btnWidth: {
+    btnWidth: { // 像素字符串，例：'1px'
       type: String,
       default: ''
     }
@@ -46,8 +55,9 @@ export default {
         this.data.map((item) => {
           if (util.isObject(item)) {
             obj = {
-              value: item.value,
+              value: item.value || '',
               icon: item.icon,
+              iconClass: item.iconClass,
               activated: !!item.activated
             }
           } else {
