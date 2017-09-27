@@ -5,9 +5,13 @@ import App from './App'
 import router from './router'
 import zhugeView from '../src'
 import demoPanel from './components/demoPanel'
+import docMarkdown from './components/docMarkdown'
+import VueMarkdown from 'vue-markdown'
 
 Vue.config.productionTip = false
 Vue.use(zhugeView)
+Vue.component('vue-markdown', VueMarkdown)
+Vue.component('doc-markdown', docMarkdown)
 Vue.component('demo-panel', demoPanel)
 
 /* eslint-disable no-new */

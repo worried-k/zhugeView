@@ -17,11 +17,9 @@
   "files": [
     "lib"
   ],
-  "dependencies": {
-    "vue": "^2.4.2",
-    "vue-router": "^2.7.0"
-  },
   "devDependencies": {
+    "vue": "^2.4.2",
+    "vue-router": "^2.7.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -84,7 +82,9 @@
     "webpack": "^2.6.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.18.0",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "raw-loader": "^0.5.1",
+    "vue-markdown": "^2.2.4"
   },
   "engines": {
     "node": ">= 4.0.0",
