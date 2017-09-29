@@ -1,14 +1,28 @@
 @import "../../../assets/styles/constants"
 .zg-select
+  height: 28px
+  line-height: 28px
   display: inline-block
   font-size: $size-font-content
+
+  position: relative
   .zg-select-handle
+    width: 100%
+    height: 100%
+    .zg-select-chosen input[type='text']
+      padding-right: 20px !important
+    .zg-select-arrow
+      position: absolute
+      top: 0
+      right: 5px
+  .zg-drop-panel
+    display: none
+    position: absolute
     border: 1px solid $color-border-normal
     border-radius: $border-radius
-    .zg-select-chosen
-    [class^='icon-']
-  .zg-drop-panel
-    .zg-select-search
-      .icon-search
-      .icon-remove
-    .zg-select-clear
+    margin-top: 7px
+    padding: 5px
+
+    min-width: 100%
+    width: auto
+    background: $color-white

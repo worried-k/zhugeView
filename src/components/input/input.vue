@@ -2,11 +2,12 @@
   <span class="zg-input" :style="style" @click="onClick">
     <i class="zg-input-icon" :class="icon"></i>
     <input ref="input"
-           type=":type"
            class="zg-input-input"
+           type="text"
            :style="inputStyle"
            :placeholder="placeholder"
            v-model="inputValue"
+           :readonly="readOnly"
     />
     <i v-if="clearAble && inputValue"
        class="zg-input-clear icon-delete-little1"
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+  import {util} from '../../utils/index'
   export default {
     name: 'ZgInput',
     props: {
@@ -28,16 +30,15 @@
       icon: {
         type: String
       },
-      type: {
-        type: String,
-        default: 'text',
-        validator (value) {
-          return ['text', 'password'].indexOf(value) > -1
-        }
-      },
       width: {
-        type: Number,
-        default: 150
+        type: [Number, String],
+        default: 150,
+        validator (value) {
+          if (util.isString(value)) {
+            return ['auto', '100%'].indexOf(value) > -1
+          }
+          return value > 0
+        }
       },
       clearAble: {
         type: Boolean,
@@ -46,6 +47,13 @@
       autoFocus: {
         type: Boolean,
         default: true
+      },
+      /**
+       * 作为普通文本展示
+       */
+      readOnly: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -58,9 +66,10 @@
     },
     computed: {
       style () {
-        return {
-          width: this.width + 'px'
+        let style = {
+          width: util.isNumber(this.width) ? `${this.width}px` : this.width
         }
+        return style
       },
       inputStyle () {
         return {

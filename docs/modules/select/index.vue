@@ -7,7 +7,7 @@
       <zg-select>
         <zg-option
           icon="icon-add"
-          label="test"
+          label="909"
           value="aaa"
         ></zg-option>
       </zg-select>

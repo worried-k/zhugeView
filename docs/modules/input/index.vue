@@ -5,14 +5,14 @@
       subtitle="普通输入框"
     >
       <zg-input icon="icon-list"
-                clearAble
+                clear-able
                 placeholder="有清除有icon"
                 v-model="value"></zg-input>
       <span>输入值：{{value}}</span>
 
       <zg-input style="margin-left: 15px"
                 placeholder="带有清除的输入框"
-                clearAble></zg-input>
+                clear-able></zg-input>
       <zg-input
         placeholder="普通输入框"
         style="margin-left: 15px"></zg-input>
