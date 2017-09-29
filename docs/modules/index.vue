@@ -14,12 +14,14 @@
 </template>
 <script>
 import button from './button'
+import select from './select'
 export default {
   name: 'index',
   data () {
     return {
       menuList: [
-        'button'
+        'button',
+        'select'
       ]
     }
   },

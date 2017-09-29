@@ -2,15 +2,19 @@ import './assets/styles/reset.sass'
 import './assets/icons/iconfont.css'
 import Button from './components/button/index.js'
 import ButtonGroup from './components/buttonGroup/index.js'
+import {ZgSelect, ZgOption, ZgOptGroup} from './components/selector/index'
 
 const components = [
   Button,
-  ButtonGroup
+  ButtonGroup,
+  ZgOption,
+  ZgOptGroup,
+  ZgSelect
 ]
 
 const install = function (Vue) {
-  components.map((component) => {
-    Vue.component(component.name, component)
+  components.forEach((component) => {
+    component.install(Vue)
   })
 }
 /* istanbul ignore if */
@@ -19,7 +23,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default {
-  install,
-  Button,
-  ButtonGroup
+  install
 }
