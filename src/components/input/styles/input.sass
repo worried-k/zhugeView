@@ -1,0 +1,30 @@
+@import "../../../assets/styles/constants"
+.zg-input
+  display: inline-block
+  border: 1px solid $color-border-normal
+  border-radius: $border-radius
+
+  font-size: $size-font-content
+  height: 28px
+  line-height: 28px
+
+  position: relative
+  .zg-input-icon,.zg-input-clear
+    font-size: $size-font-tip
+    color: $color-font-assist
+
+    position: absolute
+    top: 0
+  .zg-input-icon
+    left: 8px
+  .zg-input-clear
+    right: 8px
+    cursor: pointer
+
+  .zg-input-input
+    width: 100%
+    height: 100%
+    vertical-align: top
+
+    border: none
+    border-radius: $border-radius

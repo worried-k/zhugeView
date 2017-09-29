@@ -21,6 +21,7 @@ export default {
     return {
       menuList: [
         'button',
+        'input',
         'select'
       ]
     }

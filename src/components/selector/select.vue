@@ -11,6 +11,7 @@
         <i class="icon-remove"></i>
       </li>
       <li class="zg-select-clear">清空</li>
+      <!--to options-->
       <slot></slot>
     </ul>
   </div>

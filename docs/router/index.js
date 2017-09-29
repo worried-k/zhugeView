@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Index from '@docs/modules/index.vue'
 import Button from '@docs/modules/button/index.vue'
 import Select from '@docs/modules/select/index.vue'
+import Input from '@docs/modules/input/index.vue'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
           path: '/button',
           name: 'button',
           component: Button
+        },
+        {
+          path: '/input',
+          name: 'input',
+          component: Input
         },
         {
           path: '/select',
