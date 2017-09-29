@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <ul>
-      <li>
+  <div class="zg-select">
+    <div class="zg-select-handle">
+      <span class="zg-select-chosen"></span>
+      <i class="icon-down"></i>
+    </div>
+    <ul class="zg-drop-panel">
+      <li class="zg-select-search">
+        <i class="icon-search"></i>
         <input/>
+        <i class="icon-remove"></i>
       </li>
-      <li class="zg-clear"></li>
+      <li class="zg-select-clear">清空</li>
       <slot></slot>
     </ul>
   </div>
@@ -24,5 +30,5 @@
 </script>
 
 <style lang="sass">
-
+@import "styles/select"
 </style>
