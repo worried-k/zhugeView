@@ -1,7 +1,7 @@
 <template>
   <li class="zg-option" :class="className">
     <slot>
-      <span v-if="icon" class="icon" :class="icon"></span>
+      <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <span>{{label}}</span>
     </slot>
   </li>
@@ -66,5 +66,5 @@
 </script>
 
 <style lang="sass">
-
+@import "styles/option"
 </style>

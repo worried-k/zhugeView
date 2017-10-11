@@ -1,7 +1,7 @@
 <template>
   <div class="zg-select"
        :style="style">
-    <div class="zg-select-handle">
+    <div class="zg-select-handle" @click="showOptions = !showOptions">
       <zg-input class="zg-select-chosen"
                 v-model="chosenValue"
                 width="100%"
@@ -11,7 +11,7 @@
       <i class="zg-select-arrow icon-down"></i>
     </div>
 
-    <ul class="zg-drop-panel">
+    <ul v-if="showOptions" class="zg-drop-panel">
       <zg-input
         icon="icon-search"
         width="100%"
@@ -47,7 +47,9 @@
     data () {
       return {
         chosenValue: '',
-        filter: ''
+        filter: '',
+
+        showOptions: false
       }
     },
     computed: {
