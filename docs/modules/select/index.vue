@@ -10,6 +10,7 @@
                  multiple
                  :width="100"
                  filter-option
+                 v-model="value1"
                  label-field="label">
         <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
@@ -21,6 +22,7 @@
       <zg-select>
         <zg-opt-group label="城市">
           <zg-option value="北京"></zg-option>
+          <zg-option value="上海"></zg-option>
         </zg-opt-group>
       </zg-select>
     </demo-panel>
@@ -48,7 +50,8 @@
             })
           }
           return data
-        })()
+        })(),
+        value1: []
       }
       return data
     }

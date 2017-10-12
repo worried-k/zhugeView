@@ -45,6 +45,9 @@
     name: 'ZgSelect',
     mixins: [emitter],
     props: {
+      value: {
+        type: [Array, String, Object]
+      },
       width: {
         type: Number,
         default: 150
@@ -134,6 +137,7 @@
           }
           return item[this.labelField]
         }).join(',')
+        this.$emit('input', this.chosen)
       },
       onClickOutside () {
         this.showOptions = false
