@@ -8,6 +8,7 @@
 
       <zg-select placeholder="多选"
                  multiple
+                 :width="100"
                  filter-option
                  label-field="label">
         <zg-option v-for="item in select1" :value="item"></zg-option>
