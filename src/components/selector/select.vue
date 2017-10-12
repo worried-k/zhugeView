@@ -9,7 +9,7 @@
                 read-only
                 :placeholder="placeholder"
       ></zg-input>
-      <i class="zg-select-arrow icon-down"></i>
+      <i class="zg-select-arrow" :class="arrowIcon"></i>
     </div>
 
     <ul v-show="showOptions" class="zg-drop-panel">
@@ -45,6 +45,14 @@
     name: 'ZgSelect',
     mixins: [emitter],
     props: {
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder']
+          return themes.indexOf(value) > -1
+        }
+      },
       value: {
         type: [Array, String, Object]
       },
@@ -86,7 +94,16 @@
       handleClass () {
         let clazz = []
         if (this.showOptions) clazz.push('active')
+        if (this.theme !== 'normal') {
+          clazz.push(this.theme)
+        }
         return clazz.join(' ')
+      },
+      arrowIcon () {
+        if (this.theme === 'noborder') {
+          return 'icon-collapse-down'
+        }
+        return 'icon-down'
       }
     },
     methods: {

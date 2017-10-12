@@ -11,6 +11,7 @@
                  :width="100"
                  filter-option
                  v-model="value1"
+                 theme="noborder"
                  label-field="label">
         <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
