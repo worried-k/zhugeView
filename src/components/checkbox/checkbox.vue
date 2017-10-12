@@ -3,7 +3,7 @@
     <span class="zg-box">
       <i v-if="checked" class="icon-check_small"></i>
     </span>
-    {{label}}
+    <span>{{label}}</span>
   </span>
 </template>
 

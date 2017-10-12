@@ -45,7 +45,7 @@
           let data = []
           for (let i = 0; i < 10; i++) {
             data.push({
-              label: `label${i}`,
+              label: `label2121212121@!@121212${i}`,
               value: i
             })
           }
