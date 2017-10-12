@@ -102,7 +102,7 @@
       onFilter () {
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
-          if (instance.$props.label.indexOf(this.filter) > -1) {
+          if (instance.$props.value[this.labelField].indexOf(this.filter) > -1) {
             instance.$data.show = true
           } else {
             instance.$data.show = false
