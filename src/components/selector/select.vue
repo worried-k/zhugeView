@@ -110,19 +110,27 @@
       clear () {
         this.chosen.splice(0, this.chosen.length)
         this.chosenValue = ''
-        this.$children.forEach((child) => {
-          if (child.$options.name === 'ZgOption') {
-            child.$data.checked = false
-          }
+        this.children('ZgOption').forEach((child) => {
+          child.$data.checked = false
         })
       },
       onFilter () {
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
-          if (instance.$props.value[this.labelField].indexOf(this.filter) > -1) {
-            instance.$data.show = true
+          if (instance.$options.name === 'ZgOptGroup') {
+            instance.children('ZgOption').forEach(option => {
+              if (option.$props.value[this.labelField].indexOf(this.filter) > -1) {
+                option.$data.show = true
+              } else {
+                option.$data.show = false
+              }
+            })
           } else {
-            instance.$data.show = false
+            if (instance.$props.value[this.labelField].indexOf(this.filter) > -1) {
+              instance.$data.show = true
+            } else {
+              instance.$data.show = false
+            }
           }
         })
       },
@@ -139,8 +147,8 @@
             }
           }
         } else {
-          this.$children.forEach((child) => {
-            if (child.$options.name === 'ZgOption' && child.$props.value !== value) {
+          this.children('ZgOption').forEach((child) => {
+            if (child.$props.value !== value) {
               child.$data.checked = false
             }
           })

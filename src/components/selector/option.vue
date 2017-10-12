@@ -50,8 +50,8 @@
       let data = {
         checked: this.defaultChecked,
         show: true,
-        checkAble: this.$parent.$props.multiple,
-        label: this.$parent.$props.labelField
+        checkAble: this.parent('ZgSelect').$props.multiple,
+        label: this.parent('ZgSelect').$props.labelField
       }
       return data
     },

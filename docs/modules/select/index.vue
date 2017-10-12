@@ -20,10 +20,12 @@
         <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
 
-      <zg-select>
+      <zg-select placeholder="多选"
+                 filter-option
+                 multiple
+                 label-field="label">
         <zg-opt-group label="城市">
-          <zg-option value="北京"></zg-option>
-          <zg-option value="上海"></zg-option>
+          <zg-option v-for="item in select1" :value="item"></zg-option>
         </zg-opt-group>
       </zg-select>
     </demo-panel>

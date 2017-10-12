@@ -1,8 +1,21 @@
+
+const getChildren = (parent, childName, result) => {
+  let children = result || []
+  if (parent.$children) {
+    parent.$children.forEach(item => {
+      if (item.$options.name === childName) {
+        children.push(item)
+      }
+      getChildren(item, childName, children)
+    })
+  }
+  return children
+}
 export default {
   methods: {
     dispatch (componentName, eventName, params) {
-      var parent = this.$parent || this.$root
-      var name = parent.$options.name
+      let parent = this.$parent || this.$root
+      let name = parent.$options.name
 
       while (parent && (!name || name !== componentName)) {
         parent = parent.$parent
@@ -13,6 +26,21 @@ export default {
       }
       if (parent) {
         parent[eventName].apply(parent, params)
+      }
+    },
+    children (componentName) {
+      return getChildren(this, componentName)
+    },
+    parent (parentName) {
+      let parent = this.$parent
+      if (parent.$options.name === parentName) {
+        return parent
+      }
+      while (parent.$options.name !== parentName) {
+        parent = parent.$parent
+        if (parent.$options.name === parentName) {
+          return parent
+        }
       }
     }
   }

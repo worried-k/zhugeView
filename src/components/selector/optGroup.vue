@@ -6,8 +6,10 @@
 </template>
 
 <script>
+  import emitter from '../../mixins/emitter'
   export default {
     name: 'ZgOptGroup',
+    mixins: [emitter],
     props: {
       icon: {
         type: String
