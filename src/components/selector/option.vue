@@ -3,11 +3,11 @@
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <zg-checkbox v-if="checkAble"
-                   :label="label"
+                   :label="getLabel(value)"
                    v-model="checked"
                    @change="onClick"
       ></zg-checkbox>
-      <template v-if="!checkAble">{{label}}</template>
+      <template v-if="!checkAble">{{getLabel(value)}}</template>
     </slot>
   </li>
 </template>
@@ -15,6 +15,7 @@
 <script>
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import emitter from '../../mixins/emitter'
+  import {util} from '../../utils/index'
   export default {
     components: {ZgCheckbox},
     name: 'ZgOption',
@@ -24,12 +25,6 @@
        * icon名称
        */
       icon: {
-        type: String
-      },
-      /**
-       * 选项展示文本
-       */
-      label: {
         type: String
       },
       /**
@@ -55,24 +50,35 @@
       let data = {
         checked: this.defaultChecked,
         show: true,
-        checkAble: this.$parent.$props.multiple
+        checkAble: this.$parent.$props.multiple,
+        label: this.$parent.$props.labelField
       }
       return data
     },
     computed: {
       className: function () {
+        let clazz = []
         if (this.disable) {
-          return 'zg-disable'
-        } else if (this.checked) {
-          return 'zg-checked'
+          clazz.push('disable')
+        } else if (this.checked && !this.checkAble) {
+          clazz.push('active')
         }
-        return ''
+        return clazz.join(' ')
       }
     },
     methods: {
       onClick () {
-        this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checkAble, this.checked])
+        if (!this.checkAble) {
+          this.checked = true
+        }
+        this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
         this.$emit('check', this.value)
+      },
+      getLabel (value) {
+        if (util.isString(value)) {
+          return value
+        }
+        return value[this.label]
       }
     }
   }

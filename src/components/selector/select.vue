@@ -38,6 +38,7 @@
 <script>
   import emitter from '../../mixins/emitter'
   import ZgInput from '../input/input.vue'
+  import {util} from '../../utils/index'
 
   export default {
     components: {ZgInput},
@@ -59,6 +60,9 @@
       filterOption: {
         type: Boolean,
         default: false
+      },
+      labelField: {
+        type: String
       }
     },
     data () {
@@ -102,8 +106,8 @@
           }
         })
       },
-      onClickOption (value, checkAble, checked) {
-        if (checkAble) {
+      onClickOption (value, checked) {
+        if (this.multiple) {
           if (checked) {
             this.chosen.push(value)
           } else {
@@ -115,9 +119,21 @@
             }
           }
         } else {
-          this.chosen.splice(0, this.chosen.length).push(value)
+          this.$children.forEach((child) => {
+            if (child.$options.name === 'ZgOption' && child.$props.value !== value) {
+              child.$data.checked = false
+            }
+          })
+          this.chosen.splice(0, this.chosen.length)
+          this.chosen.push(value)
+          this.showOptions = false
         }
-        this.chosenValue = this.chosen.join(',')
+        this.chosenValue = this.chosen.map(item => {
+          if (util.isString(item)) {
+            return item
+          }
+          return item[this.labelField]
+        }).join(',')
       },
       onClickOutside () {
         this.showOptions = false

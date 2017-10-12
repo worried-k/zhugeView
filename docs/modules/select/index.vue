@@ -2,22 +2,24 @@
   <div>
     <demo-panel
       title="普通下拉框"
-      subtitle="subtitle"
-    >
+      subtitle="subtitle">
+
       <zg-checkbox label="勾选项"></zg-checkbox>
-      <zg-select placeholder="全部"
+
+      <zg-select placeholder="多选"
                  multiple
                  filter-option
-      >
-        <zg-option v-for="item in select1"
-          :label="item.label"
-          :value="item.value"
-        ></zg-option>
+                 label-field="label">
+        <zg-option v-for="item in select1" :value="item"></zg-option>
+      </zg-select>
+
+      <zg-select placeholder="单选" label-field="label">
+        <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
 
       <zg-select>
         <zg-opt-group label="城市">
-          <zg-option label="北京"></zg-option>
+          <zg-option value="北京"></zg-option>
         </zg-opt-group>
       </zg-select>
     </demo-panel>
