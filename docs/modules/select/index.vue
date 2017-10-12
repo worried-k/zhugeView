@@ -5,11 +5,13 @@
       subtitle="subtitle"
     >
       <zg-checkbox label="勾选项"></zg-checkbox>
-      <zg-select placeholder="全部">
+      <zg-select placeholder="全部"
+                 multiple
+                 filter-option
+      >
         <zg-option v-for="item in select1"
           :label="item.label"
           :value="item.value"
-          :checkAble=true
         ></zg-option>
       </zg-select>
 

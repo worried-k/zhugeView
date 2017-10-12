@@ -2,7 +2,11 @@
   <li v-show="show" class="zg-option" :class="className" @click="onClick">
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
-      <zg-checkbox v-if="checkAble" :label="label" v-model="checked"></zg-checkbox>
+      <zg-checkbox v-if="checkAble"
+                   :label="label"
+                   v-model="checked"
+                   @change="onClick"
+      ></zg-checkbox>
       <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
@@ -10,10 +14,11 @@
 
 <script>
   import ZgCheckbox from '../checkbox/checkbox.vue'
-
+  import emitter from '../../mixins/emitter'
   export default {
     components: {ZgCheckbox},
     name: 'ZgOption',
+    mixins: [emitter],
     props: {
       /**
        * icon名称
@@ -32,13 +37,6 @@
        */
       value: {},
       /**
-       * 是否可以勾选
-       */
-      checkAble: {
-        type: Boolean,
-        default: false
-      },
-      /**
        * 是否被选中
        */
       defaultChecked: {
@@ -54,10 +52,12 @@
       }
     },
     data () {
-      return {
+      let data = {
         checked: this.defaultChecked,
-        show: true
+        show: true,
+        checkAble: this.$parent.$props.multiple
       }
+      return data
     },
     computed: {
       className: function () {
@@ -71,6 +71,7 @@
     },
     methods: {
       onClick () {
+        this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checkAble, this.checked])
         this.$emit('check', this.value)
       }
     }

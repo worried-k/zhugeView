@@ -1,5 +1,6 @@
 <template>
   <div class="zg-select"
+       v-click-outside="onClickOutside"
        :style="style">
     <div class="zg-select-handle" :class="handleClass" @click="showOptions = !showOptions">
       <zg-input class="zg-select-chosen"
@@ -14,6 +15,7 @@
     <ul v-show="showOptions" class="zg-drop-panel">
       <div class="zg-fixed">
         <zg-input
+          v-if="filterOption"
           icon="icon-search"
           width="100%"
           class="zg-select-search"
@@ -21,8 +23,8 @@
           v-model="filter"
           @input="onFilter"
         ></zg-input>
-        <li class="zg-clear">
-          <a href="javascript:void(0)">清空</a>
+        <li v-show="multiple && chosen.length" class="zg-clear">
+          <a href="javascript:void(0)" @click="clear">清空</a>
         </li>
       </div>
       <!--to options-->
@@ -49,10 +51,19 @@
       placeholder: {
         type: String,
         default: '请选择'
+      },
+      multiple: {
+        type: Boolean,
+        default: false
+      },
+      filterOption: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
       return {
+        chosen: [],
         chosenValue: '',
         filter: '',
 
@@ -72,6 +83,15 @@
       }
     },
     methods: {
+      clear () {
+        this.chosen.splice(0, this.chosen.length)
+        this.chosenValue = ''
+        this.$children.forEach((child) => {
+          if (child.$options.name === 'ZgOption') {
+            child.$data.checked = false
+          }
+        })
+      },
       onFilter () {
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
@@ -81,6 +101,26 @@
             instance.$data.show = false
           }
         })
+      },
+      onClickOption (value, checkAble, checked) {
+        if (checkAble) {
+          if (checked) {
+            this.chosen.push(value)
+          } else {
+            for (let i = 0; i < this.chosen.length; i++) {
+              if (this.chosen[i] === value) {
+                this.chosen.splice(i, 1)
+                break
+              }
+            }
+          }
+        } else {
+          this.chosen.splice(0, this.chosen.length).push(value)
+        }
+        this.chosenValue = this.chosen.join(',')
+      },
+      onClickOutside () {
+        this.showOptions = false
       }
     }
   }

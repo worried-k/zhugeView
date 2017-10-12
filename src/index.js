@@ -4,6 +4,9 @@ import Button from './components/button/index.js'
 import ButtonGroup from './components/buttonGroup/index.js'
 import ZgInput from './components/input/index'
 import {ZgSelect, ZgOption, ZgOptGroup} from './components/selector/index'
+
+import directives from './directives/main'
+
 const components = [
   Button,
   ButtonGroup,
@@ -14,6 +17,10 @@ const components = [
 ]
 
 const install = function (Vue) {
+  for (let key in directives) {
+    let directive = directives[key]
+    Vue.directive(key, directive)
+  }
   components.forEach((component) => {
     component.install(Vue)
   })
