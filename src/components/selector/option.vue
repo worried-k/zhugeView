@@ -1,14 +1,18 @@
 <template>
-  <li class="zg-option" :class="className">
+  <li v-show="show" class="zg-option" :class="className" @click="onClick">
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
-      <span>{{label}}</span>
+      <zg-checkbox v-if="checkAble" :label="label" v-model="checked"></zg-checkbox>
+      <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
 </template>
 
 <script>
+  import ZgCheckbox from '../checkbox/checkbox.vue'
+
   export default {
+    components: {ZgCheckbox},
     name: 'ZgOption',
     props: {
       /**
@@ -28,9 +32,16 @@
        */
       value: {},
       /**
+       * 是否可以勾选
+       */
+      checkAble: {
+        type: Boolean,
+        default: false
+      },
+      /**
        * 是否被选中
        */
-      checked: {
+      defaultChecked: {
         type: Boolean,
         default: false
       },
@@ -44,7 +55,8 @@
     },
     data () {
       return {
-        msg: 'option'
+        checked: this.defaultChecked,
+        show: true
       }
     },
     computed: {

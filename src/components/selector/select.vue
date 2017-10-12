@@ -1,7 +1,7 @@
 <template>
   <div class="zg-select"
        :style="style">
-    <div class="zg-select-handle" @click="showOptions = !showOptions">
+    <div class="zg-select-handle" :class="handleClass" @click="showOptions = !showOptions">
       <zg-input class="zg-select-chosen"
                 v-model="chosenValue"
                 width="100%"
@@ -11,17 +11,24 @@
       <i class="zg-select-arrow icon-down"></i>
     </div>
 
-    <ul v-if="showOptions" class="zg-drop-panel">
-      <zg-input
-        icon="icon-search"
-        width="100%"
-        class="zg-select-search"
-        clear-able
-        v-model="filter"
-        @input="onFilter"
-      ></zg-input>
+    <ul v-show="showOptions" class="zg-drop-panel">
+      <div class="zg-fixed">
+        <zg-input
+          icon="icon-search"
+          width="100%"
+          class="zg-select-search"
+          clear-able
+          v-model="filter"
+          @input="onFilter"
+        ></zg-input>
+        <li class="zg-clear">
+          <a href="javascript:void(0)">清空</a>
+        </li>
+      </div>
       <!--to options-->
-      <slot></slot>
+      <div class="zg-content">
+        <slot></slot>
+      </div>
     </ul>
   </div>
 </template>
@@ -57,11 +64,23 @@
         return {
           width: this.width + 'px'
         }
+      },
+      handleClass () {
+        let clazz = []
+        if (this.showOptions) clazz.push('active')
+        return clazz.join(' ')
       }
     },
     methods: {
       onFilter () {
-        console.log(this.searchValue)
+        this.$slots.default.forEach((item) => {
+          let instance = item.componentInstance
+          if (instance.$props.label.indexOf(this.filter) > -1) {
+            instance.$data.show = true
+          } else {
+            instance.$data.show = false
+          }
+        })
       }
     }
   }

@@ -4,11 +4,12 @@
       title="普通下拉框"
       subtitle="subtitle"
     >
-      <zg-select>
-        <zg-option
-          icon="icon-list"
-          label="909"
-          value="aaa"
+      <zg-checkbox label="勾选项"></zg-checkbox>
+      <zg-select placeholder="全部">
+        <zg-option v-for="item in select1"
+          :label="item.label"
+          :value="item.value"
+          :checkAble=true
         ></zg-option>
       </zg-select>
 
@@ -24,14 +25,27 @@
 <script>
 
   import ZgOption from "../../../src/components/selector/option.vue";
+  import ZgCheckbox from "../../../src/components/checkbox/checkbox.vue";
 
   export default {
-    components: {ZgOption},
+    components: {
+      ZgCheckbox,
+      ZgOption},
     name: 'index',
     data() {
-      return {
-        msg: 'this is index'
+      let data = {
+        select1: (() => {
+          let data = []
+          for (let i = 0; i < 10; i++) {
+            data.push({
+              label: `label${i}`,
+              value: i
+            })
+          }
+          return data
+        })()
       }
+      return data
     }
   }
 </script>

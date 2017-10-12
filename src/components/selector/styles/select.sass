@@ -17,6 +17,8 @@
       position: absolute
       top: 0
       right: 5px
+    &.active .zg-select-arrow
+      transform: rotate(180deg)
   .zg-drop-panel
     position: absolute
     border: 1px solid $color-border-normal
@@ -25,7 +27,23 @@
     padding: 5px
 
     min-width: 100%
+    max-height: 325px
     width: auto
     background: $color-white
+    box-shadow: 0 1px 4px 0 rgba(53,64,82,0.50)
+
+    display: flex
+    flex-direction: column
+    .zg-fixed
+      flex: none
+    .zg-content
+      flex: 1
+      overflow-y: auto
     li:first-child
       margin-top: 5px
+    .zg-clear
+      border-bottom: 1px solid $color-border-normal
+      a
+        font-size: $size-font-tip
+        color: $color-info
+        margin-left: 10px
