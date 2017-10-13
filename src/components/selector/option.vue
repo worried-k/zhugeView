@@ -4,6 +4,7 @@
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <zg-checkbox v-if="checkAble"
                    :label="getLabel(value)"
+                   :disable="disable"
                    v-model="checked"
                    @change="onClick"
       ></zg-checkbox>
@@ -68,6 +69,7 @@
     },
     methods: {
       onClick () {
+        if (this.disable) return
         if (!this.checkAble) {
           this.checked = true
         }

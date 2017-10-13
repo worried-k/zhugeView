@@ -101,7 +101,7 @@
       },
       arrowIcon () {
         if (this.theme === 'noborder') {
-          return 'icon-collapse-down'
+          return 'icon-pulldown'
         }
         return 'icon-down'
       }
@@ -117,6 +117,7 @@
       onFilter () {
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
+          if (!instance) return
           if (instance.$options.name === 'ZgOptGroup') {
             instance.children('ZgOption').forEach(option => {
               if (option.$props.value[this.labelField].indexOf(this.filter) > -1) {

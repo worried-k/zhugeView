@@ -18,7 +18,7 @@
       label: {
         type: String
       },
-      disabled: {
+      disable: {
         type: Boolean,
         default: false
       }
@@ -37,11 +37,13 @@
       clazz () {
         let clazz = []
         if (this.checked) clazz.push('checked')
+        if (this.disable) clazz.push('disable')
         return clazz.join(' ')
       }
     },
     methods: {
       onChange () {
+        if (this.disable) return
         this.checked = !this.checked
         this.$emit('input', this.checked)
         this.$emit('change', this.checked)
