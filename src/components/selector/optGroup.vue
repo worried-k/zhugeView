@@ -1,6 +1,8 @@
 <template>
-  <ul>
-    <li>{{label}}</li>
+  <ul class="zg-opt-group">
+    <li class="zg-header">
+      <slot name="header">{{label}}</slot>
+    </li>
     <slot></slot>
   </ul>
 </template>
@@ -27,5 +29,5 @@
 </script>
 
 <style lang="sass">
-
+@import "styles/optGroup"
 </style>
