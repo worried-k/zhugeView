@@ -59,7 +59,7 @@ export default {
     iconClassArr () {
       let result = []
       if (this.icon) {
-        result.push('icon-' + this.icon)
+        result.push('zgicon-' + this.icon)
       }
       if (this.iconClass) {
         result.push(this.iconClass)

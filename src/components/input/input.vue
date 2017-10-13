@@ -10,7 +10,7 @@
            :readonly="readOnly"
     />
     <i v-if="clearAble && inputValue"
-       class="zg-input-clear icon-delete-little1"
+       class="zg-input-clear zgicon-delete-little1"
        @click="onClear"
     ></i>
   </span>

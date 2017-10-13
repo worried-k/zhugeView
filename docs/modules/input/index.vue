@@ -4,7 +4,7 @@
       title="输入框"
       subtitle="普通输入框"
     >
-      <zg-input icon="icon-list"
+      <zg-input icon="zgicon-list"
                 clear-able
                 placeholder="有清除有icon"
                 v-model="value"></zg-input>

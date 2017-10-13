@@ -79,7 +79,7 @@
       <zg-button theme="border" icon="add" @click="onClick">add</zg-button>
       <zg-button icon="add" @click="onClick" type="primary">add</zg-button>
       <zg-button theme="border" icon="add" @click="onClick" :disabled="true">add</zg-button>
-      <zg-button iconClass="icon-add" @click="onClick" type="primary">icon-add</zg-button>
+      <zg-button iconClass="zgicon-add" @click="onClick" type="primary">icon-add</zg-button>
     </demo-panel>
 
     <demo-panel

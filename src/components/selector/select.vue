@@ -16,7 +16,7 @@
       <div class="zg-fixed">
         <zg-input
           v-if="filterOption"
-          icon="icon-search"
+          icon="zgicon-search"
           width="100%"
           class="zg-select-search"
           clear-able
@@ -101,9 +101,9 @@
       },
       arrowIcon () {
         if (this.theme === 'noborder') {
-          return 'icon-pulldown'
+          return 'zgicon-pulldown'
         }
-        return 'icon-down'
+        return 'zgicon-down'
       }
     },
     methods: {

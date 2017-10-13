@@ -1,7 +1,7 @@
 <template>
   <span class="zg-checkbox" :class="clazz" @click.stop="onChange">
     <span class="zg-box">
-      <i v-if="checked" class="icon-check_small"></i>
+      <i v-if="checked" class="zgicon-check_small"></i>
     </span>
     <span>{{label}}</span>
   </span>
