@@ -1,9 +1,7 @@
 {
-  "name": "zhugeview-test",
-  "version": "1.0.13",
-  "description": "A Vue.js project",
-  "author": "kangpeng",
-  "license": "MIT",
+  "name": "zhugeview",
+  "version": "0.0.1",
+  "description": "诸葛io VUE组件库",
   "scripts": {
     "start": "node build/dev-server.js",
     "dev": "npm start",
@@ -17,6 +15,20 @@
   "files": [
     "lib"
   ],
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",
@@ -87,26 +99,18 @@
     "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^4.1.0"
   },
-  "engines": {
-    "node": ">= 4.0.0",
-    "npm": ">= 3.0.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
-  "directories": {
-    "docs": "docs",
-    "lib": "lib",
-    "test": "test"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/worried-k/zhugeView.git"
+    "url": "git+https://github.com/struggling-bird/zhugeView.git"
   },
+  "keywords": [
+    "vue",
+    "components"
+  ],
+  "author": "yqdong",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/worried-k/zhugeView/issues"
+    "url": "https://github.com/struggling-bird/zhugeView/issues"
   },
-  "homepage": "https://github.com/worried-k/zhugeView#readme"
+  "homepage": "https://github.com/struggling-bird/zhugeView#readme"
 }
