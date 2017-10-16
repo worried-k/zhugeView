@@ -21,6 +21,11 @@
         <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
 
+      <zg-select placeholder="单选" label-field="label">
+        <i slot="handle" class="">dd</i>
+        <zg-option v-for="item in select1" :value="item"></zg-option>
+      </zg-select>
+
       <zg-select placeholder="多选"
                  filter-option
                  multiple

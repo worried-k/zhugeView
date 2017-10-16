@@ -2,17 +2,19 @@
   <div class="zg-select"
        v-click-outside="onClickOutside"
        :style="style">
-    <div class="zg-select-handle" :class="handleClass" @click="showOptions = !showOptions">
-      <zg-input class="zg-select-chosen"
-                v-model="chosenValue"
-                width="100%"
-                read-only
-                :placeholder="placeholder"
-      ></zg-input>
+    <div class="zg-select-handle" :class="handleClass" @click="onClickHandle">
+      <slot name="handle">
+        <zg-input class="zg-select-chosen"
+                  v-model="chosenValue"
+                  width="100%"
+                  read-only
+                  :placeholder="placeholder"
+        ></zg-input>
+      </slot>
       <i class="zg-select-arrow" :class="arrowIcon"></i>
     </div>
 
-    <ul v-show="showOptions" class="zg-drop-panel">
+    <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
       <div class="zg-fixed">
         <zg-input
           v-if="filterOption"
@@ -164,6 +166,9 @@
           return item[this.labelField]
         }).join(',')
         this.$emit('input', this.chosen)
+      },
+      onClickHandle () {
+        this.showOptions = !this.showOptions
       },
       onClickOutside () {
         this.showOptions = false

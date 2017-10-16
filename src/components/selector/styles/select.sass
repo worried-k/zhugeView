@@ -1,6 +1,6 @@
 @import "../../../assets/styles/constants"
 .zg-select
-  height: 28px
+  height: 30px
   line-height: 28px
   display: inline-block
   font-size: $size-font-content
@@ -9,9 +9,14 @@
     width: 100%
     height: 100%
     cursor: pointer
+    border: 1px solid $color-border-normal
+    border-radius: $border-radius
+    .zg-input
+      border: none
     &.noborder
-      .zg-input
-        border: none
+      border: none
+      &+.zg-drop-panel
+        margin: 0
     .zg-select-chosen input[type='text']
       padding-right: 20px !important
       cursor: pointer
@@ -23,6 +28,7 @@
       transform: rotate(180deg)
   .zg-drop-panel
     position: absolute
+    z-index: 1
     border: 1px solid $color-border-normal
     border-radius: $border-radius
     margin-top: 7px
