@@ -2,7 +2,7 @@
   <div class="zg-select"
        v-click-outside="onClickOutside"
        :style="style">
-    <div class="zg-select-handle" :class="handleClass" @click="onClickHandle">
+    <div class="zg-select-handle" :class="handleClass" @click="onClickHandle" ref="handle">
       <slot name="handle">
         <zg-input class="zg-select-chosen"
                   v-model="chosenValue"
@@ -106,6 +106,13 @@
           return 'zgicon-pulldown'
         }
         return 'zgicon-down'
+      }
+    },
+    updated () {
+      const dropPanel = this.$refs.dropPanel
+      const panelRect = dropPanel.getBoundingClientRect()
+      if ((panelRect.width + panelRect.left) > window.innerWidth) {
+        dropPanel.style.right = '0px'
       }
     },
     methods: {
