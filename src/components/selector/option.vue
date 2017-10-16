@@ -67,6 +67,11 @@
         return clazz.join(' ')
       }
     },
+    mounted () {
+      if (this.defaultChecked) {
+        this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
+      }
+    },
     methods: {
       onClick () {
         if (this.disable) return

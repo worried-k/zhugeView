@@ -13,7 +13,7 @@
                  v-model="value1"
                  theme="noborder"
                  label-field="label">
-        <zg-option :value="{label: 'disable', value: '2939'}" disable defaultChecked></zg-option>
+        <zg-option :value="{label: 'disable', value: '2939'}" defaultChecked></zg-option>
         <zg-option v-for="item in select1" :value="item"></zg-option>
       </zg-select>
 

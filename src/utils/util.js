@@ -19,6 +19,9 @@ let util = {
   },
   isFunction (obj) {
     return this.type(obj) === '[object Function]'
+  },
+  equal (a, b) {
+    return JSON.stringify(b) === JSON.stringify(b)
   }
 }
 

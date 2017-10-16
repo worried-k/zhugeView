@@ -79,13 +79,14 @@
       }
     },
     data () {
-      return {
+      let data = {
         chosen: [],
         chosenValue: '',
         filter: '',
 
         showOptions: false
       }
+      return data
     },
     computed: {
       style () {
@@ -150,7 +151,7 @@
             this.chosen.push(value)
           } else {
             for (let i = 0; i < this.chosen.length; i++) {
-              if (this.chosen[i] === value) {
+              if (util.equal(this.chosen[i], value)) {
                 this.chosen.splice(i, 1)
                 break
               }
