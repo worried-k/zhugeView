@@ -15,6 +15,15 @@
       border: none
     &.noborder
       border: none
+      .zg-label
+        margin-right: 25px
+        text-overflow: ellipsis
+        display: inline-block
+        vertical-align: middle
+        overflow: hidden
+        white-space: nowrap
+        &.zg-placeholder
+          color: $color-font-placeholder
       &+.zg-drop-panel
         margin: 0
     .zg-select-chosen input[type='text']
@@ -28,7 +37,7 @@
       transform: rotate(180deg)
   .zg-drop-panel
     position: absolute
-    z-index: 1
+    z-index: $z-index-base
     border: 1px solid $color-border-normal
     border-radius: $border-radius
     margin-top: 7px

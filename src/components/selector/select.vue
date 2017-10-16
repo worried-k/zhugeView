@@ -4,12 +4,21 @@
        :style="style">
     <div class="zg-select-handle" :class="handleClass" @click="onClickHandle" ref="handle">
       <slot name="handle">
-        <zg-input class="zg-select-chosen"
+        <zg-input v-if="theme === 'normal'" class="zg-select-chosen"
                   v-model="chosenValue"
                   width="100%"
                   read-only
                   :placeholder="placeholder"
         ></zg-input>
+        <span class="zg-label"
+              v-else-if="theme === 'noborder' && chosenValue"
+              :style="{'max-width': (width - 25) + 'px'}">
+          {{chosenValue}}
+          <span v-if="chosen.length > 1">({{chosen.length}})</span>
+        </span>
+        <span v-else class="zg-label zg-placeholder">
+          {{placeholder}}
+        </span>
       </slot>
       <i class="zg-select-arrow" :class="arrowIcon"></i>
     </div>
@@ -90,9 +99,13 @@
     },
     computed: {
       style () {
-        return {
-          width: this.width + 'px'
+        let style = {}
+        if (this.theme === 'normal') {
+          style.width = this.width + 'px'
+        } else {
+          style['max-width'] = this.width + 'px'
         }
+        return style
       },
       handleClass () {
         let clazz = []
