@@ -21,7 +21,7 @@ let util = {
     return this.type(obj) === '[object Function]'
   },
   equal (a, b) {
-    return JSON.stringify(b) === JSON.stringify(b)
+    return JSON.stringify(a) === JSON.stringify(b)
   }
 }
 
