@@ -41,6 +41,9 @@
       <!--to options-->
       <div class="zg-content" @mousewheel="onScroll" ref="options">
         <slot></slot>
+        <zg-option v-show="noMatch" disable :value="{label: ''}" style="text-align: center">
+          {{noMatchText}}
+        </zg-option>
       </div>
     </ul>
   </div>
@@ -103,7 +106,8 @@
         chosenValue: '',
         filter: '',
         scrollBottom: 0,
-        showOptions: false
+        showOptions: false,
+        noMatch: false
       }
       return data
     },
@@ -152,6 +156,7 @@
           this.filterCallback(this.filter)
           return
         }
+        let noMatch = true
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
           if (!instance) return
@@ -168,7 +173,11 @@
           } else {
             instance.$data.show = instance.$props.value[this.labelField].indexOf(this.filter) > -1
           }
+          if (instance.$data.show) {
+            noMatch = false
+          }
         })
+        this.noMatch = noMatch
       },
       onClickOption (value, checked) {
         if (this.multiple) {
