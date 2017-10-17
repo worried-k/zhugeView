@@ -14,16 +14,16 @@
                  theme="noborder"
                  label-field="label">
         <zg-option :value="{label: 'disable', value: '2939'}" defaultChecked></zg-option>
-        <zg-option v-for="item in select1" :value="item"></zg-option>
+        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
       </zg-select>
 
       <zg-select placeholder="单选" label-field="label">
-        <zg-option v-for="item in select1" :value="item"></zg-option>
+        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
       </zg-select>
 
       <zg-select placeholder="单选" label-field="label">
         <i slot="handle" class="">dd</i>
-        <zg-option v-for="item in select1" :value="item"></zg-option>
+        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
       </zg-select>
 
       <zg-select placeholder="多选"
@@ -31,7 +31,7 @@
                  multiple
                  label-field="label">
         <zg-opt-group label="城市">
-          <zg-option v-for="item in select1" :value="item"></zg-option>
+          <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
         </zg-opt-group>
       </zg-select>
     </demo-panel>
