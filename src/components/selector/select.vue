@@ -39,7 +39,7 @@
         </li>
       </div>
       <!--to options-->
-      <div class="zg-content">
+      <div class="zg-content" @mousewheel="onScroll" ref="options">
         <slot></slot>
       </div>
     </ul>
@@ -85,6 +85,9 @@
       },
       labelField: {
         type: String
+      },
+      filterCallback: {
+        type: Function
       }
     },
     data () {
@@ -92,7 +95,7 @@
         chosen: [],
         chosenValue: '',
         filter: '',
-
+        scrollBottom: 0,
         showOptions: false
       }
       return data
@@ -138,6 +141,10 @@
         })
       },
       onFilter () {
+        if (util.isFunction(this.filterCallback)) {
+          this.filterCallback(this.filter)
+          return
+        }
         this.$slots.default.forEach((item) => {
           let instance = item.componentInstance
           if (!instance) return
@@ -193,6 +200,16 @@
       },
       onClickOutside () {
         this.showOptions = false
+      },
+      onScroll () {
+        const panel = this.$refs.options
+        const height = panel.getBoundingClientRect().height
+        const scrollBottom = panel.scrollHeight - height - panel.scrollTop
+        if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
+        this.scrollBottom = scrollBottom
+        if (scrollBottom <= 20) {
+          this.$emit('bottom')
+        }
       }
     }
   }

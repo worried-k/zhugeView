@@ -12,6 +12,8 @@
                  filter-option
                  v-model="value1"
                  theme="noborder"
+                 :filterCallback="onFilter"
+                 @bottom="onBottom"
                  label-field="label">
         <zg-option :value="{label: 'disable', value: '2939'}" defaultChecked></zg-option>
         <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
@@ -63,6 +65,14 @@
         value1: []
       }
       return data
+    },
+    methods: {
+      onFilter (value) {
+        console.log(value)
+      },
+      onBottom () {
+        console.log('到底了')
+      }
     }
   }
 </script>
