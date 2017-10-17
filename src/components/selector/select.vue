@@ -34,7 +34,7 @@
           v-model="filter"
           @input="onFilter"
         ></zg-input>
-        <li v-show="multiple && chosen.length" class="zg-clear">
+        <li v-show="multiple && chosen.length && clearAble" class="zg-clear">
           <a href="javascript:void(0)" @click="clear">清空</a>
         </li>
       </div>
@@ -96,12 +96,17 @@
         type: Boolean,
         default: false
       },
+      clearAble: {
+        type: Boolean,
+        default: true
+      },
       filterOption: {
         type: Boolean,
         default: false
       },
       labelField: {
-        type: String
+        type: String,
+        default: 'label'
       },
       filterCallback: {
         type: Function
