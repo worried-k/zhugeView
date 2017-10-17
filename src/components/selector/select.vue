@@ -13,8 +13,8 @@
         <span class="zg-label"
               v-else-if="theme === 'noborder' && chosenValue"
               :style="{'max-width': (width - 25) + 'px'}">
-          {{chosenValue}}
-          <span v-if="chosen.length > 1">({{chosen.length}})</span>
+          <span class="zg-value">{{chosenValue}}</span>
+          <span class="zg-count" v-if="chosen.length > 1">({{chosen.length}})</span>
         </span>
         <span v-else class="zg-label zg-placeholder">
           {{placeholder}}
