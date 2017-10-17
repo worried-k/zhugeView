@@ -153,7 +153,6 @@
     },
     mounted () {
       this.noData = this.children('ZgOption').length === 0
-      console.log(this.children('ZgOption').length)
     },
     methods: {
       clear () {
