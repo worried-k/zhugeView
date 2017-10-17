@@ -25,7 +25,7 @@
 
       <zg-select placeholder="单选" label-field="label">
         <i slot="handle" class="">dd</i>
-        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
+        <!--<zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>-->
       </zg-select>
 
       <zg-select placeholder="多选"

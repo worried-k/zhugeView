@@ -41,9 +41,12 @@
       <!--to options-->
       <div class="zg-content" @mousewheel="onScroll" ref="options">
         <slot></slot>
-        <zg-option v-show="noMatch" disable :value="{label: ''}" style="text-align: center">
+        <li v-show="noMatch" class="zg-error">
           {{noMatchText}}
-        </zg-option>
+        </li>
+        <li v-show="noData" class="zg-error">
+          {{noDataText}}
+        </li>
       </div>
     </ul>
   </div>
@@ -85,6 +88,10 @@
         type: String,
         default: '无匹配数据'
       },
+      noDataText: {
+        type: String,
+        default: '暂无数据'
+      },
       multiple: {
         type: Boolean,
         default: false
@@ -107,7 +114,8 @@
         filter: '',
         scrollBottom: 0,
         showOptions: false,
-        noMatch: false
+        noMatch: false,
+        noData: false
       }
       return data
     },
@@ -142,6 +150,10 @@
       if ((panelRect.width + panelRect.left) > window.innerWidth) {
         dropPanel.style.right = '0px'
       }
+    },
+    mounted () {
+      this.noData = this.children('ZgOption').length === 0
+      console.log(this.children('ZgOption').length)
     },
     methods: {
       clear () {
