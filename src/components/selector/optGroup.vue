@@ -1,5 +1,5 @@
 <template>
-  <ul class="zg-opt-group">
+  <ul class="zg-opt-group" v-show="show">
     <li class="zg-header">
       <slot name="header">{{label}}</slot>
     </li>
@@ -22,7 +22,7 @@
     },
     data () {
       return {
-        msg: 'optionGroup'
+        show: true
       }
     }
   }

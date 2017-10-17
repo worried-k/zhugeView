@@ -50,9 +50,12 @@
   import emitter from '../../mixins/emitter'
   import ZgInput from '../input/input.vue'
   import {util} from '../../utils/index'
+  import ZgOption from './option.vue'
 
   export default {
-    components: {ZgInput},
+    components: {
+      ZgOption,
+      ZgInput},
     name: 'ZgSelect',
     mixins: [emitter],
     props: {
@@ -74,6 +77,10 @@
       placeholder: {
         type: String,
         default: '请选择'
+      },
+      noMatchText: {
+        type: String,
+        default: '无匹配数据'
       },
       multiple: {
         type: Boolean,
@@ -149,19 +156,17 @@
           let instance = item.componentInstance
           if (!instance) return
           if (instance.$options.name === 'ZgOptGroup') {
+            let hideCount = 0
             instance.children('ZgOption').forEach(option => {
-              if (option.$props.value[this.labelField].indexOf(this.filter) > -1) {
-                option.$data.show = true
-              } else {
+              option.$data.show = option.$props.value[this.labelField].indexOf(this.filter) > -1
+              if (!option.$data.show) {
+                hideCount++
                 option.$data.show = false
               }
             })
+            instance.$data.show = hideCount !== instance.children('ZgOption').length
           } else {
-            if (instance.$props.value[this.labelField].indexOf(this.filter) > -1) {
-              instance.$data.show = true
-            } else {
-              instance.$data.show = false
-            }
+            instance.$data.show = instance.$props.value[this.labelField].indexOf(this.filter) > -1
           }
         })
       },
