@@ -79,7 +79,7 @@
           this.checked = true
         }
         this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
-        this.$emit('check', this.value)
+        this.$emit('check', this.value, this.checked)
       },
       getLabel (value) {
         if (util.isString(value)) {

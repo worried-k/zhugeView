@@ -41,10 +41,10 @@
       <!--to options-->
       <div class="zg-content" @mousewheel="onScroll" ref="options">
         <slot></slot>
-        <li v-show="noMatch" class="zg-error">
+        <li v-show="noMatch" class="zg-option zg-error">
           {{noMatchText}}
         </li>
-        <li v-show="noData" class="zg-error">
+        <li v-show="noData" class="zg-option zg-error">
           {{noDataText}}
         </li>
       </div>
@@ -115,7 +115,6 @@
     data () {
       let data = {
         chosen: [],
-        chosenValue: '',
         filter: '',
         scrollBottom: 0,
         showOptions: false,
@@ -124,7 +123,20 @@
       }
       return data
     },
+    watch: {
+      value (value) {
+        this.chosen = value
+      }
+    },
     computed: {
+      chosenValue () {
+        return this.chosen.map(item => {
+          if (util.isString(item)) {
+            return item
+          }
+          return item[this.labelField]
+        }).join(',')
+      },
       style () {
         let style = {}
         if (this.theme === 'normal') {
@@ -155,6 +167,7 @@
       if ((panelRect.width + panelRect.left) > window.innerWidth) {
         dropPanel.style.right = '0px'
       }
+      this.noData = this.children('ZgOption').length === 0
     },
     mounted () {
       this.noData = this.children('ZgOption').length === 0
@@ -162,7 +175,6 @@
     methods: {
       clear () {
         this.chosen.splice(0, this.chosen.length)
-        this.chosenValue = ''
         this.children('ZgOption').forEach((child) => {
           child.$data.checked = false
         })
@@ -198,7 +210,7 @@
       onClickOption (value, checked) {
         if (this.multiple) {
           if (checked) {
-            this.chosen.push(value)
+            if (this.chosen.indexOf(value) === -1) this.chosen.push(value)
           } else {
             for (let i = 0; i < this.chosen.length; i++) {
               if (util.equal(this.chosen[i], value)) {
@@ -217,12 +229,6 @@
           this.chosen.push(value)
           this.showOptions = false
         }
-        this.chosenValue = this.chosen.map(item => {
-          if (util.isString(item)) {
-            return item
-          }
-          return item[this.labelField]
-        }).join(',')
         this.$emit('input', this.chosen)
       },
       onClickHandle () {

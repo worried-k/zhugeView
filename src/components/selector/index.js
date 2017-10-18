@@ -7,11 +7,13 @@
 import ZgOptGroup from './optGroup.vue'
 import ZgOption from './option.vue'
 import ZgSelect from './select.vue'
+import ZgBigSelect from './bigSelect.vue'
 
 let components = {
   ZgOptGroup,
   ZgOption,
-  ZgSelect
+  ZgSelect,
+  ZgBigSelect
 }
 
 for (const key in components) {
@@ -22,5 +24,6 @@ for (const key in components) {
 export {
   ZgOption,
   ZgSelect,
-  ZgOptGroup
+  ZgOptGroup,
+  ZgBigSelect
 }
