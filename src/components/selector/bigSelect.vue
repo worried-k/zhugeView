@@ -10,6 +10,7 @@
              :width="width"
              :theme="theme"
              v-model="chosen"
+             @clear="onClear"
              @bottom="onBottom">
     <template v-for="item in showList">
       <zg-opt-group v-if="childrenField && item._show" :label="item[labelField]">
@@ -101,7 +102,7 @@
       },
       pageSize: {
         type: Number,
-        default: 10
+        default: 20
       }
     },
     data () {
@@ -157,6 +158,19 @@
       onFilter (value) {
         this.pageNum = 0
         this.filterValue = value
+      },
+      onClear () {
+        if (!this.childrenField) {
+          this.store.forEach(item => {
+            if (item.checked) item.checked = false
+          })
+        } else {
+          this.store.forEach(item => {
+            item[this.childrenField].forEach(child => {
+              if (child.checked) child.checked = false
+            })
+          })
+        }
       },
       onBottom () {
         let count = (this.pageNum + 1) * this.pageSize

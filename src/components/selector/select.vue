@@ -180,8 +180,10 @@
         this.children('ZgOption').forEach((child) => {
           child.$data.checked = false
         })
+        this.$emit('clear')
       },
       onFilter () {
+        this.$refs.options.scrollTop = 0
         if (util.isFunction(this.filterCallback)) {
           this.filterCallback(this.filter)
           return
