@@ -9,7 +9,7 @@
     "build-lib": "node build/build-lib.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
-    "version": "npm run build-lib",
+    "version": "npm run build-lib; git add -A",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "main": "lib/main.js",
