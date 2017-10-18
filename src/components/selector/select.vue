@@ -2,20 +2,22 @@
   <div class="zg-select"
        v-click-outside="onClickOutside"
        :style="style">
-    <div class="zg-select-handle" :class="handleClass" @click="onClickHandle" ref="handle">
+    <div class="zg-select-handle" :class="handleClass" @click="onClickHandle" ref="handle" :title="chosenValue">
       <slot name="handle">
         <zg-input v-if="theme === 'normal'" class="zg-select-chosen"
-                  v-model="chosenValue"
+                  :value="chosenValue"
                   width="100%"
                   read-only
                   :placeholder="placeholder"
         ></zg-input>
+
         <span class="zg-label"
               v-else-if="theme === 'noborder' && chosenValue"
               :style="{'max-width': (width - 25) + 'px'}">
           <span class="zg-value">{{chosenValue}}</span>
           <span class="zg-count" v-if="chosen.length > 1">({{chosen.length}})</span>
         </span>
+
         <span v-else class="zg-label zg-placeholder">
           {{placeholder}}
         </span>

@@ -3,7 +3,7 @@ import './assets/icons/iconfont.css'
 import Button from './components/button/index.js'
 import ButtonGroup from './components/buttonGroup/index.js'
 import ZgInput from './components/input/index'
-import {ZgSelect, ZgOption, ZgOptGroup} from './components/selector/index'
+import {ZgSelect, ZgOption, ZgOptGroup, ZgBigSelect} from './components/selector/index'
 
 import directives from './directives/main'
 
@@ -13,7 +13,8 @@ const components = [
   ZgInput,
   ZgOption,
   ZgOptGroup,
-  ZgSelect
+  ZgSelect,
+  ZgBigSelect
 ]
 
 const install = function (Vue) {

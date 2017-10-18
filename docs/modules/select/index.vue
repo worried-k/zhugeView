@@ -4,8 +4,6 @@
       title="普通下拉框"
       subtitle="subtitle">
 
-      <zg-checkbox label="勾选项"></zg-checkbox>
-
       <zg-select placeholder="多选"
                  multiple
                  :width="100"
@@ -13,24 +11,18 @@
                  v-model="value1"
                  theme="noborder"
                  @bottom="onBottom"
-                 label-field="label">
-        <!--<zg-option :value="{label: 'disable', value: '2939'}" defaultChecked></zg-option>-->
+                 label-field="text">
         <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
       </zg-select>
 
-      <zg-select placeholder="单选" label-field="label">
+      <zg-select placeholder="单选" label-field="text">
         <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
-      </zg-select>
-
-      <zg-select placeholder="单选" label-field="label">
-        <i slot="handle" class="">dd</i>
-        <!--<zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>-->
       </zg-select>
 
       <zg-select placeholder="多选"
                  filter-option
                  multiple
-                 label-field="label">
+                 label-field="text">
         <zg-opt-group label="城市">
           <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
         </zg-opt-group>
@@ -42,6 +34,7 @@
       <zg-big-select
         multiple
         :store="bigSelect"
+        childrenField="keywords"
         filterOption
         labelField="text"
         theme="noborder"
@@ -65,26 +58,12 @@
     name: 'index',
     data() {
       let data = {
-        select1: [],
+        select1: json[0].campaigns,
         value1: [],
 
         bigSelect: json[1].campaigns[4].adgroups
       }
       return data
-    },
-    mounted () {
-      setTimeout(() => {
-        this.select1 = (() => {
-          let data = []
-          for (let i = 0; i < 10; i++) {
-            data.push({
-              label: `label2121212121@!@121212${i}`,
-              value: i
-            })
-          }
-          return data
-        })()
-      }, 2000)
     },
     methods: {
       onFilter (value) {

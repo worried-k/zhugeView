@@ -1,14 +1,14 @@
 <template>
-  <li v-show="show" class="zg-option" :class="className" @click="onClick">
+  <li v-show="show" class="zg-option" :class="className" @click="onClick" :title="label">
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <zg-checkbox v-if="checkAble"
-                   :label="getLabel(value)"
+                   :label="label"
                    :disable="disable"
                    v-model="checked"
                    @change="onClick"
       ></zg-checkbox>
-      <template v-if="!checkAble">{{getLabel(value)}}</template>
+      <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
 </template>
@@ -52,12 +52,12 @@
         checked: this.defaultChecked,
         show: true,
         checkAble: this.parent('ZgSelect').$props.multiple,
-        label: this.parent('ZgSelect').$props.labelField
+        labelField: this.parent('ZgSelect').$props.labelField
       }
       return data
     },
     computed: {
-      className: function () {
+      className () {
         let clazz = []
         if (this.disable) {
           clazz.push('disable')
@@ -65,6 +65,12 @@
           clazz.push('active')
         }
         return clazz.join(' ')
+      },
+      label () {
+        if (util.isString(this.value)) {
+          return this.value
+        }
+        return this.value[this.labelField]
       }
     },
     mounted () {
@@ -80,12 +86,6 @@
         }
         this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
         this.$emit('check', this.value, this.checked)
-      },
-      getLabel (value) {
-        if (util.isString(value)) {
-          return value
-        }
-        return value[this.label]
       }
     }
   }
