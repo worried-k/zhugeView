@@ -133,10 +133,10 @@
     computed: {
       chosenValue () {
         return this.chosen.map(item => {
-          if (util.isString(item)) {
-            return item
+          if (util.isObject(item)) {
+            return item[this.labelField]
           }
-          return item[this.labelField]
+          return item
         }).join(',')
       },
       style () {

@@ -67,10 +67,10 @@
         return clazz.join(' ')
       },
       label () {
-        if (util.isString(this.value)) {
-          return this.value
+        if (util.isObject(this.value)) {
+          return this.value[this.labelField]
         }
-        return this.value[this.labelField]
+        return this.value
       }
     },
     mounted () {
