@@ -121,7 +121,8 @@
         scrollBottom: 0,
         showOptions: false,
         noMatch: false,
-        noData: false
+        noData: false,
+        filterTimeout: null
       }
       return data
     },
@@ -169,13 +170,24 @@
       if ((panelRect.width + panelRect.left) > window.innerWidth) {
         dropPanel.style.right = '0px'
       }
-      this.noData = this.children('ZgOption').length === 0
+      if (this.filter) {
+        this.noMatch = this.children('ZgOption').length === 0
+      } else {
+        this.noMatch = false
+        this.noData = this.children('ZgOption').length === 0
+      }
     },
     mounted () {
-      this.noData = this.children('ZgOption').length === 0
+      if (this.filter) {
+        this.noMatch = this.children('ZgOption').length === 0
+      } else {
+        this.noMatch = false
+        this.noData = this.children('ZgOption').length === 0
+      }
     },
     methods: {
       clear () {
+        this.$refs.options.scrollTop = 0
         this.chosen.splice(0, this.chosen.length)
         this.children('ZgOption').forEach((child) => {
           child.$data.checked = false
@@ -183,33 +195,36 @@
         this.$emit('clear')
       },
       onFilter () {
-        this.$refs.options.scrollTop = 0
-        if (util.isFunction(this.filterCallback)) {
-          this.filterCallback(this.filter)
-          return
-        }
-        let noMatch = true
-        this.$slots.default.forEach((item) => {
-          let instance = item.componentInstance
-          if (!instance) return
-          if (instance.$options.name === 'ZgOptGroup') {
-            let hideCount = 0
-            instance.children('ZgOption').forEach(option => {
-              option.$data.show = option.$props.value[this.labelField].indexOf(this.filter) > -1
-              if (!option.$data.show) {
-                hideCount++
-                option.$data.show = false
-              }
-            })
-            instance.$data.show = hideCount !== instance.children('ZgOption').length
-          } else {
-            instance.$data.show = instance.$props.value[this.labelField].indexOf(this.filter) > -1
+        if (this.filterTimeout) clearTimeout(this.filterTimeout)
+        this.filterTimeout = setTimeout(() => {
+          this.$refs.options.scrollTop = 0
+          if (util.isFunction(this.filterCallback)) {
+            this.filterCallback(this.filter)
+            return
           }
-          if (instance.$data.show) {
-            noMatch = false
-          }
-        })
-        this.noMatch = noMatch
+          let noMatch = true
+          this.$slots.default.forEach((item) => {
+            let instance = item.componentInstance
+            if (!instance) return
+            if (instance.$options.name === 'ZgOptGroup') {
+              let hideCount = 0
+              instance.children('ZgOption').forEach(option => {
+                option.$data.show = option.$props.value[this.labelField].indexOf(this.filter) > -1
+                if (!option.$data.show) {
+                  hideCount++
+                  option.$data.show = false
+                }
+              })
+              instance.$data.show = hideCount !== instance.children('ZgOption').length
+            } else {
+              instance.$data.show = instance.$props.value[this.labelField].indexOf(this.filter) > -1
+            }
+            if (instance.$data.show) {
+              noMatch = false
+            }
+          })
+          this.noMatch = noMatch
+        }, 100)
       },
       onClickOption (value, checked) {
         if (this.multiple) {
@@ -247,7 +262,7 @@
         const scrollBottom = panel.scrollHeight - height - panel.scrollTop
         if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
         this.scrollBottom = scrollBottom
-        if (scrollBottom <= 20) {
+        if (scrollBottom <= (panel.scrollHeight - height) * 0.05) {
           this.$emit('bottom')
         }
       }

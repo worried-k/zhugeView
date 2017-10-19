@@ -36,6 +36,7 @@
   import ZgSelect from './select.vue'
   import ZgOption from './option.vue'
   import ZgOptGroup from './optGroup.vue'
+//  import {util} from '../../utils/index'
 
   export default {
     components: {
@@ -141,45 +142,47 @@
         let list = []
         let count = this.currentCount
         let resultCount = 0
+        console.time()
         if (this.childrenField) {
-          for (let i = 0; i < this.store.length; i++) {
-            let item = this.store[i]
+          let isBreak = false
+          this.store.forEach(item => {
+            if (isBreak) return
 //            分组默认不显示
             this.$set(this.showMap, item[this.keyField], false)
-            let isBreak = false
-            for (let j = 0; j < item[this.childrenField].length; j++) {
-              if (resultCount > count) {
+
+            item[this.childrenField].forEach(child => {
+              if (resultCount >= count) {
                 isBreak = true
-                break
+                return
               }
-              let child = item[this.childrenField][j]
 //              控制子选项的显示隐藏
               let flag = false
               if (!this.filterValue) {
                 flag = resultCount <= count
                 this.$set(this.showMap, child[this.keyField], flag)
               } else {
-                flag = child[this.labelField].indexOf(this.filterValue) > -1 && resultCount <= count
+                flag = child[this.labelField].indexOf(this.filterValue) > -1 && list.length <= count
                 this.$set(this.showMap, child[this.keyField], flag)
+                if (!flag) resultCount--
               }
               if (flag) {
                 this.$set(this.showMap, item[this.keyField], true)
               }
               resultCount++
-            }
+            })
+
             list.push(item)
-            if (isBreak) break
-          }
+          })
         } else {
-          let i = 0
-          for (i; i < this.store.length && i < count; i++) {
-            let item = this.store[i]
+          this.store.forEach((item, i) => {
+            if (list.length >= count) return
             if (!this.filterValue ||
               (this.filterValue && item[this.labelField].indexOf(this.filterValue) > -1)) {
               list.push(item)
             }
-          }
+          })
         }
+        console.timeEnd()
         return list
       }
     },
