@@ -1,5 +1,5 @@
 <template>
-  <span class="zg-input" :style="style" @click="onClick">
+  <span class="zg-input" :class="clazz" :style="style" @click="onClick">
     <i class="zg-input-icon" :class="icon"></i>
     <input ref="input"
            class="zg-input-input"
@@ -8,6 +8,8 @@
            :placeholder="placeholder"
            v-model="inputValue"
            :readonly="readOnly"
+           @focus="active = true"
+           @blur="active = false"
     />
     <i v-if="clearAble && inputValue"
        class="zg-input-clear zgicon-delete-little1"
@@ -46,7 +48,7 @@
       },
       autoFocus: {
         type: Boolean,
-        default: true
+        default: false
       },
       /**
        * 作为普通文本展示
@@ -58,13 +60,19 @@
     },
     data () {
       return {
-        inputValue: this.value
+        inputValue: this.value,
+        active: this.autoFocus
       }
     },
     mounted () {
       this.autoFocus && this.$refs.input.focus()
     },
     computed: {
+      clazz () {
+        let clazz = []
+        if (this.active) clazz.push('zg-active')
+        return clazz
+      },
       style () {
         let style = {
           width: util.isNumber(this.width) ? `${this.width}px` : this.width

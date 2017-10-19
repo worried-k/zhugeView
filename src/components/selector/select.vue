@@ -41,7 +41,7 @@
         </li>
       </div>
       <!--to options-->
-      <div class="zg-content" @scroll="onScroll" ref="options">
+      <div class="zg-content" @mousewheel="onScroll" @scroll="onScroll" ref="options">
         <slot></slot>
         <li v-show="noMatch" class="zg-option zg-error">
           {{noMatchText}}
