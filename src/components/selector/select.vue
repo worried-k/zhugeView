@@ -36,12 +36,12 @@
           v-model="filter"
           @input="onFilter"
         ></zg-input>
-        <li v-show="multiple && chosen.length && clearAble" class="zg-clear">
+        <li v-show="multiple && chosen.length && clearAble && !filter" class="zg-clear">
           <a href="javascript:void(0)" @click="clear">清空</a>
         </li>
       </div>
       <!--to options-->
-      <div class="zg-content" @mousewheel="onScroll" ref="options">
+      <div class="zg-content" @scroll="onScroll" ref="options">
         <slot></slot>
         <li v-show="noMatch" class="zg-option zg-error">
           {{noMatchText}}

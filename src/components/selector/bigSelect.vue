@@ -13,9 +13,9 @@
              @clear="onClear"
              @bottom="onBottom">
     <template v-for="item in showList">
-      <zg-opt-group v-if="childrenField && item._show" :label="item[labelField]">
-        <zg-option v-for="option in item[childrenField]"
-                   v-if="option._show"
+      <zg-opt-group v-if="childrenField && showMap[item[keyField]]" :label="item[labelField]">
+        <zg-option v-for="(option, i) in item[childrenField]"
+                   v-if="i < currentCount && showMap[option[keyField]]"
                    :key="option[keyField]"
                    :value="option"
                    :defaultChecked="option.checked"
@@ -112,41 +112,67 @@
       let data = {
         pageNum: 0,
         filterValue: '',
-        chosen: []
+        chosen: [],
+        /**
+         * {
+         *  [key]: boolean
+         * }
+         */
+        showMap: {}
       }
       return data
     },
     computed: {
+      currentCount () {
+        return (this.pageNum + 1) * this.pageSize
+      },
+      totalCount () {
+        if (this.childrenField) {
+          let count = 0
+          this.store.forEach(item => {
+            count += item[this.childrenField].length
+          })
+          return count
+        } else {
+          return this.store.length
+        }
+      },
       showList () {
         let list = []
-        let count = (this.pageNum + 1) * this.pageSize
+        let count = this.currentCount
         let resultCount = 0
         if (this.childrenField) {
           for (let i = 0; i < this.store.length; i++) {
             let item = this.store[i]
 //            分组默认不显示
-            this.$set(item, '_show', false)
+            this.$set(this.showMap, item[this.keyField], false)
+            let isBreak = false
             for (let j = 0; j < item[this.childrenField].length; j++) {
+              if (resultCount > count) {
+                isBreak = true
+                break
+              }
               let child = item[this.childrenField][j]
 //              控制子选项的显示隐藏
               let flag = false
               if (!this.filterValue) {
                 flag = resultCount <= count
-                this.$set(child, '_show', flag)
+                this.$set(this.showMap, child[this.keyField], flag)
               } else {
                 flag = child[this.labelField].indexOf(this.filterValue) > -1 && resultCount <= count
-                this.$set(child, '_show', flag)
+                this.$set(this.showMap, child[this.keyField], flag)
               }
               if (flag) {
-                this.$set(item, '_show', true)
+                this.$set(this.showMap, item[this.keyField], true)
               }
               resultCount++
             }
             list.push(item)
+            if (isBreak) break
           }
         } else {
           let i = 0
-          for (i; i < this.store.length && list.length < count; i++) {
+          for (i; i < this.store.length && i < count; i++) {
             let item = this.store[i]
             if (!this.filterValue ||
               (this.filterValue && item[this.labelField].indexOf(this.filterValue) > -1)) {
@@ -177,7 +203,9 @@
       },
       onBottom () {
         let count = (this.pageNum + 1) * this.pageSize
-        if (this.store.length > count) this.pageNum++
+        if (this.totalCount > count) {
+          this.pageNum++
+        }
       },
       onClickOption (option, checked) {
         this.$set(option, 'checked', checked)
