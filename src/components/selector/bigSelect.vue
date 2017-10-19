@@ -55,6 +55,9 @@
       value: {
         type: [Array, String, Object]
       },
+      /**
+       * @tip 组件使用过程中，会在原始数据上增加_show属性
+       */
       store: {
         type: Array,
         default () {
