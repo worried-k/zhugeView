@@ -67,6 +67,9 @@
     name: 'ZgSelect',
     mixins: [emitter],
     props: {
+      /**
+       * 主题类型
+       */
       theme: {
         type: String,
         default: 'normal',
@@ -78,6 +81,9 @@
       value: {
         type: [Array, String, Object]
       },
+      /**
+       * 宽度
+       */
       width: {
         type: Number,
         default: 150
@@ -86,18 +92,31 @@
         type: String,
         default: '请选择'
       },
+      /**
+       * 搜索无匹配数据时的提示文本
+       */
       noMatchText: {
         type: String,
         default: '无匹配数据'
       },
+      /**
+       * 下拉列表空数据提示
+       */
       noDataText: {
         type: String,
         default: '暂无数据'
       },
+      /**
+       * 多选
+       */
       multiple: {
         type: Boolean,
         default: false
       },
+      /**
+       * 可清空
+       * @tip multiple启用时有效
+       */
       clearAble: {
         type: Boolean,
         default: true
