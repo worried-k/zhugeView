@@ -14,11 +14,11 @@
              @bottom="onBottom">
     <template v-for="item in showList">
       <zg-opt-group v-if="childrenField && showMap[item[keyField]]" :label="item[labelField]">
-        <zg-option v-for="(option, i) in item[childrenField]"
-                   v-if="i < currentCount && showMap[option[keyField]]"
-                   :key="option[keyField]"
-                   :value="option"
-                   :defaultChecked="option.checked"
+        <zg-option v-for="child in item[childrenField]"
+                   v-if="showMap[child[keyField]]"
+                   :key="child[keyField]"
+                   :value="child"
+                   :defaultChecked="child.checked"
                    @check="onClickOption">
         </zg-option>
       </zg-opt-group>
@@ -128,13 +128,29 @@
         return (this.pageNum + 1) * this.pageSize
       },
       totalCount () {
+        const filterValue = this.filterValue
         if (this.childrenField) {
           let count = 0
-          this.store.forEach(item => {
-            count += item[this.childrenField].length
-          })
+          if (filterValue) {
+            this.store.forEach(item => {
+              item[this.childrenField].forEach(child => {
+                if (child[this.labelField].indexOf(filterValue) > -1) count++
+              })
+            })
+          } else {
+            this.store.forEach(item => {
+              count += item[this.childrenField].length
+            })
+          }
           return count
         } else {
+          if (filterValue) {
+            let count = 0
+            this.store.forEach(item => {
+              if (item[this.labelField].indexOf(filterValue) > -1) count++
+            })
+            return count
+          }
           return this.store.length
         }
       },
@@ -142,7 +158,7 @@
         let list = []
         let count = this.currentCount
         let resultCount = 0
-        console.time()
+        this.showMap = {}
         if (this.childrenField) {
           let isBreak = false
           this.store.forEach(item => {
@@ -157,14 +173,20 @@
               }
 //              控制子选项的显示隐藏
               let flag = false
-              if (!this.filterValue) {
+              if (this.filterValue) {
+                let label = child[this.labelField]
+                flag = label.indexOf(this.filterValue) > -1
+                if (flag) {
+                  this.$set(this.showMap, child[this.keyField], true)
+                } else {
+                  resultCount--
+                }
+              } else {
                 flag = resultCount <= count
                 this.$set(this.showMap, child[this.keyField], flag)
-              } else {
-                flag = child[this.labelField].indexOf(this.filterValue) > -1 && list.length <= count
-                this.$set(this.showMap, child[this.keyField], flag)
-                if (!flag) resultCount--
               }
+
+              // 如果分组内，有选项显示，则显示该分组
               if (flag) {
                 this.$set(this.showMap, item[this.keyField], true)
               }
@@ -182,7 +204,6 @@
             }
           })
         }
-        console.timeEnd()
         return list
       }
     },
