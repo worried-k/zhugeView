@@ -44,6 +44,7 @@
         placeholder="关键词"
         multiple
         :store="adgroups"
+        :customHeader="customHeader"
         childrenField="keywords"
         filterOption
         labelField="text"
@@ -107,6 +108,10 @@
       },
       onBottom () {
         console.log('到底了')
+      },
+      customHeader (data) {
+        console.log(data)
+        return '<a href="javascript:void(0)">title</a>'
       }
     }
   }

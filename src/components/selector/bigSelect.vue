@@ -14,6 +14,7 @@
              @bottom="onBottom">
     <template v-for="item in showList">
       <zg-opt-group v-if="childrenField && showMap[item[keyField]]" :label="item[labelField]">
+        <span v-html="customHeader(item)" v-if="customHeader" slot="header"></span>
         <zg-option v-for="child in item[childrenField]"
                    v-if="showMap[child[keyField]]"
                    :key="child[keyField]"
@@ -107,6 +108,9 @@
       pageSize: {
         type: Number,
         default: 20
+      },
+      customHeader: {
+        type: Function
       }
     },
     data () {

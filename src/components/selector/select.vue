@@ -81,6 +81,9 @@
           return themes.indexOf(value) > -1
         }
       },
+      /**
+       *
+       */
       value: {
         type: [Array, String, Object]
       },
@@ -91,6 +94,9 @@
         type: Number,
         default: 150
       },
+      /**
+       *
+       */
       placeholder: {
         type: String,
         default: '请选择'
@@ -124,14 +130,23 @@
         type: Boolean,
         default: true
       },
+      /**
+       *
+       */
       filterOption: {
         type: Boolean,
         default: false
       },
+      /**
+       *
+       */
       labelField: {
         type: String,
         default: 'label'
       },
+      /**
+       *
+       */
       filterCallback: {
         type: Function
       }
