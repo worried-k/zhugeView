@@ -5,9 +5,9 @@
     <div class="zg-select-handle" :class="handleClass" @click="onClickHandle" ref="handle" :title="chosenValue">
       <slot name="handle">
         <zg-input v-if="theme === 'normal'" class="zg-select-chosen"
-                  :value="chosenValue"
                   width="100%"
                   read-only
+                  :value="chosenValue"
                   :placeholder="placeholder"
         ></zg-input>
 
@@ -25,32 +25,35 @@
       <i class="zg-select-arrow" :class="arrowIcon"></i>
     </div>
 
-    <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
-      <div class="zg-fixed">
-        <zg-input
-          v-if="filterOption"
-          icon="zgicon-search"
-          width="100%"
-          class="zg-select-search"
-          clear-able
-          v-model="filter"
-          @input="onFilter"
-        ></zg-input>
-        <li v-show="multiple && chosen.length && clearAble && !filter" class="zg-clear">
-          <a href="javascript:void(0)" @click="clear">清空</a>
-        </li>
-      </div>
-      <!--to options-->
-      <div class="zg-content" @mousewheel="onScroll" @scroll="onScroll" ref="options">
-        <slot></slot>
-        <li v-show="noMatch" class="zg-option zg-error">
-          {{noMatchText}}
-        </li>
-        <li v-show="noData" class="zg-option zg-error">
-          {{noDataText}}
-        </li>
-      </div>
-    </ul>
+    <transition enter-active-class="animated slideInDown">
+      <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
+        <div class="zg-fixed">
+          <zg-input
+            v-if="filterOption"
+            icon="zgicon-search"
+            width="100%"
+            class="zg-select-search"
+            clear-able
+            v-model="filter"
+            @input="onFilter"
+          ></zg-input>
+          <li v-show="multiple && chosen.length && clearAble && !filter" class="zg-clear">
+            <a href="javascript:void(0)" @click="clear">清空</a>
+          </li>
+        </div>
+        <!--to options-->
+        <div class="zg-content" @mousewheel="onScroll" @scroll="onScroll" ref="options">
+          <slot></slot>
+          <li v-show="noMatch" class="zg-option zg-error">
+            {{noMatchText}}
+          </li>
+          <li v-show="noData" class="zg-option zg-error">
+            {{noDataText}}
+          </li>
+        </div>
+      </ul>
+    </transition>
+
   </div>
 </template>
 

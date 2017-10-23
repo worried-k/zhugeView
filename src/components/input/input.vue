@@ -10,6 +10,7 @@
            :readonly="readOnly"
            @focus="active = true"
            @blur="active = false"
+           @keyup="onKey"
     />
     <i v-if="clearAble && inputValue"
        class="zg-input-clear zgicon-delete-little1"
@@ -100,6 +101,9 @@
       },
       onClear () {
         this.inputValue = ''
+      },
+      onKey (event) {
+        this.$emit('key', event)
       }
     }
   }
