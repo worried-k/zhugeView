@@ -71,7 +71,7 @@
     mixins: [emitter],
     props: {
       /**
-       * 主题类型
+       * @description 主题类型
        */
       theme: {
         type: String,
@@ -82,48 +82,48 @@
         }
       },
       /**
-       *
+       * @description value
        */
       value: {
         type: [Array, String, Object]
       },
       /**
-       * 宽度
+       * @description 宽度
        */
       width: {
         type: Number,
         default: 150
       },
       /**
-       *
+       * @description placeholder
        */
       placeholder: {
         type: String,
         default: '请选择'
       },
       /**
-       * 搜索无匹配数据时的提示文本
+       * @description 搜索无匹配数据时的提示文本
        */
       noMatchText: {
         type: String,
         default: '无匹配数据'
       },
       /**
-       * 下拉列表空数据提示
+       * @description 下拉列表空数据提示
        */
       noDataText: {
         type: String,
         default: '暂无数据'
       },
       /**
-       * 多选
+       * @description 多选
        */
       multiple: {
         type: Boolean,
         default: false
       },
       /**
-       * 可清空
+       * @description 可清空
        * @tip multiple启用时有效
        */
       clearAble: {
@@ -131,21 +131,22 @@
         default: true
       },
       /**
-       *
+       * @description 过滤选项
        */
       filterOption: {
         type: Boolean,
         default: false
       },
       /**
-       *
+       * @description 用于展示的字段名称
        */
       labelField: {
         type: String,
         default: 'label'
       },
       /**
-       *
+       * @description 过滤选项的回调函数
+       * @tip 用于自定义过滤规则
        */
       filterCallback: {
         type: Function
