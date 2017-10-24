@@ -23,7 +23,7 @@
     mixins: [emitter],
     props: {
       /**
-       * icon名称
+       * @description icon名称
        */
       icon: {
         type: String

@@ -11,25 +11,46 @@
 export default {
   name: 'ZgButton',
   props: {
-    type: { // 可选值为：normal、submit、reset、primary、danger、secondary、successs或空
+    /**
+     * @description 可选值为：normal、submit、reset、primary、danger、secondary、successs或空
+     */
+    type: {
       type: String,
       default: ''
     },
-    size: String, // 可选值为：small、noraml、large或空
+    /**
+     * @description 可选值为：small、noraml、large或空
+     */
+    size: String,
+    /**
+     *
+     */
     theme: {
       type: String,
       default: ''
     },
-    icon: { // 内置icon文件的名称
+    /**
+     * @description 内置icon文件的名称
+     */
+    icon: {
       type: String,
       default: ''
     },
-    iconClass: { // 自定义class的字符串
+    /**
+     * 自定义class的字符串
+     */
+    iconClass: {
       type: String,
       default: ''
     },
+    /**
+     *
+     */
     disabled: Boolean,
-    nativeType: { // 可选值为：button、submit、reset
+    /**
+     * 可选值为：button、submit、reset
+     */
+    nativeType: {
       type: String,
       default: 'button'
     }

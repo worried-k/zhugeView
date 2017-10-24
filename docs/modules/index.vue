@@ -14,7 +14,7 @@
 </template>
 <script>
 import button from './button'
-import select from './select'
+import select from './selector'
 export default {
   name: 'index',
   data () {

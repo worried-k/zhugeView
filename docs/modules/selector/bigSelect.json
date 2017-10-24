@@ -1,0 +1,1 @@
+[{"name":"store","type":"Array","required":"true","default":"default(){","tip":"组件使用过程中，会在原始数据上增加_show属性"}]

@@ -1,0 +1,1 @@
+[{"name":"icon","type":"String","required":false,"default":null,"description":"icon名称"},{"name":"value","type":"{}","required":false,"default":null},{"name":"defaultChecked","type":"Boolean","required":false,"default":"false"},{"name":"disable","type":"Boolean","required":false,"default":"false"}]

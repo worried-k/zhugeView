@@ -79,11 +79,8 @@ fsUtil.readDir(config.basePath, (filePath, file, stat) => {
         fs.stat(outputFilePath, (err) => {
           if (err) {
             fs.mkdirSync(outputFilePath)
-            console.log('目录不存在')
-          } else {
-            console.log('目录存在')
           }
-          fs.writeFile(path.resolve(outputFilePath, 'api.json'), JSON.stringify(docJson), err => {
+          fs.writeFile(path.resolve(outputFilePath, `${file.split('.')[0]}.json`), JSON.stringify(docJson), err => {
             if (err) {
               console.error('api文档写入错误', path.resolve(outputFilePath, 'api.json'))
             }
