@@ -7,7 +7,7 @@
 import ZgInput from './input.vue'
 
 ZgInput.install = function (Vue) {
-  Vue.component(ZgInput)
+  Vue.component(ZgInput.name, ZgInput)
 }
 
 export default ZgInput
