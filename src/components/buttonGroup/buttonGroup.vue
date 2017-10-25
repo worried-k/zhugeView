@@ -16,16 +16,14 @@ import button from '../button/button.vue'
 export default {
   name: 'ZgButtonGroup',
   props: {
-    /* 可为字符串数组 和 对象数组，对象数组事例如下：
-    [{
-      value: '按钮名称',
-      icon: '内置icon名称', --可选
-      iconClass: '自定义icon的class', --可选
-      activated: boolean --可选
-    }]
-    */
-    data: Array,
-    btnWidth: { // 像素字符串，例：'1px'
+    /**
+     * @description 可为字符串数组 和 对象数组
+     */
+    store: Array,
+    /**
+     * 按钮项宽度
+     */
+    btnWidth: {
       type: String,
       default: ''
     }
@@ -51,8 +49,8 @@ export default {
     initGroupData () {
       this.groupData = []
       let obj = null
-      if (this.data && this.data.length) {
-        this.data.map((item) => {
+      if (this.store && this.store.length) {
+        this.store.map((item) => {
           if (util.isObject(item)) {
             obj = {
               value: item.value || '',

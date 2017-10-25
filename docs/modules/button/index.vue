@@ -94,16 +94,21 @@
         :data="['1',{value: '2', icon: 'add'}]">
       </zg-button-group>
     </demo-panel>
-    <doc-markdown :doc="attrDoc"></doc-markdown>
+    <doc-markdown :api="json.button" title="button"></doc-markdown>
+    <doc-markdown :api="json.btnGroup" title="buttonGroup"></doc-markdown>
   </div>
 </template>
 <script>
-import attrDoc from "./doc.md"
+import buttonJson from './button.json'
+import btnGroupJson from '../buttonGroup/buttonGroup.json'
 export default {
   name: 'buttonDemo',
   data () {
     return {
-      attrDoc: attrDoc
+      json: {
+        button: buttonJson,
+        btnGroup: btnGroupJson
+      }
     }
   },
   methods: {

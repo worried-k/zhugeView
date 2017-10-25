@@ -33,9 +33,11 @@
             icon="zgicon-search"
             width="100%"
             class="zg-select-search"
+            :class="filterClass"
             clear-able
             v-model="filter"
             @input="onFilter"
+            ref="optionFilter"
           ></zg-input>
           <li v-show="multiple && chosen.length && clearAble && !filter" class="zg-clear">
             <a href="javascript:void(0)" @click="clear">清空</a>
@@ -201,6 +203,13 @@
           return 'zgicon-pulldown'
         }
         return 'zgicon-down'
+      },
+      filterClass () {
+        let clazz = []
+        if (this.filter) {
+          clazz.push('zg-active')
+        }
+        return clazz.join(' ')
       }
     },
     updated () {
@@ -291,9 +300,18 @@
       },
       onClickHandle () {
         this.showOptions = !this.showOptions
+        if (this.filterOption) {
+          this.filter = ''
+          setTimeout(() => {
+            this.$refs.optionFilter.focus()
+          })
+        }
       },
       onClickOutside () {
         this.showOptions = false
+        if (this.filterOption) {
+          this.filter = ''
+        }
       },
       onScroll () {
         const panel = this.$refs.options

@@ -65,6 +65,7 @@
     <doc-markdown :api="api.select" title="select"></doc-markdown>
     <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
     <doc-markdown :api="api.option" title="option"></doc-markdown>
+    <doc-markdown :api="api.optGroup" title="optionGroup"></doc-markdown>
   </div>
 </template>
 
@@ -78,6 +79,7 @@
   import DocMarkdown from '../../components/docMarkdown/index.vue'
   import optionJson from './option.json'
   import bigSelectJson from './bigSelect.json'
+  import optGroupJson from './optGroup.json'
 
   export default {
     components: {
@@ -111,7 +113,8 @@
         api: {
           select: selectApi,
           option: optionJson,
-          bigSelect: bigSelectJson
+          bigSelect: bigSelectJson,
+          optGroup: optGroupJson
         }
       }
       return data

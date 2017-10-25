@@ -17,20 +17,26 @@
         placeholder="普通输入框"
         style="margin-left: 15px"></zg-input>
     </demo-panel>
+
+    <doc-markdown :api="json" title="input"></doc-markdown>
   </div>
 </template>
 
 <script>
   import DemoPanel from "../../components/demoPanel/index.vue";
   import ZgInput from "../../../src/components/input/input.vue";
+  import json from './input.json'
+  import DocMarkdown from '../../components/docMarkdown/index.vue'
 
   export default {
     components: {
+      DocMarkdown,
       ZgInput,
       DemoPanel},
     data () {
       return {
-        value: ''
+        json,
+        value: '默认值'
       }
     }
   }

@@ -13,9 +13,15 @@
     name: 'ZgOptGroup',
     mixins: [emitter],
     props: {
+      /**
+       * @description icon名称
+       */
       icon: {
         type: String
       },
+      /**
+       * group名称
+       */
       label: {
         type: String
       }

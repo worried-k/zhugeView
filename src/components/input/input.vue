@@ -24,15 +24,27 @@
   export default {
     name: 'ZgInput',
     props: {
+      /**
+       * @description value
+       */
       value: {
         type: String
       },
+      /**
+       * @description 提示文本内容
+       */
       placeholder: {
         type: String
       },
+      /**
+       * @description icon名称
+       */
       icon: {
         type: String
       },
+      /**
+       * @description 输入框宽度
+       */
       width: {
         type: [Number, String],
         default: 150,
@@ -43,16 +55,22 @@
           return value > 0
         }
       },
+      /**
+       * @description 是否可清空内容
+       */
       clearAble: {
         type: Boolean,
         default: false
       },
+      /**
+       * @description 自动获取焦点
+       */
       autoFocus: {
         type: Boolean,
         default: false
       },
       /**
-       * 作为普通文本展示
+       * @description 作为普通文本展示
        */
       readOnly: {
         type: Boolean,
@@ -66,7 +84,7 @@
       }
     },
     mounted () {
-      this.autoFocus && this.$refs.input.focus()
+      this.autoFocus && this.focus()
     },
     computed: {
       clazz () {
@@ -104,6 +122,9 @@
       },
       onKey (event) {
         this.$emit('key', event)
+      },
+      focus () {
+        this.$refs.input.focus()
       }
     }
   }
