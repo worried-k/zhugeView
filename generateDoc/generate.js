@@ -45,7 +45,7 @@ fsUtil.readDir(config.basePath, (filePath, file, stat) => {
         comment = comment.match(reg.comment)[0]
 
         // 解析注解信息
-        const marks = ['description', 'tip']
+        const marks = ['description', 'tip', 'type', 'required', 'default']
         marks.forEach(mark => {
           const regexp = new RegExp('@' + mark + '[\\s\\S]*?\\n')
           if (regexp.test(comment)) {
@@ -53,14 +53,14 @@ fsUtil.readDir(config.basePath, (filePath, file, stat) => {
           }
         })
 
-        // 解析vue中prop规则属性
+        // 解析vue中prop规则属性, 如果有同名注解，则以注解为准
         const rules = ['type', 'required', 'default']
         if (prop.match(/\n/g).length <= 1) {// 简单定义，只定义了属性类型
           docItem.type = prop.replace(/[\s\n]*/g, '').replace(/,$/, '')
         } else {
           rules.forEach(rule => {
             const regexp = new RegExp(rule + '[\\s\\S]*?\\n')
-            if (regexp.test(prop)) {
+            if (regexp.test(prop) && !docItem[rule]) {
               docItem[rule] = prop.match(regexp)[0]
                 .replace(/[\s\n]*/g, '')
                 .replace(/,$/, '')

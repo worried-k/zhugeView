@@ -46,6 +46,47 @@
       ZgSelect},
     name: 'ZgBigSelect',
     props: {
+      /**
+       * @description 选项唯一标识字段
+       */
+      keyField: {
+        type: String,
+        required: true
+      },
+      /**
+       * @description 用于展示的子集字段名称
+       * @tip 用于分组展示
+       */
+      childrenField: {
+        type: String
+      },
+      /**
+       * @description 数据源
+       * @default []
+       */
+      store: {
+        type: Array,
+        default () {
+          return []
+        }
+      },
+      /**
+       * @description （默认）单页展示条数
+       */
+      pageSize: {
+        type: Number,
+        default: 20
+      },
+      /**
+       * @description 自定义展示分组头部
+       * @tip childrenField被指定时启用，自定义头部可返回html片段，因此需调用时注意xss漏洞处理
+       */
+      customHeader: {
+        type: Function
+      },
+      /**
+       * @description 同select
+       */
       theme: {
         type: String,
         default: 'normal',
@@ -54,63 +95,67 @@
           return themes.indexOf(value) > -1
         }
       },
+      /**
+       * @description value
+       */
       value: {
         type: [Array, String, Object]
       },
       /**
-       * @tip 组件使用过程中，会在原始数据上增加_show属性
+       * @description 同select
        */
-      store: {
-        type: Array,
-        default () {
-          return []
-        }
-      },
       width: {
         type: Number,
         default: 150
       },
+      /**
+       * @description 同select
+       */
       labelField: {
         type: String,
         required: true
       },
-      keyField: {
-        type: String,
-        required: true
-      },
-      childrenField: {
-        type: String
-      },
+      /**
+       * @description 同select
+       */
       placeholder: {
         type: String,
         default: '请选择'
       },
+      /**
+       * @description 同select
+       */
       noMatchText: {
         type: String,
         default: '无匹配数据'
       },
+      /**
+       * @description 同select
+       */
       noDataText: {
         type: String,
         default: '暂无数据'
       },
+      /**
+       * @description 同select
+       */
       clearAble: {
         type: Boolean,
         default: true
       },
+      /**
+       * @description 同select
+       */
       filterOption: {
         type: Boolean,
         default: false
       },
+      /**
+       * @description 同select
+       */
       multiple: {
         type: Boolean,
         default: false
-      },
-      pageSize: {
-        type: Number,
-        default: 20
-      },
-      customHeader: {
-        type: Function
       }
     },
     data () {

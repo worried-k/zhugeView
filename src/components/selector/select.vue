@@ -72,6 +72,7 @@
     props: {
       /**
        * @description 主题类型
+       * @test this is test
        */
       theme: {
         type: String,

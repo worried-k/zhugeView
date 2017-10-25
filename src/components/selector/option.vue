@@ -29,18 +29,18 @@
         type: String
       },
       /**
-       * 选项值
+       * @description 选项值
        */
-      value: {},
+      value: null,
       /**
-       * 是否被选中
+       * @description 是否被选中
        */
       defaultChecked: {
         type: Boolean,
         default: false
       },
       /**
-       * 禁用选项
+       * @description 禁用选项
        */
       disable: {
         type: Boolean,

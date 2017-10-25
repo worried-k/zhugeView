@@ -61,6 +61,10 @@
         theme="noborder"
         keyField="id"></zg-big-select>
     </demo-panel>
+
+    <doc-markdown :api="api.select" title="select"></doc-markdown>
+    <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
+    <doc-markdown :api="api.option" title="option"></doc-markdown>
   </div>
 </template>
 
@@ -70,9 +74,14 @@
   import ZgCheckbox from "../../../src/components/checkbox/checkbox.vue";
   import json from './test.json'
   import ZgBigSelect from '../../../src/components/selector/bigSelect.vue'
-  console.log(json.datas)
+  import selectApi from './select.json'
+  import DocMarkdown from '../../components/docMarkdown/index.vue'
+  import optionJson from './option.json'
+  import bigSelectJson from './bigSelect.json'
+
   export default {
     components: {
+      DocMarkdown,
       ZgBigSelect,
       ZgCheckbox,
       ZgOption},
@@ -98,7 +107,12 @@
         campaigns,
         adgroups,
         big,
-        value1: []
+        value1: [],
+        api: {
+          select: selectApi,
+          option: optionJson,
+          bigSelect: bigSelectJson
+        }
       }
       return data
     },
