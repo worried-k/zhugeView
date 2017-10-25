@@ -256,6 +256,12 @@
         return list
       }
     },
+    watch: {
+      store () {
+        this.chosen = []
+        this.$emit('input', this.chosen)
+      }
+    },
     methods: {
       onFilter (value) {
         this.pageNum = 0
