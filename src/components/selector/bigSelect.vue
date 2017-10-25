@@ -11,7 +11,8 @@
              :theme="theme"
              v-model="chosen"
              @clear="onClear"
-             @bottom="onBottom">
+             @bottom="onBottom"
+             @clickHandle="onClickHandle">
     <template v-for="item in showList">
       <zg-opt-group v-if="childrenField && showMap[item[keyField]]" :label="item[labelField]">
         <span v-html="customHeader(item)" v-if="customHeader" slot="header"></span>
@@ -38,7 +39,11 @@
   import ZgOption from './option.vue'
   import ZgOptGroup from './optGroup.vue'
 //  import {util} from '../../utils/index'
-
+  /**
+   * 远程查询缓存结果
+   * @type {{}}
+   */
+  let remoteFilterCatch = {}
   export default {
     components: {
       ZgOptGroup,
@@ -82,6 +87,13 @@
        * @tip childrenField被指定时启用，自定义头部可返回html片段，因此需调用时注意xss漏洞处理
        */
       customHeader: {
+        type: Function
+      },
+      /**
+       * @description 远程搜索函数, 接收参数为匹配文本
+       * @tip 返回需要是promise对象，resolve返回参数应为数据集
+       */
+      remote: {
         type: Function
       },
       /**
@@ -263,7 +275,27 @@
       }
     },
     methods: {
+      onClickHandle () {
+        this.onFilter('')
+      },
       onFilter (value) {
+        if (this.remote) {
+          // 如果有缓存结果，则直接展示缓存结果
+          if (remoteFilterCatch[value]) {
+            this.store = remoteFilterCatch[value]
+            this.noDataText = '暂无数据'
+          } else {
+            // 没有缓存结果，则执行远程查询
+            this.remote(value).then(store => {
+              remoteFilterCatch[value] = store
+              this.store = store
+              this.noDataText = '暂无数据'
+            }).catch(() => {
+              this.store = []
+              this.noDataText = '查询失败'
+            })
+          }
+        }
         this.pageNum = 0
         this.filterValue = value
       },

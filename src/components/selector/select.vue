@@ -306,6 +306,7 @@
             this.$refs.optionFilter.focus()
           })
         }
+        this.$emit('clickHandle', this.showOptions)
       },
       onClickOutside () {
         this.showOptions = false
