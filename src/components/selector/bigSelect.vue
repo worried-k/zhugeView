@@ -18,14 +18,14 @@
         <span v-html="customHeader(item)" v-if="customHeader" slot="header"></span>
         <zg-option v-for="child in item[childrenField]"
                    v-if="showMap[child[keyField]]"
-                   :key="child[keyField] + '' + randomId"
                    :value="child"
+                   :key="child[keyField] + randomId"
                    :defaultChecked="checkedMap[child[keyField]]"
                    @check="onClickOption">
         </zg-option>
       </zg-opt-group>
       <zg-option v-else-if="!childrenField"
-                 :key="item[keyField]"
+                 :key="item[keyField] + randomId"
                  :value="item"
                  :defaultChecked="checkedMap[item[keyField]]"
                  @check="onClickOption">
@@ -269,6 +269,7 @@
       store () {
         if (!this.remote) {
           this.chosen = []
+          this.randomId = Math.random().toString().split('.')[1]
           this.$emit('input', this.chosen)
           this.$set(this, 'checkedMap', {})
         }
