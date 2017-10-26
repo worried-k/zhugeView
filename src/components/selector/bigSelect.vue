@@ -285,17 +285,7 @@
         this.filterValue = value
       },
       onClear () {
-        if (!this.childrenField) {
-          this.store.forEach(item => {
-            if (item.checked) item.checked = false
-          })
-        } else {
-          this.store.forEach(item => {
-            item[this.childrenField].forEach(child => {
-              if (child.checked) child.checked = false
-            })
-          })
-        }
+        this.$set(this, 'checkedMap', {})
       },
       onBottom () {
         let count = (this.pageNum + 1) * this.pageSize
