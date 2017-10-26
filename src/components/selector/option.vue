@@ -72,6 +72,9 @@
         return this.value
       }
     },
+    mounted () {
+      if (this.defaultChecked) this.dispatch('ZgSelect', 'onClickOption', [this.value, true])
+    },
     methods: {
       onClick () {
         if (this.disable) return
