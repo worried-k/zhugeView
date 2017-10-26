@@ -92,6 +92,7 @@
       },
       /**
        * @description 宽度
+       * @tip 当theme为noborder时，该值会作为最大宽度
        */
       width: {
         type: Number,
