@@ -60,6 +60,13 @@
         labelField="text"
         theme="noborder"
         keyField="id"></zg-big-select>
+
+      <zg-big-select keyField="id"
+                     labelField="text"
+                     placeholder="es搜索"
+                     filterOption
+                     :remote="onRemote"
+                     :store="esStore"></zg-big-select>
     </demo-panel>
 
     <doc-markdown :api="api.select" title="select"></doc-markdown>
@@ -110,6 +117,7 @@
         adgroups,
         big,
         value1: [],
+        esStore: [],
         api: {
           select: selectApi,
           option: optionJson,
@@ -120,6 +128,14 @@
       return data
     },
     methods: {
+      onRemote (value) {
+        this.esStore = []
+        this.adgroups.forEach(item => {
+          if (item.text.indexOf(value) > -1 && this.esStore.length < 20) {
+            this.esStore.push(item)
+          }
+        })
+      },
       onFilter (value) {
         console.log(value)
       },

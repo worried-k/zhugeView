@@ -39,11 +39,6 @@
   import ZgOption from './option.vue'
   import ZgOptGroup from './optGroup.vue'
 //  import {util} from '../../utils/index'
-  /**
-   * 远程查询缓存结果
-   * @type {{}}
-   */
-  let remoteFilterCatch = {}
   export default {
     components: {
       ZgOptGroup,
@@ -91,7 +86,7 @@
       },
       /**
        * @description 远程搜索函数, 接收参数为匹配文本
-       * @tip 返回需要是promise对象，resolve返回参数应为数据集
+       * @tip 外部使用时候，建议做数据查询缓存，以提高性能
        */
       remote: {
         type: Function
@@ -280,21 +275,7 @@
       },
       onFilter (value) {
         if (this.remote) {
-          // 如果有缓存结果，则直接展示缓存结果
-          if (remoteFilterCatch[value]) {
-            this.store = remoteFilterCatch[value]
-            this.noDataText = '暂无数据'
-          } else {
-            // 没有缓存结果，则执行远程查询
-            this.remote(value).then(store => {
-              remoteFilterCatch[value] = store
-              this.store = store
-              this.noDataText = '暂无数据'
-            }).catch(() => {
-              this.store = []
-              this.noDataText = '查询失败'
-            })
-          }
+          this.remote(value)
         }
         this.pageNum = 0
         this.filterValue = value
