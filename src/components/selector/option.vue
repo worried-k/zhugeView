@@ -73,7 +73,7 @@
       }
     },
     mounted () {
-      if (this.defaultChecked) this.dispatch('ZgSelect', 'onClickOption', [this.value, true])
+      if (this.checked) this.dispatch('ZgSelect', 'onClickOption', [this.value, true])
     },
     methods: {
       onClick () {
