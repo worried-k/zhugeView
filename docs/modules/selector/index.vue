@@ -42,11 +42,10 @@
 
       <zg-big-select
         placeholder="关键词"
-        multiple
         :store="adgroups"
-        :customHeader="customHeader"
         childrenField="keywords"
         filterOption
+        multiple
         labelField="text"
         theme="noborder"
         keyField="id"></zg-big-select>
@@ -65,6 +64,7 @@
                      labelField="text"
                      placeholder="es搜索"
                      filterOption
+                     multiple
                      :remote="onRemote"
                      :store="esStore"></zg-big-select>
     </demo-panel>
@@ -141,10 +141,6 @@
       },
       onBottom () {
         console.log('到底了')
-      },
-      customHeader (data) {
-        console.log(data)
-        return '<a href="javascript:void(0)">title</a>'
       }
     }
   }

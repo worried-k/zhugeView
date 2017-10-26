@@ -20,14 +20,14 @@
                    v-if="showMap[child[keyField]]"
                    :key="child[keyField]"
                    :value="child"
-                   :defaultChecked="child.checked"
+                   :defaultChecked="checkedMap[child[keyField]]"
                    @check="onClickOption">
         </zg-option>
       </zg-opt-group>
       <zg-option v-else-if="!childrenField"
                  :key="item[keyField]"
                  :value="item"
-                 :defaultChecked="item.checked"
+                 :defaultChecked="checkedMap[item[keyField]]"
                  @check="onClickOption">
       </zg-option>
     </template>
@@ -175,7 +175,8 @@
          *  [key]: boolean
          * }
          */
-        showMap: {}
+        showMap: {},
+        checkedMap: {}
       }
       return data
     },
@@ -265,8 +266,11 @@
     },
     watch: {
       store () {
-        this.chosen = []
-        this.$emit('input', this.chosen)
+        if (!this.remote) {
+          this.chosen = []
+          this.$emit('input', this.chosen)
+          this.$set(this, 'checkedMap', {})
+        }
       }
     },
     methods: {
@@ -300,7 +304,10 @@
         }
       },
       onClickOption (option, checked) {
-        this.$set(option, 'checked', checked)
+        if (!this.multiple) {
+          this.$set(this, 'checkedMap', {})
+        }
+        this.$set(this.checkedMap, option[this.keyField], checked)
         this.$emit('input', this.chosen)
       }
     }

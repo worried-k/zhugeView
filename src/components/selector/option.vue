@@ -6,8 +6,7 @@
                    :label="label"
                    :disable="disable"
                    v-model="checked"
-                   @change="onClick"
-      ></zg-checkbox>
+                   @change="onClick"></zg-checkbox>
       <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
@@ -71,11 +70,6 @@
           return this.value[this.labelField]
         }
         return this.value
-      }
-    },
-    mounted () {
-      if (this.defaultChecked) {
-        this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
       }
     },
     methods: {
