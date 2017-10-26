@@ -18,7 +18,7 @@
         <span v-html="customHeader(item)" v-if="customHeader" slot="header"></span>
         <zg-option v-for="child in item[childrenField]"
                    v-if="showMap[child[keyField]]"
-                   :key="child[keyField]"
+                   :key="child[keyField] + '' + randomId"
                    :value="child"
                    :defaultChecked="checkedMap[child[keyField]]"
                    @check="onClickOption">
@@ -176,7 +176,8 @@
          * }
          */
         showMap: {},
-        checkedMap: {}
+        checkedMap: {},
+        randomId: Math.random().toString().split('.')[1]
       }
       return data
     },
