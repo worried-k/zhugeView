@@ -219,12 +219,6 @@
       if ((panelRect.width + panelRect.left) > window.innerWidth) {
         dropPanel.style.right = '0px'
       }
-      if (this.filter) {
-        this.noMatch = this.children('ZgOption').length === 0
-      } else {
-        this.noMatch = false
-        this.noData = this.children('ZgOption').length === 0
-      }
     },
     mounted () {
       if (this.filter) {

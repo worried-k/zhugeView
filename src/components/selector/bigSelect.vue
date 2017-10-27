@@ -9,6 +9,7 @@
              :noDataText="noDataText"
              :width="width"
              :theme="theme"
+             ref="select"
              v-model="chosen"
              @clear="onClear"
              @bottom="onBottom"
@@ -66,6 +67,7 @@
        */
       store: {
         type: Array,
+        required: true,
         default () {
           return []
         }
@@ -253,6 +255,8 @@
 
             list.push(item)
           })
+
+          if (this.filterValue) this.$refs.select.noMatch = resultCount === 0
         } else {
           this.store.forEach((item, i) => {
             if (list.length >= count) return
@@ -261,6 +265,9 @@
               list.push(item)
             }
           })
+          if (this.filterValue) {
+            this.$refs.select.noMatch = list.length === 0
+          }
         }
         return list
       }
@@ -272,6 +279,9 @@
           this.randomId = Math.random().toString().split('.')[1]
           this.$emit('input', this.chosen)
           this.$set(this, 'checkedMap', {})
+        } else {
+          this.$refs.select.noData = this.store.length === 0
+          this.$refs.select.noMatch = false
         }
       }
     },

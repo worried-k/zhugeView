@@ -1,73 +1,11 @@
 <template>
   <div>
-    <demo-panel
-      title="普通下拉框"
-      subtitle="subtitle">
-      <zg-select placeholder="多选"
-                 multiple
-                 :width="100"
-                 filter-option
-                 v-model="value1"
-                 theme="noborder"
-                 @bottom="onBottom"
-                 label-field="text">
-        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
-      </zg-select>
-
-      <zg-select placeholder="单选" label-field="text">
-        <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
-      </zg-select>
-
-      <zg-select placeholder="多选"
-                 filter-option
-                 multiple
-                 label-field="text">
-        <zg-opt-group label="城市">
-          <zg-option v-for="(item, i) in select1" :value="item" :key="i"></zg-option>
-        </zg-opt-group>
-      </zg-select>
-    </demo-panel>
-    <demo-panel
-      title="大数据下拉框"
-      subtitle="联动下拉框示例">
-
-      <zg-big-select
-        placeholder="无分组"
-        multiple
-        :store="big"
-        filterOption
-        labelField="text"
-        theme="noborder"
-        keyField="text"></zg-big-select>
-
-      <zg-big-select
-        placeholder="关键词"
-        :store="adgroups"
-        childrenField="keywords"
-        filterOption
-        multiple
-        labelField="text"
-        theme="noborder"
-        keyField="id"></zg-big-select>
-
-      <zg-big-select
-        placeholder="公司"
-        multiple
-        :store="campaigns"
-        childrenField="campaigns"
-        filterOption
-        labelField="text"
-        theme="noborder"
-        keyField="id"></zg-big-select>
-
-      <zg-big-select keyField="id"
-                     labelField="text"
-                     placeholder="es搜索"
-                     filterOption
-                     multiple
-                     :remote="onRemote"
-                     :store="esStore"></zg-big-select>
-    </demo-panel>
+    <normal-select></normal-select>
+    <multiple-select></multiple-select>
+    <group-select></group-select>
+    <normal-big-select></normal-big-select>
+    <group-big-select></group-big-select>
+    <es-select></es-select>
 
     <doc-markdown :api="api.select" title="select"></doc-markdown>
     <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
@@ -87,37 +25,28 @@
   import optionJson from './option.json'
   import bigSelectJson from './bigSelect.json'
   import optGroupJson from './optGroup.json'
+  import NormalSelect from './demo/normalSelect.vue'
+  import MultipleSelect from './demo/multipleSelect.vue'
+  import GroupSelect from './demo/groupSelect.vue'
+  import NormalBigSelect from './demo/normalBigSelect.vue'
+  import GroupBigSelect from './demo/groupBigSelect.vue'
+  import EsSelect from './demo/esSelect.vue'
 
   export default {
     components: {
+      EsSelect,
+      GroupBigSelect,
+      NormalBigSelect,
+      GroupSelect,
+      MultipleSelect,
+      NormalSelect,
       DocMarkdown,
       ZgBigSelect,
       ZgCheckbox,
       ZgOption},
     name: 'index',
     data() {
-      let adgroups = []
-      json.datas.forEach(account => {
-        account.campaigns.forEach(campaign => {
-          adgroups = adgroups.concat(campaign.adgroups)
-        })
-      })
-      let campaigns = [json.datas[1]]
-      campaigns[0].text = campaigns[0].account
-
-      let big = []
-      for (let i = 0; i < 10000; i++) {
-        big.push({
-          text: i + 'opt'
-        })
-      }
       let data = {
-        select1: json.datas[0].campaigns,
-        campaigns,
-        adgroups,
-        big,
-        value1: [],
-        esStore: [],
         api: {
           select: selectApi,
           option: optionJson,
@@ -126,22 +55,6 @@
         }
       }
       return data
-    },
-    methods: {
-      onRemote (value) {
-        this.esStore = []
-        this.adgroups.forEach(item => {
-          if (item.text.indexOf(value) > -1 && this.esStore.length < 20) {
-            this.esStore.push(item)
-          }
-        })
-      },
-      onFilter (value) {
-        console.log(value)
-      },
-      onBottom () {
-        console.log('到底了')
-      }
     }
   }
 </script>
