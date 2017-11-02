@@ -7,7 +7,8 @@
       <span style="margin-right: 20px">{{area && area[0]}}</span>
 
       <zg-select v-model="sex" placeholder="性别" labelField="label">
-        <zg-option v-for="(item, i) in sexList" :value="item" :key="i"></zg-option>
+        <zg-option @click.native="clickSex(item, 'option_' + item.value)" :ref="'option_' + item.value"
+                   :silence="silence" v-for="(item, i) in sexList" :value="item" :key="i"></zg-option>
       </zg-select>
       <span>{{sex && sex[0].label}}</span>
     </demo-panel>
@@ -44,7 +45,14 @@
           '河北'
         ],
         sex: null,
-        area: null
+        area: null,
+        silence: true
+      }
+    },
+    methods: {
+      clickSex (data, ref) {
+        console.log('click outer')
+        const option = this.$refs[ref][0]
       }
     }
   }

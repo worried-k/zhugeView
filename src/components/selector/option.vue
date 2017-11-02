@@ -1,12 +1,12 @@
 <template>
-  <li v-show="show" class="zg-option" :class="className" @click="onClick" :title="label">
+  <li v-show="show" class="zg-option" :class="className" @click="click" :title="label">
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <zg-checkbox v-if="checkAble"
                    :label="label"
                    :disable="disable"
                    v-model="checked"
-                   @change="onClick"></zg-checkbox>
+                   @change="click"></zg-checkbox>
       <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
@@ -44,6 +44,14 @@
       disable: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 静默模式，该模式下，选项的点击事件将不进行默认处理
+       * @tip 如想让选项被选中，修改silence为false，外部调用该option的引用：ref，再调用click方法
+       */
+      silence: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -73,11 +81,11 @@
       }
     },
     mounted () {
-      this.onClick()
+      if (this.checked) this.click()
     },
     methods: {
-      onClick () {
-        if (this.disable) return
+      click () {
+        if (this.disable || this.silence) return
         if (!this.checkAble) {
           // 如果当前是单选模式，且该选项已被选中
           if (this.checked) return
