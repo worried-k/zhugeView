@@ -106,9 +106,10 @@
       },
       /**
        * @description value
+       * @tip 如果multiple为true，则value需要为对象数组，否则为Object，Object需是Store的子项，或者至少拥有有效的keyField字段
        */
       value: {
-        type: [Array, String, Object]
+        type: [Array, Object]
       },
       /**
        * @description 同select
@@ -180,6 +181,15 @@
         showMap: {},
         checkedMap: {},
         randomId: Math.random().toString().split('.')[1]
+      }
+      if (this.value) {
+        if (this.multiple) {
+          this.value.forEach(item => {
+            data.checkedMap[item[this.keyField]] = true
+          })
+        } else {
+          data.checkedMap[this.value[this.keyField]] = true
+        }
       }
       return data
     },

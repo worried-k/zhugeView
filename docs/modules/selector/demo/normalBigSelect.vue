@@ -1,7 +1,8 @@
 <template>
   <div>
     <demo-panel title="bigSelect 大数据下拉框" :subtitle="subTitle" jsFiddleName="26xt4dLg">
-      <zg-big-select keyField="id" :store="store" labelField="label" filterOption multiple></zg-big-select>
+      <zg-big-select keyField="id" v-model="value" :store="store" labelField="label" filterOption multiple></zg-big-select>
+      {{value}}
     </demo-panel>
   </div>
 </template>
@@ -27,7 +28,8 @@
             })
           }
           return result
-        })()
+        })(),
+        value: [{id: 2}, {id: 5}]
       }
     }
   }

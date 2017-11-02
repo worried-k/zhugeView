@@ -73,12 +73,14 @@
       }
     },
     mounted () {
-      if (this.checked) this.dispatch('ZgSelect', 'onClickOption', [this.value, true])
+      this.onClick()
     },
     methods: {
       onClick () {
         if (this.disable) return
         if (!this.checkAble) {
+          // 如果当前是单选模式，且该选项已被选中
+          if (this.checked) return
           this.checked = true
         }
         this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
