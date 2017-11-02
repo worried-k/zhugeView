@@ -1,12 +1,12 @@
 <template>
-  <li v-show="show" class="zg-option" :class="className" @click="click" :title="label">
+  <li v-show="show" class="zg-option" :class="className" @click="onClick" :title="label">
     <slot>
       <span v-if="icon" class="zg-option-icon" :class="icon"></span>
       <zg-checkbox v-if="checkAble"
                    :label="label"
                    :disable="disable"
                    v-model="checked"
-                   @change="click"></zg-checkbox>
+                   @change="onClick"></zg-checkbox>
       <template v-if="!checkAble">{{label}}</template>
     </slot>
   </li>
@@ -84,11 +84,13 @@
       if (this.checked) this.click()
     },
     methods: {
-      click () {
+      onClick () {
         if (this.disable || this.silence) return
+        this.click()
+      },
+      click () {
         if (!this.checkAble) {
           // 如果当前是单选模式，且该选项已被选中
-          if (this.checked) return
           this.checked = true
         }
         this.dispatch('ZgSelect', 'onClickOption', [this.value, this.checked])
