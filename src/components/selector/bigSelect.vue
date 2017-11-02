@@ -311,6 +311,7 @@
         }
         this.$set(this.checkedMap, option[this.keyField], checked)
         this.$emit('input', this.chosen)
+        this.$emit('change', this.chosen)
       }
     }
   }
