@@ -222,6 +222,9 @@
               this.$emit('input', this.chosenList[0])
             }
           })
+          if (this.noData) this.$emit('input', this.chosenList[0])
+        } else {
+          if (this.noData) this.$emit('input', this.chosenList)
         }
       }
     },

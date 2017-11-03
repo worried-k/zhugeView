@@ -21,12 +21,12 @@
       return {
         store: (() => {
           let store = []
-          for (let i = 0; i < 20; i++) {
-            store.push({
-              id: i,
-              label: 'option_' + i
-            })
-          }
+//          for (let i = 0; i < 20; i++) {
+//            store.push({
+//              id: i,
+//              label: 'option_' + i
+//            })
+//          }
           return store
         })(),
         result: {id: 4},
