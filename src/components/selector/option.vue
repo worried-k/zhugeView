@@ -1,8 +1,14 @@
 <template>
   <li class="zg-option" :class="className" @click="onClick">
-    <slot :data="data">
+    <slot v-if="!multiple" :data="data" :active="active">
       <span>{{data[labelField]}}</span>
     </slot>
+
+    <zg-checkbox v-else @change="onClick" v-model="active" :disable="disable">
+      <slot :data="data" :active="active">
+        <span>{{data[labelField]}}</span>
+      </slot>
+    </zg-checkbox>
   </li>
 </template>
 
@@ -42,6 +48,13 @@
       disable: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 多选模式
+       */
+      multiple: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -53,7 +66,7 @@
       className () {
         return {
           disable: this.disable,
-          active: this.active
+          active: this.active && !this.multiple
         }
       }
     },
@@ -65,8 +78,12 @@
     methods: {
       onClick () {
         if (this.disable) return
-        this.active = !this.active
-        this.$emit('click', this.active, this.data)
+        if (this.multiple) {
+          this.$emit('click', this.active, this.data)
+        } else {
+          this.active = !this.active
+          this.$emit('click', this.active, this.data)
+        }
       }
     }
   }

@@ -10,6 +10,13 @@
 
     <transition enter-active-class="animated slideInDown">
       <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
+
+        <div class="zg-fixed">
+          <li v-show="multiple && chosenList.length && clearAble" class="zg-clear">
+            <a href="javascript:void(0)" @click="clean">清空</a>
+          </li>
+        </div>
+
         <div class="zg-content" ref="options">
           <zg-option v-for="option in store"
                      :key="option[keyField]"
@@ -17,6 +24,7 @@
                      :disable="disableOptions.indexOf(option[keyField]) > -1"
                      :data="option"
                      :labelField="labelField"
+                     :multiple="multiple"
                      @click="onClickOption">
           </zg-option>
           <li v-show="noData" class="zg-option zg-error">
@@ -30,9 +38,12 @@
 
 <script>
   import ZgOption from './option.vue'
+  import ZgCheckbox from '../checkbox/checkbox.vue'
 
   export default {
-    components: {ZgOption},
+    components: {
+      ZgCheckbox,
+      ZgOption},
     name: 'zgSelector',
     props: {
       /**
@@ -161,9 +172,6 @@
       multiple: {
         type: Boolean,
         default: false
-      },
-      isDisableOption: {
-        type: Function
       }
     },
     data () {
@@ -179,6 +187,15 @@
               data.checkedMap[this.value[this.keyField]] = true
               data.chosenList.push(option)
             }
+          })
+        } else {
+          this.store.forEach(option => {
+            this.value.forEach(defaultOption => {
+              if (option[this.keyField] === defaultOption[this.keyField]) {
+                data.checkedMap[option[this.keyField]] = true
+                data.chosenList.push(option)
+              }
+            })
           })
         }
       }
@@ -212,8 +229,8 @@
     },
     watch: {
       value (value) {
-        this.chosenList = []
-        this.$set(this, 'checkedMap', {})
+        if (value === this.chosenList) return
+        this.clean()
         if (!this.multiple) {
           this.store.forEach(option => {
             if (option[this.keyField] === value[this.keyField]) {
@@ -224,7 +241,15 @@
           })
           if (this.noData) this.$emit('input', this.chosenList[0])
         } else {
-          if (this.noData) this.$emit('input', this.chosenList)
+          this.store.forEach(option => {
+            value.forEach(defaultOption => {
+              if (option[this.keyField] === defaultOption[this.keyField]) {
+                this.checkedMap[option[this.keyField]] = true
+                this.chosenList.push(option)
+              }
+            })
+          })
+          this.$emit('input', this.chosenList)
         }
       }
     },
@@ -252,8 +277,25 @@
 
           this.showOptions = false
           this.$emit('input', this.chosenList[0])
+        } else {
+          this.$set(this.checkedMap, data[this.keyField], checked)
+          if (checked) {
+            this.chosenList.push(data)
+          } else {
+            this.chosenList.forEach((option, i) => {
+              if (option === data) {
+                this.chosenList.splice(i, 1)
+              }
+            })
+          }
+          this.$emit('input', this.chosenList)
         }
         this.$emit('change')
+      },
+      clean () {
+        this.chosenList = []
+        this.$set(this, 'checkedMap', {})
+        this.$emit('input', this.chosenList)
       }
     }
   }
