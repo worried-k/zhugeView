@@ -13,13 +13,22 @@
   export default {
     name: 'zgCheckbox',
     props: {
+      /**
+       * @description 默认选中状态,使用时，通过v-model的形式
+       */
       value: {
         type: Boolean,
         default: false
       },
+      /**
+       * @description 展示文本
+       */
       label: {
         type: String
       },
+      /**
+       * @description 禁用
+       */
       disable: {
         type: Boolean,
         default: false
@@ -37,10 +46,10 @@
     },
     computed: {
       clazz () {
-        let clazz = []
-        if (this.checked) clazz.push('checked')
-        if (this.disable) clazz.push('disable')
-        return clazz.join(' ')
+        return {
+          checked: this.checked,
+          disable: this.disable
+        }
       }
     },
     methods: {

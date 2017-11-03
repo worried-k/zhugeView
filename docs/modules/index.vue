@@ -22,6 +22,7 @@ export default {
       menuList: [
         'button',
         'input',
+        'checkbox',
         'select'
       ]
     }

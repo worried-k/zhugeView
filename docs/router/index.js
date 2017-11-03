@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@docs/modules/index.vue'
 import Button from '@docs/modules/button/index.vue'
+import Checkbox from '../modules/checkbox/index.vue'
 import Select from '../modules/selector/index.vue'
 import Input from '@docs/modules/input/index.vue'
 
@@ -24,6 +25,11 @@ export default new Router({
           path: '/input',
           name: 'input',
           component: Input
+        },
+        {
+          path: '/checkbox',
+          name: 'checkbox',
+          component: Checkbox
         },
         {
           path: '/select',
