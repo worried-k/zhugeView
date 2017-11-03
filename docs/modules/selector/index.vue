@@ -1,11 +1,12 @@
 <template>
   <div>
-    <normal-select></normal-select>
-    <multiple-select></multiple-select>
-    <group-select></group-select>
-    <normal-big-select></normal-big-select>
-    <group-big-select></group-big-select>
-    <es-select></es-select>
+    <normal-selector></normal-selector>
+    <!--<normal-select></normal-select>-->
+    <!--<multiple-select></multiple-select>-->
+    <!--<group-select></group-select>-->
+    <!--<normal-big-select></normal-big-select>-->
+    <!--<group-big-select></group-big-select>-->
+    <!--<es-select></es-select>-->
 
     <doc-markdown :api="api.select" title="select"></doc-markdown>
     <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
@@ -31,9 +32,11 @@
   import NormalBigSelect from './demo/normalBigSelect.vue'
   import GroupBigSelect from './demo/groupBigSelect.vue'
   import EsSelect from './demo/esSelect.vue'
+  import NormalSelector from './demo/normalSelector.vue'
 
   export default {
     components: {
+      NormalSelector,
       EsSelect,
       GroupBigSelect,
       NormalBigSelect,

@@ -1,0 +1,261 @@
+<template>
+  <div class="zg-select" v-click-outside="onClickOutside">
+    <div class="zg-select-handle" ref="handle" :class="handleClass" :style="handleStyle" @click="onClickHandle">
+      <slot name="handle">
+        <span v-show="resultLabel" class="zg-select-label">{{resultLabel}}</span>
+        <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
+      </slot>
+      <i class="zg-select-arrow" :class="arrowIcon"></i>
+    </div>
+
+    <transition enter-active-class="animated slideInDown">
+      <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
+        <div class="zg-content" ref="options">
+          <zg-option v-for="option in store"
+                     :key="option[keyField]"
+                     :checked="checkedMap[option[keyField]]"
+                     :disable="disableOptions.indexOf(option[keyField]) > -1"
+                     :data="option"
+                     :labelField="labelField"
+                     @click="onClickOption">
+          </zg-option>
+          <li v-show="noData" class="zg-option zg-error">
+            {{noDataText}}
+          </li>
+        </div>
+      </ul>
+    </transition>
+  </div>
+</template>
+
+<script>
+  import ZgOption from './option.vue'
+
+  export default {
+    components: {ZgOption},
+    name: 'zgSelector',
+    props: {
+      /**
+       * @description 选项唯一标识字段
+       */
+      keyField: {
+        type: String,
+        required: true
+      },
+      /**
+       * @description 用于展示的子集字段名称
+       * @tip 用于分组展示
+       */
+      childrenField: {
+        type: String
+      },
+      /**
+       * @description 数据源
+       */
+      store: {
+        type: Array,
+        required: true
+      },
+      /**
+       * @description 禁用的选项列表：key值列表
+       * @default []
+       */
+      disableOptions: {
+        type: Array,
+        default () {
+          return []
+        }
+      },
+      /**
+       * @description （默认）单页展示条数
+       */
+      pageSize: {
+        type: Number,
+        default: 20
+      },
+      /**
+       * @description 自定义展示分组头部
+       * @tip childrenField被指定时启用，自定义头部可返回html片段，因此需调用时注意xss漏洞处理
+       */
+      customHeader: {
+        type: Function
+      },
+      /**
+       * @description 远程搜索函数, 接收参数为匹配文本
+       * @tip 外部使用时候，建议做数据查询缓存，以提高性能
+       */
+      remote: {
+        type: Function
+      },
+      /**
+       * @description 同select
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder']
+          return themes.indexOf(value) > -1
+        }
+      },
+      /**
+       * @description value
+       * @tip 如果multiple为true，则value需要为对象数组，否则为Object，Object需是Store的子项，或者至少拥有有效的keyField字段
+       */
+      value: {
+        type: [Array, Object]
+      },
+      /**
+       * @description 下拉框宽度
+       */
+      width: {
+        type: Number,
+        default: 150
+      },
+      /**
+       * @description 用于展示的字段名称
+       */
+      labelField: {
+        type: String,
+        required: true
+      },
+      /**
+       * @description 默认提示文本
+       */
+      placeholder: {
+        type: String,
+        default: '请选择'
+      },
+      /**
+       * @description 筛选无匹配数据的提示文本
+       * @tip filterOption开启后生效
+       */
+      noMatchText: {
+        type: String,
+        default: '无匹配数据'
+      },
+      /**
+       * @description 无数据的提示文本
+       */
+      noDataText: {
+        type: String,
+        default: '暂无数据'
+      },
+      /**
+       * @description 可清空选中结果
+       */
+      clearAble: {
+        type: Boolean,
+        default: true
+      },
+      /**
+       * @description 开启选项筛选过滤
+       */
+      filterOption: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @description 多选模式
+       */
+      multiple: {
+        type: Boolean,
+        default: false
+      },
+      isDisableOption: {
+        type: Function
+      }
+    },
+    data () {
+      let data = {
+        showOptions: false,
+        checkedMap: {},
+        chosenList: []
+      }
+      if (this.value) {
+        if (!this.multiple) {
+          this.store.forEach(option => {
+            if (option[this.keyField] === this.value[this.keyField]) {
+              data.checkedMap[this.value[this.keyField]] = true
+              data.chosenList.push(option)
+            }
+          })
+        }
+      }
+      return data
+    },
+    computed: {
+      arrowIcon () {
+        if (this.theme === 'noborder') {
+          return 'zgicon-pulldown'
+        }
+        return 'zgicon-down'
+      },
+      handleClass () {
+        return {
+          active: this.showOptions
+        }
+      },
+      handleStyle () {
+        return {
+          width: this.width + 'px'
+        }
+      },
+      noData () {
+        return this.store.length === 0
+      },
+      resultLabel () {
+        return this.chosenList.map(option => {
+          return option[this.labelField]
+        }).join(',')
+      }
+    },
+    watch: {
+      value (value) {
+        this.chosenList = []
+        this.$set(this, 'checkedMap', {})
+        if (!this.multiple) {
+          this.store.forEach(option => {
+            if (option[this.keyField] === value[this.keyField]) {
+              this.checkedMap[value[this.keyField]] = true
+              this.chosenList.push(option)
+              this.$emit('input', this.chosenList[0])
+            }
+          })
+        }
+      }
+    },
+    mounted () {
+      if (this.multiple) {
+        this.$emit('input', this.chosenList)
+      } else {
+        this.$emit('input', this.chosenList[0])
+      }
+    },
+    methods: {
+      onClickOutside () {
+        this.showOptions = false
+      },
+      onClickHandle () {
+        this.showOptions = !this.showOptions
+      },
+      onClickOption (checked, data) {
+        if (!this.multiple) {
+          this.chosenList = []
+          this.store.forEach(option => {
+            this.$set(this.checkedMap, option[this.keyField], option[this.keyField] === data[this.keyField])
+            if (option[this.keyField] === data[this.keyField]) this.chosenList.push(option)
+          })
+
+          this.showOptions = false
+          this.$emit('input', this.chosenList[0])
+        }
+        this.$emit('change')
+      }
+    }
+  }
+</script>
+
+<style lang="sass">
+  @import "styles/select"
+</style>
