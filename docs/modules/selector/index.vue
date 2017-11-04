@@ -1,6 +1,7 @@
 <template>
   <div>
-    <normal-selector></normal-selector>
+    <!--<normal-selector></normal-selector>-->
+    <group-selector></group-selector>
     <!--<normal-select></normal-select>-->
     <!--<multiple-select></multiple-select>-->
     <!--<group-select></group-select>-->
@@ -33,9 +34,11 @@
   import GroupBigSelect from './demo/groupBigSelect.vue'
   import EsSelect from './demo/esSelect.vue'
   import NormalSelector from './demo/normalSelector.vue'
+  import GroupSelector from './demo/groupSelector.vue'
 
   export default {
     components: {
+      GroupSelector,
       NormalSelector,
       EsSelect,
       GroupBigSelect,

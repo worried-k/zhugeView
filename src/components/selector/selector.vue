@@ -198,9 +198,18 @@
       if (this.value) {
         if (!this.multiple) {
           this.store.forEach(option => {
-            if (option[this.keyField] === this.value[this.keyField]) {
-              data.checkedMap[this.value[this.keyField]] = true
-              data.chosenList.push(option)
+            if (this.childrenField) {
+              option[this.childrenField].forEach(child => {
+                if (child[this.keyField] === this.value[this.keyField]) {
+                  data.checkedMap[this.value[this.keyField]] = true
+                  data.chosenList.push(child)
+                }
+              })
+            } else {
+              if (option[this.keyField] === this.value[this.keyField]) {
+                data.checkedMap[this.value[this.keyField]] = true
+                data.chosenList.push(option)
+              }
             }
           })
         } else {
@@ -245,13 +254,25 @@
     watch: {
       value (value) {
         if (value === this.chosenList) return
-        this.clean()
+        this.chosenList = []
+        this.$set(this, 'checkedMap', {})
+        if (!value) return
         if (!this.multiple) {
           this.store.forEach(option => {
-            if (option[this.keyField] === value[this.keyField]) {
-              this.checkedMap[value[this.keyField]] = true
-              this.chosenList.push(option)
-              this.$emit('input', this.chosenList[0])
+            if (this.childrenField) {
+              option[this.childrenField].forEach(child => {
+                if (child[this.keyField] === value[this.keyField]) {
+                  this.checkedMap[value[this.keyField]] = true
+                  this.chosenList.push(child)
+                  this.$emit('input', this.chosenList[0])
+                }
+              })
+            } else {
+              if (option[this.keyField] === value[this.keyField]) {
+                this.checkedMap[value[this.keyField]] = true
+                this.chosenList.push(option)
+                this.$emit('input', this.chosenList[0])
+              }
             }
           })
           if (this.noData) this.$emit('input', this.chosenList[0])
