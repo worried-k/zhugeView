@@ -18,15 +18,28 @@
         </div>
 
         <div class="zg-content" ref="options">
-          <zg-option v-for="option in store"
-                     :key="option[keyField]"
-                     :checked="checkedMap[option[keyField]]"
-                     :disable="disableOptions.indexOf(option[keyField]) > -1"
-                     :data="option"
-                     :labelField="labelField"
-                     :multiple="multiple"
-                     @click="onClickOption">
-          </zg-option>
+          <template v-for="option in store">
+            <zg-opt-group v-if="childrenField"
+                          :key="option[keyField]"
+                          :store="option[childrenField]"
+                          :label="option[labelField]"
+                          :checkedMap="checkedMap"
+                          :disableOptions="disableOptions"
+                          :keyField="keyField"
+                          :labelField="labelField"
+                          :multiple="multiple"
+                          @click="onClickOption">
+
+            </zg-opt-group>
+            <zg-option v-else :key="option[keyField]"
+                       :checked="checkedMap[option[keyField]]"
+                       :disable="disableOptions.indexOf(option[keyField]) > -1"
+                       :data="option"
+                       :labelField="labelField"
+                       :multiple="multiple"
+                       @click="onClickOption">
+            </zg-option>
+          </template>
           <li v-show="noData" class="zg-option zg-error">
             {{noDataText}}
           </li>
@@ -39,9 +52,11 @@
 <script>
   import ZgOption from './option.vue'
   import ZgCheckbox from '../checkbox/checkbox.vue'
+  import ZgOptGroup from './optGroup.vue'
 
   export default {
     components: {
+      ZgOptGroup,
       ZgCheckbox,
       ZgOption},
     name: 'zgSelector',
@@ -271,8 +286,15 @@
         if (!this.multiple) {
           this.chosenList = []
           this.store.forEach(option => {
-            this.$set(this.checkedMap, option[this.keyField], option[this.keyField] === data[this.keyField])
-            if (option[this.keyField] === data[this.keyField]) this.chosenList.push(option)
+            if (this.childrenField) {
+              option[this.childrenField].forEach(children => {
+                this.$set(this.checkedMap, children[this.keyField], children[this.keyField] === data[this.keyField])
+                if (children[this.keyField] === data[this.keyField]) this.chosenList.push(children)
+              })
+            } else {
+              this.$set(this.checkedMap, option[this.keyField], option[this.keyField] === data[this.keyField])
+              if (option[this.keyField] === data[this.keyField]) this.chosenList.push(option)
+            }
           })
 
           this.showOptions = false

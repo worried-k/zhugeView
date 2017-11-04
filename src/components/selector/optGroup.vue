@@ -3,7 +3,15 @@
     <li class="zg-header">
       <slot name="header">{{label}}</slot>
     </li>
-    <slot></slot>
+    <zg-option v-for="option in store"
+               :key="option[keyField]"
+               :checked="checkedMap[option[keyField]]"
+               :disable="disableOptions.indexOf(option[keyField]) > -1"
+               :data="option"
+               :labelField="labelField"
+               :multiple="multiple"
+               @click="onClickOption">
+    </zg-option>
   </ul>
 </template>
 
@@ -14,21 +22,41 @@
     mixins: [emitter],
     props: {
       /**
-       * @description icon名称
-       */
-      icon: {
-        type: String
-      },
-      /**
        * group名称
        */
       label: {
         type: String
+      },
+      store: {
+        type: Array
+      },
+      checkedMap: {
+        type: Object
+      },
+      disableOptions: {
+        type: Array
+      },
+      keyField: {
+        type: String,
+        required: true
+      },
+      labelField: {
+        type: String,
+        required: true
+      },
+      multiple: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
       return {
         show: true
+      }
+    },
+    methods: {
+      onClickOption (checked, data) {
+        this.$emit('click', checked, data)
       }
     }
   }
