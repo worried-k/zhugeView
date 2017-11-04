@@ -7,6 +7,14 @@
                    labelField="label"
                    childrenField="children"></zg-selector>
       <span>选中值：</span>{{groupValue}}
+
+      <zg-selector keyField="id"
+                   :store="multipleStore"
+                   childrenField="children"
+                   v-model="multipleValue"
+                   multiple
+                   labelField="label" style="margin-top: 10px"></zg-selector>
+      <span>选中值：</span>{{multipleValue.map(item => item.label)}}
     </demo-panel>
   </div>
 </template>
@@ -44,12 +52,36 @@
 
           return result
         })(),
-        groupValue: {id: '2-4'}
+        groupValue: {id: '2-4'},
+        multipleStore: (() => {
+          let result = []
+
+          for (let i = 0; i < 50; i++) {
+            let item = {
+              label: 'group' + i,
+              id: i,
+              children: []
+            }
+
+            for (let j = 0; j < 5; j++) {
+              item.children.push({
+                label: `option${i}-${j}`,
+                id: `${i}-${j}`
+              })
+            }
+
+            result.push(item)
+          }
+
+          return result
+        })(),
+        multipleValue: [{id: '2-4'}]
       }
     },
     mounted () {
       setTimeout(() => {
         this.groupValue = {id: '1-3'}
+        this.multipleValue = [{id: '1-3'}]
       }, 2000)
     }
   }

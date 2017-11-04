@@ -214,12 +214,23 @@
           })
         } else {
           this.store.forEach(option => {
-            this.value.forEach(defaultOption => {
-              if (option[this.keyField] === defaultOption[this.keyField]) {
-                data.checkedMap[option[this.keyField]] = true
-                data.chosenList.push(option)
-              }
-            })
+            if (this.childrenField) {
+              option[this.childrenField].forEach(child => {
+                this.value.forEach(defaultOption => {
+                  if (child[this.keyField] === defaultOption[this.keyField]) {
+                    data.checkedMap[child[this.keyField]] = true
+                    data.chosenList.push(child)
+                  }
+                })
+              })
+            } else {
+              this.value.forEach(defaultOption => {
+                if (option[this.keyField] === defaultOption[this.keyField]) {
+                  data.checkedMap[option[this.keyField]] = true
+                  data.chosenList.push(option)
+                }
+              })
+            }
           })
         }
       }
@@ -278,12 +289,23 @@
           if (this.noData) this.$emit('input', this.chosenList[0])
         } else {
           this.store.forEach(option => {
-            value.forEach(defaultOption => {
-              if (option[this.keyField] === defaultOption[this.keyField]) {
-                this.checkedMap[option[this.keyField]] = true
-                this.chosenList.push(option)
-              }
-            })
+            if (this.childrenField) {
+              option[this.childrenField].forEach(child => {
+                value.forEach(defaultOption => {
+                  if (child[this.keyField] === defaultOption[this.keyField]) {
+                    this.checkedMap[child[this.keyField]] = true
+                    this.chosenList.push(child)
+                  }
+                })
+              })
+            } else {
+              value.forEach(defaultOption => {
+                if (option[this.keyField] === defaultOption[this.keyField]) {
+                  this.checkedMap[option[this.keyField]] = true
+                  this.chosenList.push(option)
+                }
+              })
+            }
           })
           this.$emit('input', this.chosenList)
         }
