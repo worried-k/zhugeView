@@ -129,20 +129,6 @@
         default: 20
       },
       /**
-       * @description 自定义展示分组头部
-       * @tip childrenField被指定时启用，自定义头部可返回html片段，因此需调用时注意xss漏洞处理
-       */
-      customHeader: {
-        type: Function
-      },
-      /**
-       * @description 远程搜索函数, 接收参数为匹配文本
-       * @tip 外部使用时候，建议做数据查询缓存，以提高性能
-       */
-      remote: {
-        type: Function
-      },
-      /**
        * @description 同select
        */
       theme: {
@@ -198,6 +184,7 @@
       },
       /**
        * @description 可清空选中结果
+       * @tip multiple模式下有效
        */
       clearAble: {
         type: Boolean,
@@ -416,6 +403,7 @@
       },
       onClickHandle () {
         this.showOptions = !this.showOptions
+        this.pageNum = 0
         if (this.showOptions && this.filterOption) {
           setTimeout(() => {
             this.$refs.optionFilter.focus()
