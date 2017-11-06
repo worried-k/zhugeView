@@ -10,8 +10,18 @@
 
     <transition enter-active-class="animated slideInDown">
       <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
-
         <div class="zg-fixed">
+          <zg-input
+            v-if="filterOption"
+            icon="zgicon-search"
+            width="100%"
+            class="zg-select-search"
+            :class="filterClass"
+            clear-able
+            v-model="filter"
+            ref="optionFilter"
+          ></zg-input>
+
           <li v-show="multiple && chosenList.length && clearAble" class="zg-clear">
             <a href="javascript:void(0)" @click="clean">清空</a>
           </li>
@@ -47,6 +57,9 @@
           </template>
           <li v-show="noData" class="zg-option zg-error">
             {{noDataText}}
+          </li>
+          <li v-show="noMatch" class="zg-option zg-error">
+            {{noMatchText}}
           </li>
         </div>
       </ul>
@@ -200,7 +213,9 @@
         checkedMap: {},
         chosenList: [],
         pageNum: 0,
-        totalCount: 0
+        totalCount: 0,
+        filter: '',
+        noMatch: false
       }
       // 绑定默认值
       if (this.value) {
@@ -269,6 +284,13 @@
           return option[this.labelField]
         }).join(',')
       },
+      filterClass () {
+        let clazz = []
+        if (this.filter) {
+          clazz.push('zg-active')
+        }
+        return clazz.join(' ')
+      },
       /**
        * 用于处理数据分页
        */
@@ -279,29 +301,33 @@
         }
         let maxCount = (this.pageNum + 1) * this.pageSize
         let totalCount = 0
+        let filter = this.filter
         this.store.forEach(item => {
           if (this.childrenField) {
             let flag = map.count < maxCount
             let haveChildren = false
             item[this.childrenField].forEach(child => {
-              if (flag) {
+              if (flag &&
+                (!filter || child[this.labelField].indexOf(filter) > -1)
+              ) {
                 map[child[this.keyField]] = flag
                 map.count++
                 haveChildren = true
               }
-              totalCount++
+              if (!filter || child[this.labelField].indexOf(filter) > -1) totalCount++
             })
             map[item[this.keyField]] = haveChildren
           } else {
             let flag = map.count < maxCount
-            if (flag) {
+            if (flag && ((!filter || item[this.labelField].indexOf(filter) > -1))) {
               map[item[this.keyField]] = flag
               map.count++
             }
-            totalCount++
+            if (!filter || item[this.labelField].indexOf(filter) > -1) totalCount++
           }
         })
         this.totalCount = totalCount
+        this.noMatch = filter && totalCount === 0
         console.timeEnd('showMap')
         return map
       }
@@ -374,6 +400,11 @@
       },
       onClickHandle () {
         this.showOptions = !this.showOptions
+        if (this.showOptions) {
+          setTimeout(() => {
+            this.$refs.optionFilter.focus()
+          })
+        }
       },
       onClickOption (checked, data) {
         console.time('clickOption')
