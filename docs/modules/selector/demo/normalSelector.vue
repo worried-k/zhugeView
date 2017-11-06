@@ -1,16 +1,16 @@
 <template>
   <div>
-    <demo-panel title="普通下拉框" subtitle="单选与多选">
+    <demo-panel title="普通下拉框" subtitle="单选">
       <zg-selector keyField="id" :store="store" placeholder="单选" labelField="label" :disableOptions="disableList" v-model="result">
       </zg-selector>
       <span>选中值</span>{{result}}<br>
-
+    </demo-panel>
+    <demo-panel subtitle="多选">
       <zg-selector v-model="multipleResult"
                    keyField="id"
                    :store="multipleStore"
                    labelField="label"
-                   placeholder="多选"
-                   multiple style="margin-top: 10px"></zg-selector>
+                   placeholder="多选"></zg-selector>
       <span>选中值</span>{{multipleResult.map(item => item.label)}}<br>
     </demo-panel>
   </div>

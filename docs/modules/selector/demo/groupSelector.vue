@@ -1,19 +1,20 @@
 <template>
   <div>
-    <demo-panel title="分组下拉框">
+    <demo-panel title="分组下拉框" subtitle="单选">
       <zg-selector keyField="id"
                    v-model="groupValue"
                    :store="store"
                    labelField="label"
                    childrenField="children"></zg-selector>
       <span>选中值：</span>{{groupValue}}
-
+    </demo-panel>
+    <demo-panel subtitle="多选">
       <zg-selector keyField="id"
                    :store="multipleStore"
                    childrenField="children"
                    v-model="multipleValue"
                    multiple
-                   labelField="label" style="margin-top: 10px"></zg-selector>
+                   labelField="label"></zg-selector>
       <span>选中值：</span>{{multipleValue.map(item => item.label)}}
     </demo-panel>
   </div>
