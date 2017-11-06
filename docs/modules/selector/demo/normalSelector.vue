@@ -10,8 +10,8 @@
                    keyField="id"
                    :store="multipleStore"
                    labelField="label"
-                   placeholder="多选"></zg-selector>
-      <span>选中值</span>{{multipleResult.map(item => item.label)}}<br>
+                   placeholder="多选" multiple></zg-selector>
+      <span>选中值</span>{{multipleResult}}<br>
     </demo-panel>
   </div>
 </template>

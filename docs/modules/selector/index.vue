@@ -1,18 +1,14 @@
 <template>
   <div>
-    <!--<normal-selector></normal-selector>-->
+    <normal-selector></normal-selector>
     <group-selector></group-selector>
-    <!--<normal-select></normal-select>-->
-    <!--<multiple-select></multiple-select>-->
-    <!--<group-select></group-select>-->
-    <!--<normal-big-select></normal-big-select>-->
-    <!--<group-big-select></group-big-select>-->
-    <!--<es-select></es-select>-->
+    <normal-big-data-selector></normal-big-data-selector>
+    <group-big-data-selector></group-big-data-selector>
 
-    <doc-markdown :api="api.select" title="select"></doc-markdown>
-    <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
-    <doc-markdown :api="api.option" title="option"></doc-markdown>
-    <doc-markdown :api="api.optGroup" title="optionGroup"></doc-markdown>
+    <!--<doc-markdown :api="api.select" title="select"></doc-markdown>-->
+    <!--<doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>-->
+    <!--<doc-markdown :api="api.option" title="option"></doc-markdown>-->
+    <!--<doc-markdown :api="api.optGroup" title="optionGroup"></doc-markdown>-->
   </div>
 </template>
 
@@ -27,25 +23,19 @@
   import optionJson from './option.json'
   import bigSelectJson from './bigSelect.json'
   import optGroupJson from './optGroup.json'
-  import NormalSelect from './demo/normalSelect.vue'
-  import MultipleSelect from './demo/multipleSelect.vue'
-  import GroupSelect from './demo/groupSelect.vue'
-  import NormalBigSelect from './demo/normalBigSelect.vue'
-  import GroupBigSelect from './demo/groupBigSelect.vue'
   import EsSelect from './demo/esSelect.vue'
   import NormalSelector from './demo/normalSelector.vue'
   import GroupSelector from './demo/groupSelector.vue'
+  import NormalBigDataSelector from './demo/normalBigDataSelector.vue'
+  import GroupBigDataSelector from './demo/groupBigDataSelector.vue'
 
   export default {
     components: {
+      GroupBigDataSelector,
+      NormalBigDataSelector,
       GroupSelector,
       NormalSelector,
       EsSelect,
-      GroupBigSelect,
-      NormalBigSelect,
-      GroupSelect,
-      MultipleSelect,
-      NormalSelect,
       DocMarkdown,
       ZgBigSelect,
       ZgCheckbox,
