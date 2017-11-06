@@ -39,13 +39,12 @@
         </div>
 
         <div class="zg-content" ref="options" @scroll.prevent.stop="onScroll">
-          <template v-for="option in store">
+          <template v-for="option in renderStore">
             <template v-if="childrenField">
-              <zg-opt-group v-if="showMap[option[keyField]]"
-                            :key="option[keyField]"
+              <zg-opt-group :key="option[keyField]"
                             :store="option[childrenField]"
                             :showMap="showMap"
-                            :label="option[labelField]"
+                            :groupData="option"
                             :checkedMap="checkedMap"
                             :disableOptions="disableOptions"
                             :keyField="keyField"
@@ -56,7 +55,7 @@
               </zg-opt-group>
             </template>
             <template v-else>
-              <zg-option v-if="showMap[option[keyField]]" :key="option[keyField]"
+              <zg-option :key="option[keyField]"
                          :checked="checkedMap[option[keyField]]"
                          :disable="disableOptions.indexOf(option[keyField]) > -1"
                          :data="option"
@@ -73,6 +72,8 @@
             {{noMatchText}}
           </li>
         </div>
+        <!--为了触发showMap的初始化-->
+        <div style="display: none">{{showMap.count}}</div>
       </ul>
     </transition>
   </div>
@@ -82,13 +83,14 @@
   import ZgOption from './option.vue'
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import ZgOptGroup from './optGroup.vue'
-
+  import {util} from '../../mixins/main'
   export default {
     components: {
       ZgOptGroup,
       ZgCheckbox,
       ZgOption},
     name: 'zgSelector',
+    mixins: [util],
     props: {
       /**
        * @description 选项唯一标识字段
@@ -210,10 +212,12 @@
         showOptions: false,
         checkedMap: {},
         chosenList: [],
+        renderStore: this.store.slice(0, this.pageSize),
         pageNum: 0,
         totalCount: 0,
         filter: '',
-        noMatch: false
+        noMatch: false,
+        logTime: false// 打印时间戳日志
       }
       // 绑定默认值
       if (this.value) {
@@ -298,24 +302,26 @@
        * 用于处理数据分页
        */
       showMap () {
-        console.time('showMap')
+        this.time('showMap')
         let map = {
           count: 0
         }
         let maxCount = (this.pageNum + 1) * this.pageSize
         let totalCount = 0
         let filter = this.filter
+        this.renderStore = []
         this.store.forEach(item => {
           if (this.childrenField) {
             let flag = map.count < maxCount
             let haveChildren = false
-            item[this.childrenField].forEach(child => {
+            item[this.childrenField].forEach((child, i) => {
               if (flag &&
                 (!filter || child[this.labelField].indexOf(filter) > -1)
               ) {
                 map[child[this.keyField]] = flag
                 map.count++
                 haveChildren = true
+                if (i === 0) this.renderStore.push(item)
               }
               if (!filter || child[this.labelField].indexOf(filter) > -1) totalCount++
             })
@@ -325,13 +331,14 @@
             if (flag && ((!filter || item[this.labelField].indexOf(filter) > -1))) {
               map[item[this.keyField]] = flag
               map.count++
+              this.renderStore.push(item)
             }
             if (!filter || item[this.labelField].indexOf(filter) > -1) totalCount++
           }
         })
         this.totalCount = totalCount
         this.noMatch = filter && totalCount === 0
-        console.timeEnd('showMap')
+        this.timeEnd('showMap')
         return map
       }
     },
@@ -345,7 +352,7 @@
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         if (!value) return
-        console.time('同步value')
+        this.time('同步value')
         if (!this.multiple) {
           this.store.forEach(option => {
             if (this.childrenField) {
@@ -387,7 +394,7 @@
           })
           this.$emit('input', this.chosenList)
         }
-        console.timeEnd('同步value')
+        this.timeEnd('同步value')
       }
     },
     mounted () {
@@ -411,7 +418,7 @@
         }
       },
       onClickOption (checked, data) {
-        console.time('clickOption')
+        this.time('clickOption')
         if (!this.multiple) {
           this.chosenList = []
           this.store.forEach(option => {
@@ -441,7 +448,7 @@
           }
           this.$emit('input', this.chosenList)
         }
-        console.timeEnd('clickOption')
+        this.timeEnd('clickOption')
         this.$emit('change')
       },
       onScroll () {
@@ -456,6 +463,7 @@
             this.pageNum++
           }
         }
+        this.log('pageNum', this.pageNum)
       },
       clean () {
         this.chosenList = []

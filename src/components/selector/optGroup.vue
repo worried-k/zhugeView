@@ -1,7 +1,7 @@
 <template>
   <ul class="zg-opt-group" v-show="show">
     <li class="zg-header">
-      <slot name="header">{{label}}</slot>
+      <slot name="header" :groupData="groupData">{{groupData[labelField]}}</slot>
     </li>
     <template v-for="option in store">
       <zg-option v-if="showMap[option[keyField]]"
@@ -23,11 +23,8 @@
     name: 'ZgOptGroup',
     mixins: [emitter],
     props: {
-      /**
-       * group名称
-       */
-      label: {
-        type: String
+      groupData: {
+        type: Object
       },
       store: {
         type: Array

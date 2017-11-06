@@ -24,7 +24,7 @@
       return {
         store: (() => {
           let store = []
-          for (let i = 0; i < 100; i++) {
+          for (let i = 0; i < 20000; i++) {
             store.push({
               id: i,
               label: 'option_' + i
