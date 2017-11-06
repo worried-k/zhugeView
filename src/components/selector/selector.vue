@@ -400,7 +400,7 @@
       },
       onClickHandle () {
         this.showOptions = !this.showOptions
-        if (this.showOptions) {
+        if (this.showOptions && this.filterOption) {
           setTimeout(() => {
             this.$refs.optionFilter.focus()
           })
