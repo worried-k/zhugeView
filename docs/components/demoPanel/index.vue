@@ -1,7 +1,7 @@
 <template>
   <div class="demo-panel">
-    <h3 class="title">{{title}}</h3>
-    <p class="subtitle">{{subtitle}}</p>
+    <h3 class="title" v-if="title">{{title}}</h3>
+    <p class="subtitle" v-if="subtitle">{{subtitle}}</p>
     <div class="wrap-box">
       <div class="demo-box">
         <slot></slot>
