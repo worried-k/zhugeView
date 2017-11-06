@@ -1,10 +1,21 @@
 <template>
   <div class="zg-select" v-click-outside="onClickOutside">
     <div class="zg-select-handle" ref="handle" :class="handleClass" :style="handleStyle" @click="onClickHandle">
-      <slot name="handle">
-        <span v-show="resultLabel" class="zg-select-label">{{resultLabel}}</span>
-        <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
-      </slot>
+      <template v-if="theme === 'normal'">
+        <slot name="handle">
+          <span v-show="resultLabel" class="zg-select-label">{{resultLabel}}</span>
+          <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
+        </slot>
+      </template>
+      <template v-else>
+        <slot name="handle">
+          <span class="zg-label">
+            <span v-show="resultLabel" class="zg-value">{{resultLabel}}</span>
+            <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
+            <span class="zg-count" v-if="chosenList.length > 1">({{chosenList.length}})</span>
+          </span>
+        </slot>
+      </template>
       <i class="zg-select-arrow" :class="arrowIcon"></i>
     </div>
 
@@ -268,13 +279,18 @@
       },
       handleClass () {
         return {
-          active: this.showOptions
+          active: this.showOptions,
+          noborder: this.theme === 'noborder'
         }
       },
       handleStyle () {
-        return {
-          width: this.width + 'px'
+        let style = {}
+        if (this.theme === 'normal') {
+          style.width = this.width + 'px'
+        } else {
+          style.maxWidth = this.width + 'px'
         }
+        return style
       },
       noData () {
         return this.store.length === 0

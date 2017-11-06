@@ -21,24 +21,23 @@
       text-overflow: ellipsis
     .zg-placeholder
       color: $color-font-placeholder
-    //&.noborder
-    //  border: none
-    //  .zg-label
-    //    margin-right: 25px
-    //    display: flex
-    //    flex-direction: row
-    //    &.zg-placeholder
-    //      color: $color-font-placeholder
-    //    .zg-value
-    //      flex: 1
-    //      text-overflow: ellipsis
-    //      overflow: hidden
-    //      white-space: nowrap
-    //    .zg-count
-    //      width: 20px
-    //      flex: none
-    //  &+.zg-drop-panel
-    //    margin: 0
+    &.noborder
+      border: none
+      .zg-label
+        display: flex
+        flex-direction: row
+        &.zg-placeholder
+          color: $color-font-placeholder
+        .zg-value
+          flex: 1
+          text-overflow: ellipsis
+          overflow: hidden
+          white-space: nowrap
+        .zg-count
+          width: 20px
+          flex: none
+      &+.zg-drop-panel
+        margin: 0
     .zg-select-chosen input[type='text']
       padding-right: 20px !important
       cursor: pointer
