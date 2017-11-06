@@ -3,15 +3,17 @@
     <li class="zg-header">
       <slot name="header">{{label}}</slot>
     </li>
-    <zg-option v-for="option in store"
-               :key="option[keyField]"
-               :checked="checkedMap[option[keyField]]"
-               :disable="disableOptions.indexOf(option[keyField]) > -1"
-               :data="option"
-               :labelField="labelField"
-               :multiple="multiple"
-               @click="onClickOption">
-    </zg-option>
+    <template v-for="option in store">
+      <zg-option v-if="showMap[option[keyField]]"
+                 :key="option[keyField]"
+                 :checked="checkedMap[option[keyField]]"
+                 :disable="disableOptions.indexOf(option[keyField]) > -1"
+                 :data="option"
+                 :labelField="labelField"
+                 :multiple="multiple"
+                 @click="onClickOption">
+      </zg-option>
+    </template>
   </ul>
 </template>
 
@@ -31,6 +33,9 @@
         type: Array
       },
       checkedMap: {
+        type: Object
+      },
+      showMap: {
         type: Object
       },
       disableOptions: {

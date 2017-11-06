@@ -20,8 +20,10 @@
         <div class="zg-content" ref="options" @scroll.prevent.stop="onScroll">
           <template v-for="option in store">
             <template v-if="childrenField">
-              <zg-opt-group :key="option[keyField]"
+              <zg-opt-group v-if="showMap[option[keyField]]"
+                            :key="option[keyField]"
                             :store="option[childrenField]"
+                            :showMap="showMap"
                             :label="option[labelField]"
                             :checkedMap="checkedMap"
                             :disableOptions="disableOptions"
@@ -279,9 +281,19 @@
         let totalCount = 0
         this.store.forEach(item => {
           if (this.childrenField) {
-            console.log('分组下拉')
+            let flag = map.count < maxCount
+            let haveChildren = false
+            item[this.childrenField].forEach(child => {
+              if (flag) {
+                map[child[this.keyField]] = flag
+                map.count++
+                haveChildren = true
+              }
+              totalCount++
+            })
+            map[item[this.keyField]] = haveChildren
           } else {
-            let flag = map.count <= maxCount
+            let flag = map.count < maxCount
             if (flag) {
               map[item[this.keyField]] = flag
               map.count++
