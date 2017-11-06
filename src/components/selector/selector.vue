@@ -17,28 +17,31 @@
           </li>
         </div>
 
-        <div class="zg-content" ref="options">
+        <div class="zg-content" ref="options" @scroll.prevent.stop="onScroll">
           <template v-for="option in store">
-            <zg-opt-group v-if="childrenField"
-                          :key="option[keyField]"
-                          :store="option[childrenField]"
-                          :label="option[labelField]"
-                          :checkedMap="checkedMap"
-                          :disableOptions="disableOptions"
-                          :keyField="keyField"
-                          :labelField="labelField"
-                          :multiple="multiple"
-                          @click="onClickOption">
+            <template v-if="childrenField">
+              <zg-opt-group :key="option[keyField]"
+                            :store="option[childrenField]"
+                            :label="option[labelField]"
+                            :checkedMap="checkedMap"
+                            :disableOptions="disableOptions"
+                            :keyField="keyField"
+                            :labelField="labelField"
+                            :multiple="multiple"
+                            @click="onClickOption">
 
-            </zg-opt-group>
-            <zg-option v-else :key="option[keyField]"
-                       :checked="checkedMap[option[keyField]]"
-                       :disable="disableOptions.indexOf(option[keyField]) > -1"
-                       :data="option"
-                       :labelField="labelField"
-                       :multiple="multiple"
-                       @click="onClickOption">
-            </zg-option>
+              </zg-opt-group>
+            </template>
+            <template v-else>
+              <zg-option v-if="showMap[option[keyField]]" :key="option[keyField]"
+                         :checked="checkedMap[option[keyField]]"
+                         :disable="disableOptions.indexOf(option[keyField]) > -1"
+                         :data="option"
+                         :labelField="labelField"
+                         :multiple="multiple"
+                         @click="onClickOption">
+              </zg-option>
+            </template>
           </template>
           <li v-show="noData" class="zg-option zg-error">
             {{noDataText}}
@@ -193,8 +196,11 @@
       let data = {
         showOptions: false,
         checkedMap: {},
-        chosenList: []
+        chosenList: [],
+        pageNum: 0,
+        totalCount: 0
       }
+      // 绑定默认值
       if (this.value) {
         if (!this.multiple) {
           this.store.forEach(option => {
@@ -260,14 +266,45 @@
         return this.chosenList.map(option => {
           return option[this.labelField]
         }).join(',')
+      },
+      /**
+       * 用于处理数据分页
+       */
+      showMap () {
+        console.time('showMap')
+        let map = {
+          count: 0
+        }
+        let maxCount = (this.pageNum + 1) * this.pageSize
+        let totalCount = 0
+        this.store.forEach(item => {
+          if (this.childrenField) {
+            console.log('分组下拉')
+          } else {
+            let flag = map.count <= maxCount
+            if (flag) {
+              map[item[this.keyField]] = flag
+              map.count++
+            }
+            totalCount++
+          }
+        })
+        this.totalCount = totalCount
+        console.timeEnd('showMap')
+        return map
       }
     },
     watch: {
+      /**
+       * 保持对v-model的双向数据绑定
+       * @param value
+       */
       value (value) {
         if (value === this.chosenList) return
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         if (!value) return
+        console.time('同步value')
         if (!this.multiple) {
           this.store.forEach(option => {
             if (this.childrenField) {
@@ -309,6 +346,7 @@
           })
           this.$emit('input', this.chosenList)
         }
+        console.timeEnd('同步value')
       }
     },
     mounted () {
@@ -326,6 +364,7 @@
         this.showOptions = !this.showOptions
       },
       onClickOption (checked, data) {
+        console.time('clickOption')
         if (!this.multiple) {
           this.chosenList = []
           this.store.forEach(option => {
@@ -355,7 +394,21 @@
           }
           this.$emit('input', this.chosenList)
         }
+        console.timeEnd('clickOption')
         this.$emit('change')
+      },
+      onScroll () {
+        const panel = this.$refs.options
+        const height = panel.getBoundingClientRect().height
+        const scrollBottom = panel.scrollHeight - height - panel.scrollTop
+        if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
+        this.scrollBottom = scrollBottom
+        if (scrollBottom <= (panel.scrollHeight - height) * 0.05) {
+          let count = (this.pageNum + 1) * this.pageSize
+          if (this.totalCount > count) {
+            this.pageNum++
+          }
+        }
       },
       clean () {
         this.chosenList = []
