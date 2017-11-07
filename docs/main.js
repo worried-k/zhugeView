@@ -9,6 +9,7 @@ import docMarkdown from './components/docMarkdown'
 import VueMarkdown from 'vue-markdown'
 
 Vue.config.productionTip = false
+Vue.config.devtools = false
 Vue.use(zhugeView)
 Vue.component('vue-markdown', VueMarkdown)
 Vue.component('doc-markdown', docMarkdown)

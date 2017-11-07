@@ -233,9 +233,9 @@
         this.renderStore = []
         this.store.forEach(item => {
           if (this.childrenField) {
-            let flag = map.count < maxCount
             let haveChildren = false
             item[this.childrenField].forEach((child, i) => {
+              let flag = map.count < maxCount
               if (flag &&
                 (!filter || child[this.labelField].indexOf(filter) > -1)
               ) {

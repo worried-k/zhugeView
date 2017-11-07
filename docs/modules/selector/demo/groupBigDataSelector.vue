@@ -32,7 +32,7 @@
               children: []
             }
 
-            for (let j = 0; j < 10; j++) {
+            for (let j = 0; j < 1000; j++) {
               item.children.push({
                 label: `option${i}-${j}`,
                 id: `${i}-${j}`
