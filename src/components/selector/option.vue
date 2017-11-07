@@ -1,11 +1,11 @@
 <template>
   <li class="zg-option" :class="className" @click="onClick">
-    <slot v-if="!multiple" :data="data" :active="active">
+    <slot v-if="!multiple" :data="data" :active="active" :disable="disable">
       <span>{{data[labelField]}}</span>
     </slot>
 
     <zg-checkbox v-else @change="onClick" v-model="active" :disable="disable">
-      <slot :data="data" :active="active">
+      <slot :data="data" :active="active" :disable="disable">
         <span>{{data[labelField]}}</span>
       </slot>
     </zg-checkbox>

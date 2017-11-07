@@ -9,6 +9,7 @@
         <template scope="scope">
           <span>自定义展示{{scope.data.label}}</span>
         </template>
+
         <template slot="header" scope="scope">
           自定义header: {{scope.data.label}}
         </template>

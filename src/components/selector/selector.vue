@@ -325,6 +325,13 @@
         this.$emit('input', this.chosenList[0])
       }
     },
+    updated () {
+      const dropPanel = this.$refs.dropPanel
+      const panelRect = dropPanel.getBoundingClientRect()
+      if ((panelRect.width + panelRect.left) > window.innerWidth) {
+        dropPanel.style.right = '0px'
+      }
+    },
     methods: {
       onClickOutside () {
         this.showOptions = false
@@ -399,9 +406,8 @@
               return (
                 <div ref="handle" class={this.handleClass}
                      style={this.handleStyle}
-                     onClick={this.onClickHandle}
-                     slot="handle">
-                  <span v-show={this.resultLabel} class="zg-select-label">{this.resultLabel}</span>
+                     onClick={this.onClickHandle}>
+                  <span v-show={this.resultLabel} class="zg-select-label">{this.$slots.default || this.resultLabel}</span>
                   <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
                   <i class={this.arrowIcon}></i>
                 </div>
@@ -413,7 +419,7 @@
                      onClick={this.onClickHandle}
                      slot="handle">
                   <span class="zg-label">
-                    <span v-show={this.resultLabel} class="zg-value">{this.resultLabel}</span>
+                    <span v-show={this.resultLabel} class="zg-value">{this.$slots.default || this.resultLabel}</span>
                     <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
                     <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
                   </span>
