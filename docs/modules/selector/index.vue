@@ -1,9 +1,11 @@
 <template>
   <div>
     <normal-selector></normal-selector>
-    <!--<group-selector></group-selector>-->
-    <!--<normal-big-data-selector></normal-big-data-selector>-->
-    <!--<group-big-data-selector></group-big-data-selector>-->
+    <group-selector></group-selector>
+    <normal-big-data-selector></normal-big-data-selector>
+    <group-big-data-selector></group-big-data-selector>
+
+    <!--<demo></demo>-->
     <!--<doc-markdown :api="api.select" title="select"></doc-markdown>-->
     <!--<doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>-->
     <!--<doc-markdown :api="api.option" title="option"></doc-markdown>-->
@@ -19,9 +21,11 @@
   import GroupSelector from './demo/groupSelector.vue'
   import NormalBigDataSelector from './demo/normalBigDataSelector.vue'
   import GroupBigDataSelector from './demo/groupBigDataSelector.vue'
+  import Demo from './renderTest/demo.vue'
 
   export default {
     components: {
+      Demo,
       GroupBigDataSelector,
       NormalBigDataSelector,
       GroupSelector,

@@ -1,8 +1,13 @@
 <template>
   <div>
     <demo-panel title="普通下拉框" subtitle="单选">
+
       <zg-selector keyField="id" :store="store" placeholder="单选" labelField="label" :disableOptions="disableList" v-model="result">
+        <template scope="scope">
+          <span>自定义展示{{scope.data.label}}</span>
+        </template>
       </zg-selector>
+
       <span>选中值</span>{{result}}<br>
     </demo-panel>
     <demo-panel subtitle="多选">
@@ -19,9 +24,11 @@
 <script>
   import ZgSelector from '../../../../src/components/selector/selector.vue'
   import DemoPanel from '../../../components/demoPanel/index.vue'
+  import ZgButton from '../../../../src/components/button/button.vue'
 
   export default {
     components: {
+      ZgButton,
       DemoPanel,
       ZgSelector},
     name: 'normalSelector',
