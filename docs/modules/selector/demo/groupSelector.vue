@@ -5,7 +5,14 @@
                    v-model="groupValue"
                    :store="store"
                    labelField="label"
-                   childrenField="children"></zg-selector>
+                   childrenField="children">
+        <template scope="scope">
+          <span>自定义展示{{scope.data.label}}</span>
+        </template>
+        <template slot="header" scope="scope">
+          自定义header: {{scope.data.label}}
+        </template>
+      </zg-selector>
       <span>选中值：</span>{{groupValue}}
     </demo-panel>
     <demo-panel subtitle="多选">

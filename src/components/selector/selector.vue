@@ -319,7 +319,6 @@
       }
     },
     mounted () {
-      console.log(this)
       if (this.multiple) {
         this.$emit('input', this.chosenList)
       } else {
@@ -455,7 +454,12 @@
                                     keyField={this.keyField}
                                     labelField={this.labelField}
                                     multiple={this.multiple}
-                                    onClick={this.onClickOption}></zg-opt-group>
+                                    onClick={this.onClickOption}
+                                    scopedSlots={{
+                                      default: this.$scopedSlots.default,
+                                      header: this.$scopedSlots.header
+                                    }}
+                      ></zg-opt-group>
                     )
                   } else {
                     return (
