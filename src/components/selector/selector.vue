@@ -1,85 +1,4 @@
-<template>
-  <div class="zg-select" v-click-outside="onClickOutside">
-    <div class="zg-select-handle" ref="handle" :class="handleClass" :style="handleStyle" @click="onClickHandle">
-      <template v-if="theme === 'normal'">
-        <slot name="handle">
-          <span v-show="resultLabel" class="zg-select-label">{{resultLabel}}</span>
-          <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
-        </slot>
-      </template>
-      <template v-else>
-        <slot name="handle">
-          <span class="zg-label">
-            <span v-show="resultLabel" class="zg-value">{{resultLabel}}</span>
-            <span v-show="!resultLabel" class="zg-select-label zg-placeholder">{{placeholder}}</span>
-            <span class="zg-count" v-if="chosenList.length > 1">({{chosenList.length}})</span>
-          </span>
-        </slot>
-      </template>
-      <i class="zg-select-arrow" :class="arrowIcon"></i>
-    </div>
-
-    <transition enter-active-class="animated slideInDown">
-      <ul v-show="showOptions" class="zg-drop-panel" ref="dropPanel">
-        <div class="zg-fixed">
-          <zg-input
-            v-if="filterOption"
-            icon="zgicon-search"
-            width="100%"
-            class="zg-select-search"
-            :class="filterClass"
-            clear-able
-            v-model="filter"
-            ref="optionFilter"
-          ></zg-input>
-
-          <li v-show="multiple && chosenList.length && clearAble" class="zg-clear">
-            <a href="javascript:void(0)" @click="clean">清空</a>
-          </li>
-        </div>
-
-        <div class="zg-content" ref="options" @scroll.prevent.stop="onScroll">
-          <template v-for="option in renderStore">
-            <template v-if="childrenField">
-              <zg-opt-group :key="option[keyField]"
-                            :store="option[childrenField]"
-                            :showMap="showMap"
-                            :groupData="option"
-                            :checkedMap="checkedMap"
-                            :disableOptions="disableOptions"
-                            :keyField="keyField"
-                            :labelField="labelField"
-                            :multiple="multiple"
-                            @click="onClickOption">
-
-              </zg-opt-group>
-            </template>
-            <template v-else>
-              <zg-option :key="option[keyField]"
-                         :checked="checkedMap[option[keyField]]"
-                         :disable="disableOptions.indexOf(option[keyField]) > -1"
-                         :data="option"
-                         :labelField="labelField"
-                         :multiple="multiple"
-                         @click="onClickOption">
-              </zg-option>
-            </template>
-          </template>
-          <li v-show="noData" class="zg-option zg-error">
-            {{noDataText}}
-          </li>
-          <li v-show="noMatch" class="zg-option zg-error">
-            {{noMatchText}}
-          </li>
-        </div>
-        <!--为了触发showMap的初始化-->
-        <div style="display: none">{{showMap.count}}</div>
-      </ul>
-    </transition>
-  </div>
-</template>
-
-<script>
+<script type="text/jsx">
   import ZgOption from './option.vue'
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import ZgOptGroup from './optGroup.vue'
@@ -263,13 +182,15 @@
     },
     computed: {
       arrowIcon () {
-        if (this.theme === 'noborder') {
-          return 'zgicon-pulldown'
+        return {
+          'zg-select-arrow': true,
+          'zgicon-down': this.theme === 'normal',
+          'zgicon-pulldown': this.theme === 'noborder'
         }
-        return 'zgicon-down'
       },
       handleClass () {
         return {
+          'zg-select-handle': true,
           active: this.showOptions,
           noborder: this.theme === 'noborder'
         }
@@ -292,7 +213,7 @@
         }).join(',')
       },
       filterClass () {
-        let clazz = []
+        let clazz = ['zg-select-search']
         if (this.filter) {
           clazz.push('zg-active')
         }
@@ -398,6 +319,7 @@
       }
     },
     mounted () {
+      console.log(this)
       if (this.multiple) {
         this.$emit('input', this.chosenList)
       } else {
@@ -463,13 +385,103 @@
             this.pageNum++
           }
         }
-        this.log('pageNum', this.pageNum)
       },
       clean () {
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
       }
+    },
+    render (h) {
+      return (
+        <div class="zg-select" v-click-outside={this.onClickOutside}>
+          {(() => {
+            if (this.theme === 'normal') {
+              return (
+                <div ref="handle" class={this.handleClass}
+                     style={this.handleStyle}
+                     onClick={this.onClickHandle}
+                     slot="handle">
+                  <span v-show={this.resultLabel} class="zg-select-label">{this.resultLabel}</span>
+                  <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                  <i class={this.arrowIcon}></i>
+                </div>
+              )
+            } else {
+              return (
+                <div ref="handle" class={this.handleClass}
+                     style={this.handleStyle}
+                     onClick={this.onClickHandle}
+                     slot="handle">
+                  <span class="zg-label">
+                    <span v-show={this.resultLabel} class="zg-value">{this.resultLabel}</span>
+                    <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                    <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
+                  </span>
+                  <i class={this.arrowIcon}></i>
+                </div>
+              )
+            }
+          })()}
+
+          <transition enter-active-class="animated slideInDown">
+            <ul v-show={this.showOptions} class="zg-drop-panel" ref="dropPanel">
+              <div class="zg-fixed">
+                {(() => {
+                  if (this.filterOption) {
+                    return (
+                      <zg-input icon="zgicon-search"
+                                width="100%"
+                                class={this.filterClass}
+                                clear-able v-model="filter" ref="optionFilter"></zg-input>
+                    )
+                  }
+                })()}
+                <li v-show={this.multiple && this.chosenList.length && this.clearAble} class="zg-clear">
+                  <a href="javascript:void(0)" onClick={this.clean}>清空</a>
+                </li>
+              </div>
+
+              <div class="zg-content" ref="options" onScroll={this.onScroll}>
+                {this.renderStore.map(option => {
+                  if (this.childrenField) {
+                    return (
+                      <zg-opt-group key={option[this.keyField]}
+                                    store={option[this.childrenField]}
+                                    showMap={this.showMap}
+                                    groupData={option}
+                                    checkedMap={this.checkedMap}
+                                    disableOptions={this.disableOptions}
+                                    keyField={this.keyField}
+                                    labelField={this.labelField}
+                                    multiple={this.multiple}
+                                    onClick={this.onClickOption}></zg-opt-group>
+                    )
+                  } else {
+                    return (
+                      <zg-option key={option[this.keyField]}
+                                 checked={this.checkedMap[option[this.keyField]]}
+                                 disable={this.disableOptions.indexOf(option[this.keyField]) > -1}
+                                 data={option}
+                                 labelField={this.labelField}
+                                 multiple={this.multiple}
+                                 onClick={this.onClickOption}
+                                 scopedSlots={{default: this.$scopedSlots.default}}></zg-option>
+                    )
+                  }
+                })}
+                <li v-show={this.noData} class="zg-option zg-error">
+                  {this.noDataText}
+                </li>
+                <li v-show={this.noMatch} class="zg-option zg-error">
+                  {this.noMatchText}
+                </li>
+              </div>
+            </ul>
+          </transition>
+          <div style="display: none">{this.showMap.count}</div>
+        </div>
+      )
     }
   }
 </script>
