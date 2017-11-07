@@ -135,6 +135,7 @@
         pageNum: 0,
         totalCount: 0,
         filter: '',
+        filterTimeout: null,
         noMatch: false,
         logTime: false// 打印时间戳日志
       }
@@ -242,10 +243,10 @@
                 map[child[this.keyField]] = flag
                 map.count++
                 haveChildren = true
-                if (i === 0) this.renderStore.push(item)
               }
               if (!filter || child[this.labelField].indexOf(filter) > -1) totalCount++
             })
+            if (haveChildren) this.renderStore.push(item)
             map[item[this.keyField]] = haveChildren
           } else {
             let flag = map.count < maxCount
@@ -392,6 +393,14 @@
           }
         }
       },
+      onFilter (filterValue) {
+        if (this.filterTimeout) clearTimeout(this.filterTimeout)
+        this.filterTimeout = setTimeout(() => {
+          this.$refs.options.scrollTop = 0
+          this.pageNum = 0
+          this.filter = filterValue
+        }, 100)
+      },
       clean () {
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
@@ -438,7 +447,8 @@
                       <zg-input icon="zgicon-search"
                                 width="100%"
                                 class={this.filterClass}
-                                clear-able v-model="filter" ref="optionFilter"></zg-input>
+                                clear-able
+                                ref="optionFilter" onInput={this.onFilter}></zg-input>
                     )
                   }
                 })()}
