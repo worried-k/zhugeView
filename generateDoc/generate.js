@@ -26,7 +26,9 @@ fsUtil.readDir(config.basePath, (filePath, file, stat) => {
   if (/.vue$/.test(file)) {
     fs.readFile(path.resolve(filePath, file), (err, data) => {
       const fileContent = data.toString()
-      const propContent = fileContent.match(reg.props)[0].match(/\{[\s\S]*\}/)[0]
+      const matchProps = fileContent.match(reg.props)
+      if (!matchProps) return
+      const propContent = matchProps[0].match(/\{[\s\S]*\}/)[0]
       const props = propContent.split(reg.commentAndName)
       const comments = propContent.match(reg.commentAndName)
 

@@ -1,0 +1,16 @@
+@import "./constants"
+.zg-data-grid
+  .zg-grid
+    width: 100%
+    border-collapse: collapse
+    font-size: $size-font-content
+    .zg-grid-header
+      .zg-grid-header-row
+        background: $color-background-dark
+    .zg-grid-body
+      .zg-grid-row
+        background: $color-action-normal-default
+        &:hover
+          background: $color-action-normal-hover
+  .zg-hidden-structure
+    display: none

@@ -43,14 +43,14 @@
         }
       },
       /**
-       * @description （默认）单页展示条数
+       * @description 单页展示条数,单页展示条数将影响组件性能，建议不要太大值
        */
       pageSize: {
         type: Number,
         default: 20
       },
       /**
-       * @description 同select
+       * @description 主题，目前支持的主题有：normal、noborder
        */
       theme: {
         type: String,
@@ -61,14 +61,14 @@
         }
       },
       /**
-       * @description value
+       * @description 通过v-model的形式进行数据绑定，不建议直接传递value属性
        * @tip 如果multiple为true，则value需要为对象数组，否则为Object，Object需是Store的子项，或者至少拥有有效的keyField字段
        */
       value: {
         type: [Array, Object]
       },
       /**
-       * @description 下拉框宽度
+       * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应
        */
       width: {
         type: Number,

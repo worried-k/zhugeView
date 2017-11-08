@@ -5,6 +5,7 @@ import Button from '@docs/modules/button/index.vue'
 import Checkbox from '../modules/checkbox/index.vue'
 import Select from '../modules/selector/index.vue'
 import Input from '@docs/modules/input/index.vue'
+import grid from '../modules/dataGrid/index.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
           path: '/select',
           name: 'select',
           component: Select
+        },
+        {
+          path: '/grid',
+          name: 'grid',
+          component: grid
         }
       ]
     }

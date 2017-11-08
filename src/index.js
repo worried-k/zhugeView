@@ -5,6 +5,7 @@ import ButtonGroup from './components/buttonGroup/index.js'
 import ZgInput from './components/input/index'
 import ZgCheckbox from './components/checkbox/index'
 import {zgSelector, ZgOption, ZgOptGroup} from './components/selector/index'
+import {dataGrid, gridColumn} from './components/dataGrid/index'
 
 import directives from './directives/main'
 
@@ -15,7 +16,9 @@ const components = [
   zgSelector,
   ZgOption,
   ZgOptGroup,
-  ZgCheckbox
+  ZgCheckbox,
+  dataGrid,
+  gridColumn
 ]
 
 const install = function (Vue) {
