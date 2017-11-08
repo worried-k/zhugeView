@@ -1,5 +1,5 @@
 <template>
-  <td class="zg-grid-cell" :style="style">
+  <td class="zg-grid-cell" :class="clazz" :style="style" @click="onClick">
     {{data[labelField]}}
   </td>
 </template>
@@ -16,6 +16,10 @@
         type: String,
         required: true
       },
+      index: {
+        type: Number,
+        required: true
+      },
       width: null
     },
     computed: {
@@ -23,8 +27,19 @@
         let style = {}
         if (this.width) {
           style.width = `${this.width}px`
+          style.maxWidth = `${this.width}px`
         }
         return style
+      },
+      clazz () {
+        return {
+          'zg-click-able': this.$listeners.click
+        }
+      }
+    },
+    methods: {
+      onClick () {
+        this.$emit('click', this.data, this.labelField)
       }
     }
   }

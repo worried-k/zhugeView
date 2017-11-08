@@ -1,4 +1,24 @@
 @import "constants"
 .zg-grid-header-cell
   border: 1px solid $color-border-normal
+  border-top: none
   padding: $cell-padding
+  &:first-child
+    border-left: none
+  &:last-child
+    border-right: none
+  &.zg-sort-able
+    cursor: pointer
+  .zg-sort-icon
+    float: right
+    color: $color-font-icon-normal
+    position: relative
+    i:first-child
+      position: absolute
+      right: 3px
+      top: 3px
+    i:last-child
+      position: relative
+      right: -5px
+    .zg-active
+      color: $color-brand

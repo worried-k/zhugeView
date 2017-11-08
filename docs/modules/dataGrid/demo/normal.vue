@@ -1,7 +1,13 @@
 <template>
   <div>
     <demo-panel title="dataGrid" subtitle="普通表格">
-      <zg-data-grid :store="store">
+      <zg-data-grid :store="store" @clickCell="onClickCell" showIndex>
+        <zg-grid-column field="label0"
+                        key="column0"
+                        title="首列"
+                        :width="130"
+                        sortAble
+                        @clickCell="onClickFirstColumn"></zg-grid-column>
         <zg-grid-column v-for="column in columns"
                         :field="column.field"
                         :key="column.title"
@@ -26,9 +32,9 @@
       return {
         columns: (() => {
           let columns = []
-          for (let i = 0; i < 5; i++) {
+          for (let i = 1; i < 5; i++) {
             columns.push({
-              field: 'label',
+              field: `label${i}`,
               title: `column${i + 1}`
             })
           }
@@ -37,17 +43,22 @@
         store: (() => {
           let store = []
           for (let i = 0; i < 20; i++) {
-            store.push({
-              label: `label${i}`
-            })
+            let item = {}
+            for (let j = 0; j < 5; j++) {
+              item[`label${j}`] = `${i}-${j}`
+            }
+            store.push(item)
           }
           return store
         })()
       }
     },
     methods: {
-      onClickCell () {
-        console.log('on click cell')
+      onClickCell (data, labelField) {
+        console.log('on click cell', labelField, data)
+      },
+      onClickFirstColumn (data, labelField) {
+        console.log('on click first column', labelField)
       }
     }
   }

@@ -22,10 +22,13 @@
     },
     created () {
       let structure = this.parent('zgDataGrid').$data.structure
+      let listeners = this.$listeners
       let column = {
         field: this.field,
         title: this.title,
-        width: this.width
+        width: this.width,
+        sortAble: this.sortAble,
+        clickCell: listeners.clickCell
       }
       structure.push(column)
     },

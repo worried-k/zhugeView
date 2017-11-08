@@ -1,5 +1,8 @@
 @import "./constants"
 .zg-data-grid
+  border: 1px solid $color-border-normal
+  border-radius: $border-radius
+  overflow-x: auto
   .zg-grid
     width: 100%
     border-collapse: collapse
@@ -10,7 +13,11 @@
     .zg-grid-body
       .zg-grid-row
         background: $color-action-normal-default
-        &:hover
+        &:nth-child(2n)
           background: $color-action-normal-hover
+        &:hover
+          background: $color-action-normal-active
+        &:last-child .zg-grid-cell
+          border-bottom: none
   .zg-hidden-structure
     display: none
