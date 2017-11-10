@@ -1,4 +1,6 @@
 <script type="text/jsx">
+  import {dom} from '../../utils/index'
+
   import ZgGridHeader from './gridHeader.vue'
   import ZgGridCell from './gridCell.vue'
 
@@ -6,8 +8,13 @@
     name: 'zgGrid',
     components: {
       ZgGridCell,
-      ZgGridHeader},
+      ZgGridHeader
+    },
     props: {
+      gridId: {
+        type: [String, Number],
+        required: true
+      },
       showIndex: {
         type: Boolean,
         default: false
@@ -19,6 +26,18 @@
       store: {
         type: Array,
         required: true
+      }
+    },
+    methods: {
+      onHoverRow (rowIndex) {
+        dom.addStyleSheet(`zgDataGridHover${this.gridId}`, [
+          [`.zg-row-${this.gridId}-${rowIndex}`, [
+            'background', '#F0FAFF', true
+          ]]
+        ])
+      },
+      onMouseLeave (rowIndex) {
+        dom.removeStyleSheet(`zgDataGridHover${this.gridId}`)
       }
     },
     render (h) {
@@ -51,9 +70,13 @@
               let rowClass = {
                 'zg-grid-row': true
               }
-              rowClass[`zg-row-${i}`] = true
+              rowClass[`zg-row-${this.gridId}-${i}`] = true
               return (
-                <tr class={rowClass}>
+                <tr class={rowClass} onMouseover={() => {
+                  this.onHoverRow(i)
+                }} onMouseleave={() => {
+                  this.onMouseLeave(i)
+                }}>
                   {(() => {
                     if (this.showIndex) {
                       return (

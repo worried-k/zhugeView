@@ -1,8 +1,9 @@
 <script type="text/jsx">
+  import {dom} from '../../utils/index'
+
   import ZgGridHeader from './gridHeader.vue'
   import ZgGridCell from './gridCell.vue'
   import ZgGrid from './grid.vue'
-
   /**
    * clickCell，以列上注册的事件优先
    */
@@ -27,7 +28,11 @@
     },
     data () {
       return {
-        structure: []
+        structure: {
+          left: [],
+          right: [],
+          center: []
+        }
       }
     },
     computed: {
@@ -38,6 +43,25 @@
         }
         return style
       }
+    },
+    /**
+     * 计算行高
+     */
+    updated () {
+      // todo 分页时需要修改循环数
+      let styleSheet = []
+      this.store.forEach((item, i) => {
+        const className = `.zg-row-${this._uid}-${i}`
+        const rows = document.querySelectorAll(className)
+        let heights = []
+        rows.forEach(row => {
+          heights.push(row.offsetHeight)
+        })
+        styleSheet.push([className, [
+          'height', `${Math.max.apply(Math, heights)}px`
+        ]])
+      })
+      dom.addStyleSheet(`zgDataGrid_${this._uid}`, styleSheet)
     },
     methods: {
       /**
@@ -62,12 +86,53 @@
       return (
         <div class="zg-data-grid" style={this.gridStyle}>
           <div class="zg-hidden-structure">{this.$slots.default}</div>
-          <zg-grid structure={this.structure}
-                   store={this.store}
-                   showIndex={this.showIndex}
-                   onSort={this.onSort}
-                   onClickCell={listeners.clickCell}
-          ></zg-grid>
+          <div class="zg-grid-container">
+            <div class="zg-grid-left">
+              {(() => {
+                if (this.structure.left.length) {
+                  return (
+                    <zg-grid gridId={this._uid}
+                             structure={this.structure.left}
+                             store={this.store}
+                             showIndex={this.showIndex}
+                             onSort={this.onSort}
+                             onClickCell={listeners.clickCell || (() => {})}
+                    ></zg-grid>
+                  )
+                }
+              })()}
+            </div>
+            <div class="zg-grid-center">
+              {(() => {
+                if (this.structure.center.length) {
+                  return (
+                    <zg-grid gridId={this._uid}
+                             structure={this.structure.center}
+                             store={this.store}
+                             showIndex={this.showIndex && !this.structure.left.length}
+                             onSort={this.onSort}
+                             onClickCell={listeners.clickCell || (() => {})}
+                    ></zg-grid>
+                  )
+                }
+              })()}
+            </div>
+            <div class="zg-grid-right">
+              {(() => {
+                if (this.structure.right.length) {
+                  return (
+                    <zg-grid gridId={this._uid}
+                             structure={this.structure.right}
+                             store={this.store}
+                             showIndex={this.showIndex && !this.structure.left.length && !this.structure.center.length}
+                             onSort={this.onSort}
+                             onClickCell={listeners.clickCell || (() => {})}
+                    ></zg-grid>
+                  )
+                }
+              })()}
+            </div>
+          </div>
         </div>
       )
     }

@@ -18,6 +18,13 @@
       sortAble: {
         type: Boolean,
         default: false
+      },
+      fix: {
+        type: String,
+        default: 'center',
+        validator (value) {
+          return ['left', 'center', 'right'].indexOf(value) > -1
+        }
       }
     },
     mounted () {
@@ -31,7 +38,7 @@
         clickCell: listeners.clickCell,
         cellFormatter: this.$scopedSlots.default
       }
-      structure.push(column)
+      structure[this.fix].push(column)
     },
     render (h) {
       return ('')

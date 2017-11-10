@@ -40,6 +40,7 @@
         if (this.width) {
           style.width = `${this.width}px`
           style.maxWidth = `${this.width}px`
+          style.minWidth = `${this.width}px`
         }
         return style
       },
