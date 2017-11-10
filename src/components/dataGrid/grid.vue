@@ -30,13 +30,17 @@
     },
     methods: {
       onHoverRow (rowIndex) {
+        let hoverColor = document.querySelector('.zg-grid-hover-color')
+        if (hoverColor) {
+          hoverColor = window.getComputedStyle(hoverColor)['background-color']
+        }
         dom.addStyleSheet(`zgDataGridHover${this.gridId}`, [
           [`.zg-row-${this.gridId}-${rowIndex}`, [
-            'background', '#F0FAFF', true
+            'background', hoverColor || '#F0FAFF', true
           ]]
         ])
       },
-      onMouseLeave (rowIndex) {
+      onMouseLeave () {
         dom.removeStyleSheet(`zgDataGridHover${this.gridId}`)
       }
     },

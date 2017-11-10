@@ -2,6 +2,7 @@
 .zg-data-grid
   border: 1px solid $color-border-normal
   border-radius: $border-radius
+  color: $color-brand-black
   overflow-x: auto
   .zg-grid-container
     display: flex
@@ -18,11 +19,15 @@
       position: relative
       box-shadow: -6px 0 6px -4px rgba(0,0,0,.2)
       z-index: $z-index-base + 1
+      .zg-grid-cell:first-child,.zg-grid-header-cell:first-child
+        text-align: right
     .zg-grid-center
       flex: 1
       position: relative
       z-index: $z-index-base
       overflow-x: auto
+      .zg-grid-cell:first-child,.zg-grid-header-cell:first-child
+        text-align: right
     .zg-grid
       width: auto
       min-width: 100%
@@ -33,12 +38,14 @@
           background: $color-background-dark
       .zg-grid-body
         .zg-grid-row
-          background: $color-action-normal-default
+          background: $color-background-normal
           &:nth-child(2n)
-            background: $color-action-normal-hover
+            background: $color-background-light
           &:hover
-            background: $color-action-normal-active
+            background: $color-action-normal-hover
           &:last-child .zg-grid-cell
             border-bottom: none
   .zg-hidden-structure
     display: none
+    .zg-grid-hover-color
+      background: $color-action-normal-active

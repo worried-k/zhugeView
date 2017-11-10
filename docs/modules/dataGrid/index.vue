@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<normal-grid></normal-grid>-->
+    <normal-grid></normal-grid>
     <fix-left></fix-left>
   </div>
 </template>

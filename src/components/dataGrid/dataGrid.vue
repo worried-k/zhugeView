@@ -85,7 +85,10 @@
       const listeners = this.$listeners
       return (
         <div class="zg-data-grid" style={this.gridStyle}>
-          <div class="zg-hidden-structure">{this.$slots.default}</div>
+          <div class="zg-hidden-structure">
+            {this.$slots.default}
+            <span class="zg-grid-hover-color"></span>
+          </div>
           <div class="zg-grid-container">
             <div class="zg-grid-left">
               {(() => {

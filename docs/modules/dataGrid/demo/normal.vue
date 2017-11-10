@@ -45,7 +45,7 @@
         })(),
         store: (() => {
           let store = []
-          for (let i = 0; i < 20; i++) {
+          for (let i = 0; i < 3; i++) {
             let item = {}
             for (let j = 0; j < 5; j++) {
               item[`label${j}`] = `${i}-${j}`
