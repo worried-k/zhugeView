@@ -106,6 +106,7 @@
                                         labelField={column.field}
                                         width={column.width}
                                         index={i}
+                                        scopedSlots={{default: column.cellFormatter}}
                                         onClick={column.clickCell || listeners.clickCell}
                           ></zg-grid-cell>
                         )

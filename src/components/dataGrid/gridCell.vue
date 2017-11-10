@@ -1,6 +1,6 @@
 <template>
   <td class="zg-grid-cell" :class="clazz" :style="style" @click="onClick">
-    {{data[labelField]}}
+    <slot :data="data" :field="labelField">{{data[labelField]}}</slot>
   </td>
 </template>
 

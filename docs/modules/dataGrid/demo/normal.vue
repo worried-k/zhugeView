@@ -3,11 +3,14 @@
     <demo-panel title="dataGrid" subtitle="普通表格">
       <zg-data-grid :store="store" @clickCell="onClickCell" showIndex>
         <zg-grid-column field="label0"
-                        key="column0"
                         title="首列"
                         :width="130"
                         sortAble
-                        @clickCell="onClickFirstColumn"></zg-grid-column>
+                        @clickCell="onClickFirstColumn">
+          <template scope="scope">
+            自定义展示：{{scope.data[scope.field]}}
+          </template>
+        </zg-grid-column>
         <zg-grid-column v-for="column in columns"
                         :field="column.field"
                         :key="column.title"

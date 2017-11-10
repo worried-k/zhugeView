@@ -20,15 +20,16 @@
         default: false
       }
     },
-    created () {
+    mounted () {
       let structure = this.parent('zgDataGrid').$data.structure
-      let listeners = this.$listeners
+      const listeners = this.$listeners
       let column = {
         field: this.field,
         title: this.title,
         width: this.width,
         sortAble: this.sortAble,
-        clickCell: listeners.clickCell
+        clickCell: listeners.clickCell,
+        cellFormatter: this.$scopedSlots.default
       }
       structure.push(column)
     },
