@@ -79,6 +79,13 @@
           }
           return 0
         })
+      },
+      onScroll (event) {
+        const container = this.$refs.center
+        const right = this.$refs.right
+        const left = this.$refs.left
+        if (left) left.style['box-shadow'] = container.scrollLeft === 0 ? 'none' : '6px 0 6px -4px rgba(0,0,0,.2)'
+        if (right) right.style['box-shadow'] = container.scrollLeft === (container.scrollWidth - container.offsetWidth) ? 'none' : '-6px 0 6px -4px rgba(0,0,0,.2)'
       }
     },
     render (h) {
@@ -90,10 +97,10 @@
             <span class="zg-grid-hover-color"></span>
           </div>
           <div class="zg-grid-container">
-            <div class="zg-grid-left">
-              {(() => {
-                if (this.structure.left.length) {
-                  return (
+            {(() => {
+              if (this.structure.left.length) {
+                return (
+                  <div class="zg-grid-left" ref="left">
                     <zg-grid gridId={this._uid}
                              structure={this.structure.left}
                              store={this.store}
@@ -101,14 +108,14 @@
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
-                  )
-                }
-              })()}
-            </div>
-            <div class="zg-grid-center">
-              {(() => {
-                if (this.structure.center.length) {
-                  return (
+                  </div>
+                )
+              }
+            })()}
+            {(() => {
+              if (this.structure.center.length) {
+                return (
+                  <div class="zg-grid-center" onScroll={this.onScroll} ref="center">
                     <zg-grid gridId={this._uid}
                              structure={this.structure.center}
                              store={this.store}
@@ -116,14 +123,14 @@
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
-                  )
-                }
-              })()}
-            </div>
-            <div class="zg-grid-right">
-              {(() => {
-                if (this.structure.right.length) {
-                  return (
+                  </div>
+                )
+              }
+            })()}
+            {(() => {
+              if (this.structure.right.length) {
+                return (
+                  <div class="zg-grid-right" ref="right">
                     <zg-grid gridId={this._uid}
                              structure={this.structure.right}
                              store={this.store}
@@ -131,10 +138,10 @@
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
-                  )
-                }
-              })()}
-            </div>
+                  </div>
+                )
+              }
+            })()}
           </div>
         </div>
       )
