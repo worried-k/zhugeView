@@ -1,12 +1,14 @@
 <script type="text/jsx">
   import ZgGridHeader from './gridHeader.vue'
   import ZgGridCell from './gridCell.vue'
+  import ZgGrid from './grid.vue'
 
   /**
    * clickCell，以列上注册的事件优先
    */
   export default {
     components: {
+      ZgGrid,
       ZgGridCell,
       ZgGridHeader},
     name: 'zgDataGrid',
@@ -60,63 +62,12 @@
       return (
         <div class="zg-data-grid" style={this.gridStyle}>
           <div class="zg-hidden-structure">{this.$slots.default}</div>
-          <table class="zg-grid">
-            <thead class="zg-grid-header">
-            <tr class="zg-grid-header-row">
-              {(() => {
-                if (this.showIndex) {
-                  return (
-                    <zg-grid-header title={'index'} column={{}}></zg-grid-header>
-                  )
-                }
-              })()}
-              {this.structure.map(column => {
-                return (
-                  <zg-grid-header title={column.title}
-                                  sortAble={column.sortAble}
-                                  column={column}
-                                  width={column.width}
-                                  onSort={this.onSort}></zg-grid-header>
-                )
-              })}
-            </tr>
-            </thead>
-            <tbody class="zg-grid-body">
-              {
-                this.store.map((item, i) => {
-                  let rowClass = {
-                    'zg-grid-row': true
-                  }
-                  rowClass[`zg-row-${i}`] = true
-                  return (
-                    <tr class={rowClass}>
-                      {(() => {
-                        if (this.showIndex) {
-                          return (
-                            <zg-grid-cell data={{index: i}}
-                                          labelField={'index'}
-                                          index={i}
-                            ></zg-grid-cell>
-                          )
-                        }
-                      })()}
-                      {this.structure.map(column => {
-                        return (
-                          <zg-grid-cell data={item}
-                                        labelField={column.field}
-                                        width={column.width}
-                                        index={i}
-                                        scopedSlots={{default: column.cellFormatter}}
-                                        onClick={column.clickCell || listeners.clickCell}
-                          ></zg-grid-cell>
-                        )
-                      })
-                    }</tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
+          <zg-grid structure={this.structure}
+                   store={this.store}
+                   showIndex={this.showIndex}
+                   onSort={this.onSort}
+                   onClickCell={listeners.clickCell}
+          ></zg-grid>
         </div>
       )
     }
