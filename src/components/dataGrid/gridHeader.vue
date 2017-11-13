@@ -53,14 +53,13 @@
     },
     methods: {
       onClick () {
+        if (!this.sortAble) return
         if (this.sortStatus === 0) {
           this.sortStatus = -1
         } else {
           this.sortStatus = this.sortStatus * -1
         }
-        if (this.sortAble) {
-          this.$emit('sort', this.sortStatus, this.column)
-        }
+        this.$emit('sort', this.sortStatus, this.column)
       }
     }
   }

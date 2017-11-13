@@ -1,5 +1,6 @@
 <script type="text/jsx">
   import {dom} from '../../utils/index'
+  import {emitter} from '../../mixins/main'
 
   import ZgGridHeader from './gridHeader.vue'
   import ZgGridCell from './gridCell.vue'
@@ -13,6 +14,7 @@
       ZgGridCell,
       ZgGridHeader},
     name: 'zgDataGrid',
+    mixins: [emitter],
     props: {
       store: {
         type: Array,
@@ -70,6 +72,12 @@
        * @param column
        */
       onSort (status, column) {
+        const headerList = this.children('zgGridHeader')
+        headerList.forEach(header => {
+          if (header.$props.column !== column) {
+            header.$data.sortStatus = 0
+          }
+        })
         const field = column.field
         this.store.sort((a, b) => {
           if (a[field] > b[field]) {
