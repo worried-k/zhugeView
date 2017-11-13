@@ -1,5 +1,5 @@
 <script type="text/jsx">
-  import {dom} from '../../utils/index'
+  import {dom, util} from '../../utils/index'
 
   import ZgGridHeader from './gridHeader.vue'
   import ZgGridCell from './gridCell.vue'
@@ -28,6 +28,38 @@
         required: true
       }
     },
+    computed: {
+      structureParser () {
+        let headStructure = [[], []]
+        let bodyStructure = []
+        let childExist = false
+        this.structure.forEach(item => {
+          if (item.children) {
+            childExist = true
+            item.rowspan = 1
+            headStructure[0].push(item)
+            item.children.forEach(column => {
+              headStructure[1].push(column)
+              bodyStructure.push(column)
+            })
+          } else {
+            headStructure[0].push(item)
+            bodyStructure.push(item)
+          }
+        })
+
+        if (childExist) {
+          headStructure[0].forEach(column => {
+            if (!column.rowspan) column.rowspan = 2
+          })
+        }
+
+        return {
+          headStructure,
+          bodyStructure
+        }
+      }
+    },
     methods: {
       onHoverRow (rowIndex) {
         let hoverColor = document.querySelector('.zg-grid-hover-color')
@@ -49,24 +81,30 @@
       return (
         <table class="zg-grid">
           <thead class="zg-grid-header">
-          <tr class="zg-grid-header-row">
-            {(() => {
-              if (this.showIndex) {
-                return (
-                  <zg-grid-header title={'index'} column={{}}></zg-grid-header>
-                )
-              }
-            })()}
-            {this.structure.map(column => {
-              return (
-                <zg-grid-header title={column.title}
-                                sortAble={column.sortAble}
-                                column={column}
-                                width={column.width}
-                                onSort={listeners.sort}></zg-grid-header>
-              )
-            })}
-          </tr>
+          {this.structureParser.headStructure.map((row, rowIndex) => {
+            return (
+              <tr class="zg-grid-header-row">
+                {(() => {
+                  if (this.showIndex && rowIndex === 0) {
+                    return (
+                      <zg-grid-header title={'index'} column={{}} rowspan={this.structureParser.headStructure[1].length ? 2 : 1}></zg-grid-header>
+                    )
+                  }
+                })()}
+                {row.map(column => {
+                  return (
+                    <zg-grid-header title={column.title}
+                                    sortAble={column.sortAble}
+                                    column={column}
+                                    width={column.width}
+                                    rowspan={column.rowspan}
+                                    colspan={column.colspan}
+                                    onSort={listeners.sort}></zg-grid-header>
+                  )
+                })}
+              </tr>
+            )
+          })}
           </thead>
           <tbody class="zg-grid-body">
           {
@@ -76,11 +114,8 @@
               }
               rowClass[`zg-row-${this.gridId}-${i}`] = true
               return (
-                <tr class={rowClass} onMouseover={() => {
-                  this.onHoverRow(i)
-                }} onMouseleave={() => {
-                  this.onMouseLeave(i)
-                }}>
+                <tr class={rowClass} onMouseover={() => {this.onHoverRow(i)}}
+                    onMouseleave={() => {this.onMouseLeave(i)}}>
                   {(() => {
                     if (this.showIndex) {
                       return (
@@ -91,7 +126,7 @@
                       )
                     }
                   })()}
-                  {this.structure.map(column => {
+                  {this.structureParser.bodyStructure.map(column => {
                     return (
                       <zg-grid-cell data={item}
                                     labelField={column.field}

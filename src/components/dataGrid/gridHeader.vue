@@ -1,5 +1,5 @@
 <template>
-  <th :class="clazz" :style="style" @click="onClick">
+  <th :class="clazz" :style="style" :colspan="colspan" :rowspan="rowspan" @click="onClick">
     {{title}}
     <span class="zg-sort-icon" v-if="sortAble">
       <i class="zgicon-sort-left" :class="{'zg-active': sortStatus === -1}"></i>
@@ -24,6 +24,14 @@
       sortAble: {
         type: Boolean,
         default: false
+      },
+      colspan: {
+        type: Number,
+        default: 1
+      },
+      rowspan: {
+        type: Number,
+        default: 1
       }
     },
     data () {
