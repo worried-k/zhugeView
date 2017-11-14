@@ -3,6 +3,8 @@
     <normal-grid></normal-grid>
     <fix-left></fix-left>
     <cols-header></cols-header>
+    <doc-markdown :api="json.grid" title="dataGrid"></doc-markdown>
+    <doc-markdown :api="json.column" title="gridColumn"></doc-markdown>
   </div>
 </template>
 
@@ -10,16 +12,23 @@
   import NormalGrid from './demo/normal.vue'
   import FixLeft from './demo/fixLeft.vue'
   import ColsHeader from './demo/colsHeader.vue'
+  import DocMarkdown from '../../components/docMarkdown/index.vue'
 
+  import dataGridJson from './dataGrid.json'
+  import gridColumnJson from './gridColumn.json'
   export default {
     components: {
+      DocMarkdown,
       ColsHeader,
       FixLeft,
       NormalGrid},
     name: 'index',
     data () {
       return {
-        msg: 'index'
+        json: {
+          grid: dataGridJson,
+          column: gridColumnJson
+        }
       }
     }
   }

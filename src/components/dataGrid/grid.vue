@@ -119,7 +119,7 @@
                   {(() => {
                     if (this.showIndex) {
                       return (
-                        <zg-grid-cell data={{index: i}}
+                        <zg-grid-cell store={{index: i}}
                                       labelField={'index'}
                                       index={i}
                         ></zg-grid-cell>
@@ -128,7 +128,7 @@
                   })()}
                   {this.structureParser.bodyStructure.map(column => {
                     return (
-                      <zg-grid-cell data={item}
+                      <zg-grid-cell store={item}
                                     labelField={column.field}
                                     width={column.width}
                                     index={i}

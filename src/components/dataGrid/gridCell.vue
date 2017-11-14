@@ -1,6 +1,6 @@
 <template>
   <td class="zg-grid-cell" :class="clazz" :style="style" @click="onClick">
-    <slot :data="data" :field="labelField">{{data[labelField]}}</slot>
+    <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
   </td>
 </template>
 
@@ -8,7 +8,7 @@
   export default {
     name: 'zgGridCell',
     props: {
-      data: {
+      store: {
         type: Object,
         required: true
       },
@@ -40,7 +40,7 @@
     },
     methods: {
       onClick () {
-        this.$emit('click', this.data, this.labelField)
+        this.$emit('click', this.store, this.labelField)
       }
     }
   }

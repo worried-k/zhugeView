@@ -1,0 +1,1 @@
+[{"name":"store","type":"Array","required":"true","default":null,"description":"数据源"},{"name":"width","type":"Number","required":false,"default":null,"description":"表格宽度"},{"name":"showIndex","type":"Boolean","required":false,"default":"false","description":"显示索引列"}]
