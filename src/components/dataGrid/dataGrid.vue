@@ -16,13 +16,22 @@
     name: 'zgDataGrid',
     mixins: [emitter],
     props: {
+      /**
+       * @description 数据源
+       */
       store: {
         type: Array,
         required: true
       },
+      /**
+       * @description 表格宽度
+       */
       width: {
         type: Number
       },
+      /**
+       * @description 显示索引列
+       */
       showIndex: {
         type: Boolean,
         default: false

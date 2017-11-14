@@ -11,8 +11,7 @@ var env = config.lib.env
 
 var webpackConfig = merge(baseWebpackConfig, {
   entry: {
-    main: './src/index.js',
-    button: './src/components/button/index.js'
+    main: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, '../lib'),
