@@ -82,7 +82,9 @@
     },
     render (h) {
       return (
-        <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>{this.content}</span>
+        <transition enter-active-class="animated fadeIn">
+          <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>{this.content}</span>
+        </transition>
       )
     }
   })

@@ -40,6 +40,16 @@
       },
       onMouseLeave () {
         this.tooltip.$data.show = false
+      },
+      /**
+       * 供外部主动调用，一段时间后自动消失
+       */
+      show () {
+        console.log('显示tooltip')
+        this.onHoverTrigger()
+        setTimeout(() => {
+          this.onMouseLeave()
+        }, 2000)
       }
     },
     mounted () {
