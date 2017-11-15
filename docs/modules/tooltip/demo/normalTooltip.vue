@@ -55,13 +55,6 @@
         </zg-tooltip>
       </div>
     </demo-panel>
-
-    <demo-panel subtitle="点击触发">
-      <zg-button @click="onClick">显示tooltip</zg-button>
-      <zg-tooltip content="出来了~" ref="tooltip">
-        <zg-button>触发区</zg-button>
-      </zg-tooltip>
-    </demo-panel>
   </div>
 </template>
 
@@ -79,11 +72,6 @@
     data () {
       return {
         msg: 'normalTooltip'
-      }
-    },
-    methods: {
-      onClick () {
-        this.$refs.tooltip.show()
       }
     }
   }

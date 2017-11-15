@@ -8,15 +8,21 @@
         placement: '',
         trigger: null,
         top: 0,
-        left: 0
+        left: 0,
+        autoHide: true,
+        width: 0
       }
     },
     computed: {
       style () {
-        return {
+        let style = {
           top: `${this.top}px`,
           left: `${this.left}px`
         }
+        if (this.width) {
+          style.width = `${this.width}px`
+        }
+        return style
       },
       clazz () {
         let rules = [
@@ -75,15 +81,19 @@
     destroyed () {
       this.$el.remove()
     },
-    methods: {
-      onClick () {
-        console.log('click')
-      }
-    },
     render (h) {
       return (
         <transition enter-active-class="animated fadeIn">
-          <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>{this.content}</span>
+          <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>
+            {this.content}
+            {(() => {
+              if (!this.autoHide) {
+                return (
+                  <a href="javascript:void(0);" class="zg-tooltip-close" onClick={() => {this.show = false}}>知道了</a>
+                )
+              }
+            })()}
+          </span>
         </transition>
       )
     }

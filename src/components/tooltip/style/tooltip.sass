@@ -8,17 +8,19 @@ $arrow-size: 4px
   padding: 10px
   border-radius: $border-radius
   font-size: $size-font-tip
-  line-height: $size-font-content
+  line-height: $ize-font-subtitle-lagre
   &:before
     content: ''
     position: absolute
     width: 100%
     height: 100%
-    //background: $color-brand
     border-radius: $border-radius
     top: 0
     left: 0
     z-index: 10
+  & *
+    position: relative
+    z-index: 11
   &:after
     content: ''
     display: inline-block
@@ -72,5 +74,10 @@ $arrow-size: 4px
   &.zg-bottom-right:after
     top: -$arrow-size
     right: 10px
+  .zg-tooltip-close
+    color: $color-white
+    text-decoration: underline
+    margin-left: 10px
+    cursor: pointer
 .zg-tooltip-trigger
   display: inline-block

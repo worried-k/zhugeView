@@ -20,6 +20,13 @@
           ]
           return rules.indexOf(value) > -1
         }
+      },
+      autoHide: {
+        type: Boolean,
+        default: true
+      },
+      width: {
+        type: Number
       }
     },
     data () {
@@ -36,20 +43,24 @@
     },
     methods: {
       onHoverTrigger () {
-        this.tooltip.$data.show = true
+        if (this.autoHide) this.tooltip.$data.show = true
       },
       onMouseLeave () {
-        this.tooltip.$data.show = false
+        if (this.autoHide) this.tooltip.$data.show = false
       },
       /**
-       * 供外部主动调用，一段时间后自动消失
+       * @method show
+       * @description 供外部主动调用
        */
       show () {
-        console.log('显示tooltip')
-        this.onHoverTrigger()
-        setTimeout(() => {
-          this.onMouseLeave()
-        }, 2000)
+        this.tooltip.$data.show = true
+      },
+      /**
+       * @method hide
+       * @description 供外部主动调用
+       */
+      hide () {
+        this.tooltip.$data.show = false
       }
     },
     mounted () {
@@ -57,7 +68,9 @@
         data: {
           content: this.content,
           placement: this.placement,
-          trigger: this.$refs.trigger
+          trigger: this.$refs.trigger,
+          autoHide: this.autoHide,
+          width: this.width
         }
       }).$mount()
       document.body.appendChild(this.tooltip.$el)
