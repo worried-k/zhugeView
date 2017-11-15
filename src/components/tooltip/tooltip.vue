@@ -27,6 +27,13 @@
         showTip: false
       }
     },
+    watch: {
+      placement (value) {
+        if (this.tooltip) {
+          this.tooltip.$data.placement = value
+        }
+      }
+    },
     methods: {
       onHoverTrigger () {
         this.tooltip.$data.show = true
@@ -36,13 +43,11 @@
       }
     },
     mounted () {
-      const triggerRect = this.$refs.trigger.getBoundingClientRect()
       this.tooltip = new Tooltip({
         data: {
           content: this.content,
           placement: this.placement,
-          top: triggerRect.top,
-          left: triggerRect.left
+          trigger: this.$refs.trigger
         }
       }).$mount()
       document.body.appendChild(this.tooltip.$el)

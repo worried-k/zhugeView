@@ -1,62 +1,59 @@
 <template>
   <div>
-    <demo-panel title="tooltip">
+    <demo-panel title="tooltip" subtitle="普通应用">
       <div class="top row">
-        <zg-tooltip content="上左" placement="top-left">
+        <zg-tooltip content="placement is top-left" placement="top-left">
           <span class="span">上左</span>
         </zg-tooltip>
 
-        <zg-tooltip content="上" placement="top">
+        <zg-tooltip content="placement is top" placement="top">
           <span class="span">上</span>
         </zg-tooltip>
 
-        <zg-tooltip content="上右" placement="top-right">
+        <zg-tooltip content="placement is top-right" placement="top-right">
           <span class="span">上右</span>
         </zg-tooltip>
       </div>
       <div class="center-top row">
-        <zg-tooltip content="左上" placement="left-top">
+        <zg-tooltip content="placement is left-top" placement="left-top">
           <span class="span">左上</span>
         </zg-tooltip>
 
-        <zg-tooltip content="右上" placement="right-top">
+        <zg-tooltip content="placement is right-top" placement="right-top">
           <span class="span">右上</span>
         </zg-tooltip>
       </div>
       <div class="center row">
-        <zg-tooltip content="左" placement="left">
+        <zg-tooltip content="placement is left" placement="left">
           <span class="span">左</span>
         </zg-tooltip>
 
-        <zg-tooltip content="右" placement="right">
+        <zg-tooltip content="placement is right" placement="right">
           <span class="span">右</span>
         </zg-tooltip>
       </div>
       <div class="center-bottom row">
-        <zg-tooltip content="左下" placement="left-bottom">
+        <zg-tooltip content="placement is left-bottom" placement="left-bottom">
           <span class="span">左下</span>
         </zg-tooltip>
 
-        <zg-tooltip content="右下" placement="right-bottom">
+        <zg-tooltip content="placement is right-bottom" placement="right-bottom">
           <span class="span">右下</span>
         </zg-tooltip>
       </div>
       <div class="bottom row">
-        <zg-tooltip content="下左" placement="bottom-left">
+        <zg-tooltip content="placement is bottom-left" placement="bottom-left">
           <span class="span">下左</span>
         </zg-tooltip>
 
-        <zg-tooltip content="下" placement="bottom">
+        <zg-tooltip content="placement is bottom" placement="bottom">
           <span class="span">下</span>
         </zg-tooltip>
 
-        <zg-tooltip content="下右" placement="bottom-right">
+        <zg-tooltip content="placement is bottom-right" placement="bottom-right">
           <span class="span">下右</span>
         </zg-tooltip>
       </div>
-      <zg-tooltip :content="content">
-        aa
-      </zg-tooltip>
     </demo-panel>
   </div>
 </template>
@@ -72,7 +69,7 @@
     name: 'index',
     data () {
       return {
-        content: 'this is aa'
+        placement: 'bottom'
       }
     }
   }
@@ -80,6 +77,7 @@
 
 <style lang="sass">
 .span
+  box-sizing: border-box
   display: inline-block
   border: 1px solid darkgray
   border-radius: 3px

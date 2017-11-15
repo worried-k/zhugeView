@@ -4,8 +4,9 @@
     data () {
       return {
         content: '',
-        show: true,
+        show: false,
         placement: '',
+        trigger: null,
         top: 0,
         left: 0
       }
@@ -34,6 +35,43 @@
         return clazz
       }
     },
+    updated () {
+      const triggerRect = this.trigger.getBoundingClientRect()
+      const tipRect = this.$refs.tooltip.getBoundingClientRect()
+
+      const placement = this.placement.split('-')
+      placement.forEach((position, i) => {
+        if (i > 0)return
+
+        if (['top', 'bottom'].indexOf(position) > -1) {
+          if (position === 'top') {
+            this.top = triggerRect.top - tipRect.height - 10
+          } else {
+            this.top = triggerRect.top + triggerRect.height + 10
+          }
+          if (placement[1] === 'left') {
+            this.left = triggerRect.left
+          } else if (placement[1] === 'right') {
+            this.left = triggerRect.left + triggerRect.width - tipRect.width
+          } else {
+            this.left = triggerRect.left + (triggerRect.width - tipRect.width) / 2
+          }
+        } else {
+          if (position === 'left') {
+            this.left = triggerRect.left - tipRect.width - 10
+          } else {
+            this.left = triggerRect.left + triggerRect.width + 10
+          }
+          if (this.placement === 'left-top') {
+            this.top = triggerRect.top
+          } else if (this.placement === 'left') {
+            this.top = triggerRect.top + (triggerRect.height - tipRect.height) / 2
+          } else {
+            this.top = triggerRect.top + triggerRect.height - tipRect.height
+          }
+        }
+      })
+    },
     destroyed () {
       this.$el.remove()
     },
@@ -44,7 +82,7 @@
     },
     render (h) {
       return (
-        <span class={this.clazz} style={this.style} v-show={this.show}>{this.content}</span>
+        <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>{this.content}</span>
       )
     }
   })
