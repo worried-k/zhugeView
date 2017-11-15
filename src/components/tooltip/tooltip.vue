@@ -4,8 +4,7 @@
     name: 'zgTooltip',
     props: {
       content: {
-        type: String,
-        required: true
+        type: String
       },
       placement: {
         type: String,
@@ -70,7 +69,9 @@
           placement: this.placement,
           trigger: this.$refs.trigger,
           autoHide: this.autoHide,
-          width: this.width
+          width: this.width,
+          customRender: this.$slots.tooltip,
+          onHide: this.$listeners.hide
         }
       }).$mount()
       document.body.appendChild(this.tooltip.$el)

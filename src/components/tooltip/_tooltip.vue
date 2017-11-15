@@ -10,7 +10,9 @@
         top: 0,
         left: 0,
         autoHide: true,
-        width: 0
+        width: 0,
+        customRender: null,
+        onHide: () => {}
       }
     },
     computed: {
@@ -81,16 +83,27 @@
     destroyed () {
       this.$el.remove()
     },
+    methods: {
+      hide () {
+        this.show = false
+        this.onHide()
+      }
+    },
     render (h) {
       return (
         <transition enter-active-class="animated fadeIn">
           <span ref="tooltip" class={this.clazz} style={this.style} v-show={this.show}>
-            {this.content}
             {(() => {
-              if (!this.autoHide) {
-                return (
-                  <a href="javascript:void(0);" class="zg-tooltip-close" onClick={() => {this.show = false}}>知道了</a>
-                )
+              if (this.customRender) {
+                return this.customRender
+              } else {
+                return [this.content, (() => {
+                  if (!this.autoHide) {
+                    return (
+                      <a href="javascript:void(0);" class="zg-tooltip-close" onClick={this.hide}>知道了</a>
+                    )
+                  }
+                })()]
               }
             })()}
           </span>

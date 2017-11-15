@@ -5,7 +5,7 @@
       <zg-tooltip content="出来了~，但是这段文本有点长啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
                   ref="tooltip"
                   :width="200"
-                  :autoHide="false">
+                  :autoHide="false" @hide="onHide">
         <zg-button>触发区</zg-button>
       </zg-tooltip>
     </demo-panel>
@@ -29,6 +29,9 @@
     methods: {
       onClick () {
         this.$refs.tooltip.show()
+      },
+      onHide () {
+        console.log('隐藏了')
       }
     }
   }
