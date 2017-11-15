@@ -24,7 +24,8 @@ export default {
         'input',
         'checkbox',
         'select',
-        'grid'
+        'grid',
+        'tooltip'
       ]
     }
   },

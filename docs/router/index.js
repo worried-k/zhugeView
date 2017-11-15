@@ -6,6 +6,7 @@ import Checkbox from '../modules/checkbox/index.vue'
 import Select from '../modules/selector/index.vue'
 import Input from '@docs/modules/input/index.vue'
 import grid from '../modules/dataGrid/index.vue'
+import tooltip from '../modules/tooltip/index.vue'
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
           path: '/grid',
           name: 'grid',
           component: grid
+        },
+        {
+          path: '/tooltip',
+          name: 'tooltip',
+          component: tooltip
         }
       ]
     }

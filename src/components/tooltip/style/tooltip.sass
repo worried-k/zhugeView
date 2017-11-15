@@ -1,0 +1,31 @@
+@import "../../../assets/styles/constants"
+$arrow-size: 5
+.zg-tooltip
+  display: inline-block
+  position: absolute
+  background: $color-brand-black
+  opacity: .9
+  color: $color-white
+  padding: 10px
+  border-radius: $border-radius
+  font-size: $size-font-tip
+  line-height: $size-font-content
+  &:after
+    content: ''
+    display: inline-block
+    width: 10px
+    height: 10px
+    transform: rotate(45deg)
+    transform-origin: center
+    position: absolute
+    background: $color-brand-black
+    opacity: .9
+  &.zg-top-left:after
+    left: 10px
+    bottom: -3.4px
+  &.zg-top:after
+    left: 50%
+    bottom: -3.4px
+    margin-left: -5px
+.zg-tooltip-trigger
+  display: inline-block
