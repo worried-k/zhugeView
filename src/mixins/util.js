@@ -19,7 +19,7 @@ const log = function () {
 
     arguments[0] = str
   }
-  console.log.apply(console, arguments)
+  // console.log.apply(console, arguments)
 }
 export default {
   methods: {
