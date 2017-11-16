@@ -7,6 +7,7 @@ import Select from '../modules/selector/index.vue'
 import Input from '@docs/modules/input/index.vue'
 import grid from '../modules/dataGrid/index.vue'
 import tooltip from '../modules/tooltip/index.vue'
+import badge from '../modules/badge/index.vue'
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
           path: '/tooltip',
           name: 'tooltip',
           component: tooltip
+        },
+        {
+          path: '/badge',
+          name: 'badge',
+          component: badge
         }
       ]
     }

@@ -6,6 +6,8 @@ import ZgInput from './components/input/index'
 import ZgCheckbox from './components/checkbox/index'
 import {zgSelector, ZgOption, ZgOptGroup} from './components/selector/index'
 import {dataGrid, gridColumn} from './components/dataGrid/index'
+import tooltip from './components/tooltip/index'
+import badge from './components/badge/index'
 
 import directives from './directives/main'
 
@@ -18,7 +20,9 @@ const components = [
   ZgOptGroup,
   ZgCheckbox,
   dataGrid,
-  gridColumn
+  gridColumn,
+  tooltip,
+  badge
 ]
 
 const install = function (Vue) {
