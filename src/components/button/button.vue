@@ -24,7 +24,7 @@ export default {
       }
     },
     /**
-     * @description 可选值为：small、normal、large或空
+     * @description 可选值为：small、normal、large
      */
     size: {
       type: String,
@@ -44,7 +44,7 @@ export default {
       }
     },
     /**
-     * @description 内置icon文件的名称
+     * @description icon名称
      */
     icon: {
       type: String

@@ -3,9 +3,16 @@
   export default {
     name: 'zgTooltip',
     props: {
+      /**
+       * @description 提示文本
+       * @tip 指定name为tooltip的slot时，tooltip内容为slot
+       */
       content: {
         type: String
       },
+      /**
+       * @description tooltip展示位置top-left, top, top-right, left-top, right-top,left, right,left-bottom, right-bottom,bottom-left, bottom, bottom-right
+       */
       placement: {
         type: String,
         default: 'top',
@@ -20,10 +27,16 @@
           return rules.indexOf(value) > -1
         }
       },
+      /**
+       * @description tooltip是否自动显示隐藏，默认为hover显示，mouseLeave隐藏
+       */
       autoHide: {
         type: Boolean,
         default: true
       },
+      /**
+       * @description tooltip展示宽度，默认不限制
+       */
       width: {
         type: Number
       }

@@ -74,7 +74,7 @@
               return this.$slots.default
             } else {
               return (
-                <zg-tooltip content={this.tip} placement="top-right" autoHide={this.autoHideTip}>
+                <zg-tooltip ref="tooltip" content={this.tip} placement="top-right" autoHide={this.autoHideTip}>
                   {this.$slots.default}
                   {(() => {
                     if (this.$slots.tooltip) {
