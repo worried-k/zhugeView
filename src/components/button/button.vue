@@ -4,91 +4,76 @@
     :type="nativeType"
     :disabled="disabled"
     :class="buttonClass">
-      <i :class="iconClassArr" v-if="iconClassArr.length"></i><span><slot></slot></span>
-    </button>
+    <i :class="icon" v-if="icon"></i>
+    <span><slot></slot></span>
+  </button>
 </template>
 <script>
 export default {
   name: 'ZgButton',
   props: {
     /**
-     * @description 可选值为：normal、submit、reset、primary、danger、secondary、successs或空
+     * @description 可选值为：normal、primary、danger、secondary、success
      */
     type: {
       type: String,
-      default: ''
+      default: 'normal',
+      validator (value) {
+        let rules = ['normal', 'primary', 'danger', 'secondary', 'success']
+        return rules.includes(value)
+      }
     },
     /**
-     * @description 可选值为：small、noraml、large或空
+     * @description 可选值为：small、normal、large或空
      */
-    size: String,
+    size: {
+      type: String,
+      default: 'normal',
+      validator (value) {
+        return ['small', 'normal', 'large'].includes(value)
+      }
+    },
     /**
-     *
+     * @description 主题样式：normal、border
      */
     theme: {
       type: String,
-      default: ''
+      default: 'normal',
+      validator (value) {
+        return ['normal', 'border'].includes(value)
+      }
     },
     /**
      * @description 内置icon文件的名称
      */
     icon: {
-      type: String,
-      default: ''
+      type: String
     },
     /**
-     * 自定义class的字符串
-     */
-    iconClass: {
-      type: String,
-      default: ''
-    },
-    /**
-     *
+     * @description 禁用按钮
      */
     disabled: Boolean,
     /**
-     * 可选值为：button、submit、reset
+     * @description 可选值为：button、submit、reset
      */
     nativeType: {
       type: String,
-      default: 'button'
+      default: 'button',
+      validator (value) {
+        return ['button', 'submit', 'reset'].includes(value)
+      }
     }
   },
   computed: {
     buttonClass () {
-      let mainClass = 'zg-button'
-      let result = [mainClass]
-      if (this.disabled) {
-        result.push(`is-disabled`)
-        return result
+      let clazz = {
+        'zg-button': true,
+        'zg-disable': this.disable
       }
-      if (this.theme && this.theme !== 'normal') {
-        result.push(`${mainClass}--${this.theme}`)
-      }
-      if (this.type && this.type !== 'normal') {
-        result.push(`${mainClass}--${this.type}`)
-      }
-      if (this.size && this.size !== 'normal') {
-        result.push(`${mainClass}--${this.size}`)
-      }
-      if (!this.$slots.default) {
-        result.push(`${mainClass}--icon`)
-      }
-      return result
-    },
-    iconClassArr () {
-      let result = []
-      if (this.icon) {
-        result.push('zgicon-' + this.icon)
-      }
-      if (this.iconClass) {
-        result.push(this.iconClass)
-      }
-      if ((this.icon || this.iconClass) && this.$slots.default) {
-        result.push('zg-icon-padding')
-      }
-      return result
+      clazz[`zg-button-${this.theme}-${this.type}`] = true
+      clazz[`zg-button-size-${this.size}`] = this.size !== 'normal'
+
+      return clazz
     }
   },
   methods: {

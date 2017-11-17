@@ -1,50 +1,7 @@
 <template>
   <div>
-    <demo-panel
-      title="基本用法"
-      subtitle="常规主题的按钮组件"
-      jsFiddleName='qp731r4o'>
-      <form action="#button">
-        <zg-button
-          @click="onClick"
-          nativeType="button">normal</zg-button>
-        <zg-button
-          nativeType="submit">submit</zg-button>
-          <zg-button
-          nativeType="reset">reset</zg-button>
-        <zg-button
-          @click="onClick"
-          type="primary">primary</zg-button>
-        <zg-button
-          @click="onClick"
-          type="danger">danger</zg-button>
-        <zg-button
-          @click="onClick"
-          type="secondary">secondary</zg-button>
-        <zg-button
-          @click="onClick"
-          type="success">success</zg-button>
-      </form>
-    </demo-panel>
-
-    <demo-panel
-      title="border button"
-      subtitle="主题为border的按钮组件"
-      jsFiddleName='s88yrxx7'>
-      <form>
-        <zg-button
-          @click="onClick"
-          theme="border">normal</zg-button>
-        <zg-button
-          type="primary"
-          @click="onClick"
-          theme="border">primary</zg-button>
-        <zg-button
-          type="danger"
-          @click="onClick"
-          theme="border">danger</zg-button>
-      </form>
-    </demo-panel>
+    <normal-button></normal-button>
+    <border-button></border-button>
 
     <demo-panel
       title="size属性"
@@ -101,7 +58,12 @@
 <script>
 import buttonJson from './button.json'
 import btnGroupJson from '../buttonGroup/buttonGroup.json'
+import NormalButton from './demo/normalButton.vue'
+import BorderButton from './demo/borderButton.vue'
 export default {
+  components: {
+    BorderButton,
+    NormalButton},
   name: 'buttonDemo',
   data () {
     return {
