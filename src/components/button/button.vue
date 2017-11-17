@@ -2,9 +2,9 @@
   <button
     @click="onClick"
     :type="nativeType"
-    :disabled="disabled"
+    :disabled="disable"
     :class="buttonClass">
-    <i :class="icon" v-if="icon"></i>
+    <i class="zg-icon" :class="icon" v-if="icon"></i>
     <span><slot></slot></span>
   </button>
 </template>
@@ -52,7 +52,10 @@ export default {
     /**
      * @description 禁用按钮
      */
-    disabled: Boolean,
+    disable: {
+      type: Boolean,
+      default: false
+    },
     /**
      * @description 可选值为：button、submit、reset
      */
@@ -68,7 +71,8 @@ export default {
     buttonClass () {
       let clazz = {
         'zg-button': true,
-        'zg-disable': this.disable
+        'zg-disable': this.disable,
+        'zg-button-icon': this.icon && !this.$slots.default
       }
       clazz[`zg-button-${this.theme}-${this.type}`] = true
       clazz[`zg-button-size-${this.size}`] = this.size !== 'normal'
@@ -77,8 +81,9 @@ export default {
     }
   },
   methods: {
-    onClick (e) {
-      this.$emit('click', e)
+    onClick () {
+      if (this.disable) return
+      this.$emit('click')
     }
   }
 }

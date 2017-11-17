@@ -1,7 +1,6 @@
 import './assets/styles/reset.sass'
 import './assets/icons/iconfont.css'
 import Button from './components/button/index.js'
-import ButtonGroup from './components/buttonGroup/index.js'
 import ZgInput from './components/input/index'
 import ZgCheckbox from './components/checkbox/index'
 import {zgSelector, ZgOption, ZgOptGroup} from './components/selector/index'
@@ -13,7 +12,6 @@ import directives from './directives/main'
 
 const components = [
   Button,
-  ButtonGroup,
   ZgInput,
   zgSelector,
   ZgOption,

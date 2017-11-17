@@ -9,8 +9,20 @@
   white-space: nowrap
   text-align: center
   user-select: none
-  .zg-icon-padding
-    padding-right: 0.5em
+  .zg-icon
+    margin-right: .5em
+  &.zg-button-icon
+    padding: 0.5em!important
+    .zg-icon
+      margin: 0
+  &.zg-button-size-small
+    font-size: $size-font-tip
+    padding-left: 1em
+    padding-right: 1em
+  &.zg-button-size-large
+    font-size: $size-font-subtitle-small
+    padding-left: 3em
+    padding-right: 3em
 
   &.zg-button-normal-normal
     border: 1px solid $color-border-normal
@@ -114,21 +126,11 @@
     &:active
       background: $btn-border-success-bg-active
 
-  &.zg-disabled
+  &.zg-disable
     border: 0
     color: $color-white
     background: $color-action-disabled-default
     cursor: not-allowed
     &:hover,&:active
       background: $color-action-disabled-default
-
-.zg-button-size-small
-  font-size: 12px
-  padding-left: 1em
-  padding-right: 1em
-.zg-button-size-large
-  font-size: 16px
-  padding-left: 3em
-  padding-right: 3em
-.zg-button--icon
-  padding: 0.5em
+      color: $color-white

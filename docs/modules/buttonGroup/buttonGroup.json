@@ -1,1 +1,0 @@
-[{"name":"store","type":"Array","required":false,"default":null,"description":"可为字符串数组 和 对象数组"},{"name":"btnWidth","type":"String","required":false,"default":"''"}]
