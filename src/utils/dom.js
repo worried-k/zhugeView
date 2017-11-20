@@ -54,5 +54,36 @@ export default {
   },
   removeStyleSheet (id) {
     document.getElementById(id) && document.getElementById(id).remove()
+  },
+  /**
+   * 获取指定元素的样式
+   * @param node
+   * @param style
+   * @returns {*}
+   */
+  getStyle (node, style) {
+    return window.getComputedStyle(node)[style]
+  },
+  /**
+   * 为指定元素设置样式
+   * @param node
+   * @param style
+   */
+  setStyle (node, style) {
+    for (let key in style) {
+      node.style[key] = style[key]
+    }
+  },
+  /**
+   * 校准指定元素的定位方式，如果是static，则置为relative
+   * @param node
+   */
+  setPosition (node) {
+    const position = this.getStyle(node, 'position')
+    if (position === 'static') {
+      this.setStyle(node, {
+        position: 'relative'
+      })
+    }
   }
 }

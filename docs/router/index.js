@@ -8,6 +8,7 @@ import Input from '@docs/modules/input/index.vue'
 import grid from '../modules/dataGrid/index.vue'
 import tooltip from '../modules/tooltip/index.vue'
 import badge from '../modules/badge/index.vue'
+import loading from '../modules/loading/index.vue'
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
           path: '/badge',
           name: 'badge',
           component: badge
+        },
+        {
+          path: '/loading',
+          name: 'loading',
+          component: loading
         }
       ]
     }

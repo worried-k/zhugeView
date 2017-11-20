@@ -26,7 +26,8 @@ export default {
         'select',
         'grid',
         'tooltip',
-        'badge'
+        'badge',
+        'loading'
       ]
     }
   },
