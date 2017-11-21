@@ -29,7 +29,8 @@ export default {
         'badge',
         'loading',
         'tab',
-        'message'
+        'message',
+        'dialog'
       ]
     }
   },

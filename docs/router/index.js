@@ -11,6 +11,7 @@ import badge from '../modules/badge/index.vue'
 import loading from '../modules/loading/index.vue'
 import tab from '../modules/tab/index.vue'
 import message from '../modules/message/index.vue'
+import dialog from '../modules/dialog/index.vue'
 
 Vue.use(Router)
 
@@ -71,6 +72,11 @@ export default new Router({
           path: '/message',
           name: 'message',
           component: message
+        },
+        {
+          path: '/dialog',
+          name: 'dialog',
+          component: dialog
         }
       ]
     }
