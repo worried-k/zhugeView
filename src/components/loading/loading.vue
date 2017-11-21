@@ -10,6 +10,9 @@
   export default {
     name: 'zgLoading',
     props: {
+      /**
+       * @description 默认：normal,支持normal、medium、small
+       */
       size: {
         type: [String, Number],
         default: 'normal',
@@ -20,10 +23,16 @@
           return true
         }
       },
+      /**
+       * @description loading的提示文本
+       */
       tip: {
         type: String,
         default: 'loading...'
       },
+      /**
+       * @description 是否显示提示文本
+       */
       showTip: {
         type: Boolean,
         default: true

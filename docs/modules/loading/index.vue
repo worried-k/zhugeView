@@ -1,18 +1,22 @@
 <template>
   <div>
     <normal-loading></normal-loading>
+    <doc-markdown title="loading" :api="json"></doc-markdown>
   </div>
 </template>
 
 <script>
   import NormalLoading from './demo/normalLoading.vue'
-
+  import json from './loading.json'
+  import DocMarkdown from '../../components/docMarkdown/index.vue'
   export default {
-    components: {NormalLoading},
+    components: {
+      DocMarkdown,
+      NormalLoading},
     name: 'index',
     data () {
       return {
-        msg: 'index'
+        json
       }
     }
   }
