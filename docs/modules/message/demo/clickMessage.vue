@@ -1,0 +1,31 @@
+<template>
+  <div>
+    <demo-panel subtitle="点击关闭">
+      <zg-button @click="onClick">弹出提示</zg-button>
+    </demo-panel>
+  </div>
+</template>
+
+<script>
+  import DemoPanel from '../../../components/demoPanel/index.vue'
+  import ZgButton from '../../../../src/components/button/button.vue'
+
+  export default {
+    components: {
+      ZgButton,
+      DemoPanel},
+    name: 'clickMessage',
+    methods: {
+      onClick () {
+        this.$message({
+          message: '出来了~',
+          autoHide: false
+        })
+      }
+    }
+  }
+</script>
+
+<style lang="sass">
+
+</style>

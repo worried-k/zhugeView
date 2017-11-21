@@ -10,6 +10,7 @@ import tooltip from '../modules/tooltip/index.vue'
 import badge from '../modules/badge/index.vue'
 import loading from '../modules/loading/index.vue'
 import tab from '../modules/tab/index.vue'
+import message from '../modules/message/index.vue'
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export default new Router({
           path: '/tab',
           name: 'tab',
           component: tab
+        },
+        {
+          path: '/message',
+          name: 'message',
+          component: message
         }
       ]
     }

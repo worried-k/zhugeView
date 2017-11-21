@@ -10,6 +10,8 @@ import badge from './components/badge/index'
 import loading from './components/loading/index'
 import {tabs, tabPanel} from './components/tab/index'
 
+import msg from './components/message'
+
 import directives from './directives/main'
 
 const components = [
@@ -29,13 +31,19 @@ const components = [
 ]
 
 const install = function (Vue) {
+  // directives
   for (let key in directives) {
     let directive = directives[key]
     Vue.directive(key, directive)
   }
+
+  // components
   components.forEach((component) => {
     component.install(Vue)
   })
+
+  // plugins
+  Vue.prototype.$message = msg
 }
 /* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {

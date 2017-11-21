@@ -28,7 +28,8 @@ export default {
         'tooltip',
         'badge',
         'loading',
-        'tab'
+        'tab',
+        'message'
       ]
     }
   },
