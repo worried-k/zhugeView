@@ -19,7 +19,7 @@ const reg = {
    */
   commentAndName: /\/\*\*[\s\S]*?:/g,
   comment: /\/\*\*[\s\S]*?(\*\/)/g,
-  props: /props:[\s\S]*?(data|watch|computed|updated|methods)/
+  props: /props:[\s\S]*?(data|watch|computed|updated|methods|created)/
 }
 
 fsUtil.readDir(config.basePath, (filePath, file, stat) => {

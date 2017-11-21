@@ -1,9 +1,9 @@
 <template>
   <div>
-    <demo-panel title="tab" subtitle="them is normal">
-      <zg-tabs :tabWidth="150">
+    <demo-panel title="tab" subtitle="them is card">
+      <zg-tabs theme="card">
         <zg-tab-panel title="center">
-          <zg-tabs placement="center">
+          <zg-tabs placement="center" theme="card" :tabWidth="100">
             <zg-tab-panel title="tab1">
               this is tab1
             </zg-tab-panel>
@@ -48,18 +48,19 @@
   import DemoPanel from '../../../components/demoPanel/index.vue'
 
   export default {
+    name: 'cardTab',
     components: {
       DemoPanel,
       ZgTabPanel,
       ZgTabs},
-    name: 'normalTab',
     data () {
       return {
-        msg: 'normalTab'
+        msg: 'cardTab'
       }
     }
   }
 </script>
 
 <style lang="sass">
+
 </style>

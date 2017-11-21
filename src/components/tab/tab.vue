@@ -1,5 +1,5 @@
 <template>
-  <span :class="clazz" @click="onClick">
+  <span :class="clazz" :style="style" @click="onClick">
     {{tab.title}}
   </span>
 </template>
@@ -12,6 +12,7 @@
         type: Object,
         required: true
       },
+      width: null,
       index: {
         type: Number,
         required: true
@@ -27,6 +28,11 @@
           'zg-tab': true,
           'zg-checked': this.activeIndex === this.index
         }
+      },
+      style () {
+        let style = {}
+        if (this.width) style.width = `${this.width}px`
+        return style
       }
     },
     methods: {

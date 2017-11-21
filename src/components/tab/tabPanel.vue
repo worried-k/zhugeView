@@ -4,6 +4,9 @@
     name: 'zgTabPanel',
     mixins: [emitter],
     props: {
+      /**
+       * @description tab标签显示文本
+       */
       title: {
         type: String,
         required: true

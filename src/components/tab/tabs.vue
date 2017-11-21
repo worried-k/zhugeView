@@ -11,10 +11,26 @@
        */
       placement: {
         type: String,
-        default: 'center',
+        default: 'left',
         validator (value) {
           return ['left', 'center', 'right'].includes(value)
         }
+      },
+      /**
+       * @description 主题类型
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          return ['normal', 'card'].includes(value)
+        }
+      },
+      /**
+       * @description tab标签的宽度，默认自适应
+       */
+      tabWidth: {
+        type: Number
       }
     },
     data () {
@@ -27,6 +43,8 @@
       tabBarClass () {
         return {
           'zg-tab-bar': true,
+          'zg-tab-normal': this.theme === 'normal',
+          'zg-tab-card': this.theme === 'card',
           'zg-right': this.placement === 'right',
           'zg-center': this.placement === 'center'
         }
@@ -58,6 +76,7 @@
                 <zg-tab activeIndex={this.activeIndex}
                         index={index}
                         tab={tab}
+                        width={this.tabWidth}
                         onClick={this.onClickTab}
                 ></zg-tab>
               )
