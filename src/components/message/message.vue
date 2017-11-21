@@ -3,7 +3,7 @@
   const Message = Vue.extend({
     data () {
       return {
-        // success error
+        // success error info
         type: 'success',
         message: '',
         autoHide: true,

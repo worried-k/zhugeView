@@ -19,6 +19,7 @@
       onClick () {
         this.$message({
           message: '出来了~',
+          type: 'info',
           autoHide: false
         })
       }
