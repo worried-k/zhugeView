@@ -1,0 +1,30 @@
+@import "../../../assets/styles/constants"
+.zg-tabs
+  .zg-tab-bar
+    margin-bottom: 5px
+    .zg-tab
+      display: inline-block
+      height: 32px
+      line-height: 32px
+      background: $color-white
+      color: $color-brand-black
+      border: 1px solid $color-border-normal
+      border-right: none
+      padding: 0 5px
+      &:hover
+        cursor: pointer
+      &:first-child
+        border-top-left-radius: $border-radius
+        border-bottom-left-radius: $border-radius
+      &:last-child
+        border-right: 1px solid $color-border-normal
+        border-top-right-radius: $border-radius
+        border-bottom-right-radius: $border-radius
+      &.zg-checked
+        background: $color-brand
+        color: $color-white
+        border-color: $color-brand
+        &:hover
+          cursor: default
+        & + .zg-tab
+          border-left-color: $color-brand

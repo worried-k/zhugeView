@@ -9,6 +9,7 @@ import grid from '../modules/dataGrid/index.vue'
 import tooltip from '../modules/tooltip/index.vue'
 import badge from '../modules/badge/index.vue'
 import loading from '../modules/loading/index.vue'
+import tab from '../modules/tab/index.vue'
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
           path: '/loading',
           name: 'loading',
           component: loading
+        },
+        {
+          path: '/tab',
+          name: 'tab',
+          component: tab
         }
       ]
     }

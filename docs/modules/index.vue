@@ -27,7 +27,8 @@ export default {
         'grid',
         'tooltip',
         'badge',
-        'loading'
+        'loading',
+        'tab'
       ]
     }
   },

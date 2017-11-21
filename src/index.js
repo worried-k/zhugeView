@@ -8,6 +8,7 @@ import {dataGrid, gridColumn} from './components/dataGrid/index'
 import tooltip from './components/tooltip/index'
 import badge from './components/badge/index'
 import loading from './components/loading/index'
+import {tabs, tabPanel} from './components/tab/index'
 
 import directives from './directives/main'
 
@@ -22,7 +23,9 @@ const components = [
   gridColumn,
   tooltip,
   badge,
-  loading
+  loading,
+  tabs,
+  tabPanel
 ]
 
 const install = function (Vue) {
