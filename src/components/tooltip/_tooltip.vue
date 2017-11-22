@@ -1,5 +1,6 @@
 <script type="text/jsx">
   import Vue from 'vue'
+  import {util} from '../../utils/index'
   let Tooltip = Vue.extend({
     data () {
       return {
@@ -12,7 +13,7 @@
         autoHide: true,
         width: 0,
         customRender: null,
-        onHide: () => {}
+        onHide: null
       }
     },
     computed: {
@@ -86,7 +87,7 @@
     methods: {
       hide () {
         this.show = false
-        this.onHide()
+        if (util.isFunction(this.onHide)) this.onHide()
       }
     },
     render (h) {

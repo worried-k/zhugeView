@@ -84,7 +84,7 @@
           autoHide: this.autoHide,
           width: this.width,
           customRender: this.$slots.tooltip,
-          onHide: this.$listeners.hide
+          onHide: this.$listeners ? this.$listeners.hide : null
         }
       }).$mount()
       document.body.appendChild(this.tooltip.$el)
