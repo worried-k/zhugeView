@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="通过icon属性，为按钮添加icon">
+    <demo-panel subtitle="通过icon属性，为按钮添加icon" jsFiddleName="a7rs8onk">
       <zg-button icon='zgicon-add' size="small"></zg-button>
       <zg-button icon='zgicon-add' size="small">add</zg-button>
 

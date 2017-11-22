@@ -1,15 +1,16 @@
 <template>
   <div>
-    <demo-panel title="大数据量普通下拉" subtitle="单选">
-      <zg-selector keyField="id" v-model="value"
-                   :store="store" labelField="label" filterOption></zg-selector>
+    <demo-panel title="大数据量普通下拉" subtitle="单选" jsFiddleName="udt2nfjs">
+      <zg-selector key-field="id" v-model="value"
+                   :store="store" label-field="label" filter-option></zg-selector>
       <span>所选值：</span>{{value}}
     </demo-panel>
-    <demo-panel subtitle="多选">
-      <zg-selector keyField="id" v-model="multipleValue"
+
+    <demo-panel subtitle="多选" jsFiddleName="udt2nfjs">
+      <zg-selector key-field="id" v-model="multipleValue"
                    :store="multipleStore"
-                   labelField="label"
-                   filterOption
+                   label-field="label"
+                   filter-option
                    multiple></zg-selector>
       <span>所选值：</span>{{multipleValue}}
     </demo-panel>

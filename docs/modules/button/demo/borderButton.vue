@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="theme为border">
+    <demo-panel subtitle="theme为border" jsFiddleName="yvek1jp7">
       <zg-button theme="border">normal</zg-button>
       <zg-button type="primary" theme="border">primary</zg-button>
       <zg-button type="danger" theme="border">danger</zg-button>

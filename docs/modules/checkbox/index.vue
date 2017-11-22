@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="checkbox">
+    <demo-panel title="checkbox" jsFiddleName="dpd0q8Ls">
       <ul class="list">
         <li>
           <zg-checkbox v-model="a">默认不选中</zg-checkbox><span class="result">选中结果：{{a}}</span>

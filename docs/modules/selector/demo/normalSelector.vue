@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="普通下拉框" subtitle="单选">
+    <demo-panel title="普通下拉框" subtitle="单选" jsFiddleName="s5rjhjwj">
 
       <zg-selector keyField="id" :store="store" placeholder="单选" labelField="label" :disableOptions="disableList" v-model="result">
         <template scope="scope">
@@ -10,7 +10,7 @@
 
       <span>选中值</span>{{result}}<br>
     </demo-panel>
-    <demo-panel subtitle="多选">
+    <demo-panel subtitle="多选" jsFiddleName="s5rjhjwj">
       <zg-selector v-model="multipleResult"
                    keyField="id"
                    :store="multipleStore"

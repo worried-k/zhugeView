@@ -1,11 +1,11 @@
 <template>
   <div>
-    <demo-panel title="分组下拉框" subtitle="单选">
-      <zg-selector keyField="id"
+    <demo-panel title="分组下拉框" subtitle="单选" jsFiddleName="77pqa1vk">
+      <zg-selector key-field="id"
                    v-model="groupValue"
                    :store="store"
-                   labelField="label"
-                   childrenField="children">
+                   label-field="label"
+                   children-field="children">
         <template scope="scope">
           <span>自定义展示{{scope.data.label}}</span>
         </template>
@@ -16,13 +16,14 @@
       </zg-selector>
       <span>选中值：</span>{{groupValue}}
     </demo-panel>
-    <demo-panel subtitle="多选">
-      <zg-selector keyField="id"
+
+    <demo-panel subtitle="多选" jsFiddleName="77pqa1vk">
+      <zg-selector key-field="id"
                    :store="multipleStore"
-                   childrenField="children"
+                   children-field="children"
                    v-model="multipleValue"
                    multiple
-                   labelField="label"></zg-selector>
+                   label-field="label"></zg-selector>
       <span>选中值：</span>{{multipleValue.map(item => item.label)}}
     </demo-panel>
   </div>

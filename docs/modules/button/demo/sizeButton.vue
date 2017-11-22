@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="size支持small、normal和large">
+    <demo-panel subtitle="size支持small、normal和large" jsFiddleName="ao8y58kd">
       <zg-button size="small" type="primary">small</zg-button>
       <zg-button type="primary">normal</zg-button>
       <zg-button size="large" type="primary">large</zg-button>

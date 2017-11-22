@@ -1,12 +1,12 @@
 <template>
   <div>
     <demo-panel title="dataGrid" subtitle="普通表格">
-      <zg-data-grid :store="store" @clickCell="onClickCell" showIndex>
+      <zg-data-grid :store="store" @click-cell="onClickCell" show-index>
         <zg-grid-column field="label0"
                         title="首列"
                         :width="130"
-                        sortAble
-                        @clickCell="onClickFirstColumn">
+                        sort-able
+                        @click-cell="onClickFirstColumn">
           <template scope="scope">
             自定义展示：{{scope.data[scope.field]}}
           </template>

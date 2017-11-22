@@ -7,16 +7,16 @@
 import dataGrid from './dataGrid.vue'
 import gridColumn from './gridColumn.vue'
 
-let components = {
+let components = [
   dataGrid,
   gridColumn
-}
+]
 
-for (const key in components) {
-  components[key].install = function (Vue) {
-    Vue.component(key, components[key])
+components.forEach(component => {
+  component.install = function (Vue) {
+    Vue.component(component.name, component)
   }
-}
+})
 
 export {
   dataGrid,
