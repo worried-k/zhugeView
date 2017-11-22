@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="tooltip" subtitle="普通应用">
+    <demo-panel title="tooltip" subtitle="普通应用" jsFiddleName="8xn7yac5">
       <div class="top row">
         <zg-tooltip content="placement is top-left" placement="top-left">
           <span class="span">上左</span>
@@ -60,13 +60,13 @@
 
 <script>
   import DemoPanel from '../../../components/demoPanel/index.vue'
-  import ZgTooltip from '../../../../src/components/tooltip/tooltip.vue'
-  import ZgButton from '../../../../src/components/button/button.vue'
+//  import ZgTooltip from '../../../../src/components/tooltip/tooltip.vue'
+//  import ZgButton from '../../../../src/components/button/button.vue'
 
   export default {
     components: {
-      ZgButton,
-      ZgTooltip,
+//      ZgButton,
+//      ZgTooltip,
       DemoPanel},
     name: 'normalTooltip',
     data () {

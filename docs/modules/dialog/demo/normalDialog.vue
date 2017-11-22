@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="dialog">
+    <demo-panel title="dialog" jsFiddleName="0kxve2g3">
       <zg-dialog title="dialog" v-show="show" @confirm="onConfirm" @cancel="onCancel">
         this is dialog
       </zg-dialog>

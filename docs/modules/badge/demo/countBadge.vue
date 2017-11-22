@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="badge" subtitle="count">
+    <demo-panel title="badge" subtitle="count" jsFiddleName="u5zxdv4z">
       <zg-badge mode="count" :count="count">
         <zg-button>button</zg-button>
       </zg-badge>

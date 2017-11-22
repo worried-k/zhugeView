@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="tab" subtitle="them is card">
+    <demo-panel title="tab" subtitle="them is card" jsFiddleName="zj6dsfq2">
       <zg-tabs theme="card">
         <zg-tab-panel title="center">
           <zg-tabs placement="center" theme="card" :tabWidth="100">

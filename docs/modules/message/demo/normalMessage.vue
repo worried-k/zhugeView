@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="message" subtitle="自动消失的消息提醒">
+    <demo-panel title="message" subtitle="自动消失的消息提醒" jsFiddleName="2mvd4ydh">
       <zg-button @click="onSuccess">成功提示</zg-button>
       <zg-button @click="onError">失败提示</zg-button>
       <zg-button @click="onCustomIcon">自定义icon</zg-button>

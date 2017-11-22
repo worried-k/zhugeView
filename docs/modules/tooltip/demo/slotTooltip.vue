@@ -1,6 +1,7 @@
 <template>
   <div>
-    <demo-panel subtitle="自定义tooltip内容, 自定义的话，autoHide为false时，需要使用者自己控制tooltip的隐藏">
+    <demo-panel subtitle="自定义tooltip内容, 自定义的话，autoHide为false时，需要使用者自己控制tooltip的隐藏"
+                jsFiddleName="j7hkr7p2">
       <zg-tooltip>
         <template slot="tooltip">
           这是自定义tooltip内容

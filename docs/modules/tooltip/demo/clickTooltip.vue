@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="autoHide为false时，必须通过tooltip实例的show和hide方法控制显示隐藏">
+    <demo-panel subtitle="autoHide为false时，必须通过tooltip实例的show和hide方法控制显示隐藏" jsFiddleName="h1qcofxd">
       <zg-button @click="onClick">显示tooltip</zg-button>
       <zg-tooltip content="出来了~，但是这段文本有点长啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
                   ref="tooltip"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="表头合并单元格">
+    <demo-panel subtitle="表头合并单元格" jsFiddleName="q26w5eeo">
       <zg-data-grid :store="store" showIndex>
         <zg-grid-column field="label0"
                         title="首列"

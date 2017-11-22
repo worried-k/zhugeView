@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="loading">
+    <demo-panel title="loading" jsFiddleName="8j6aaegk">
       <div class="loading-container">
         normal
         <zg-button size="small" @click="showLoading">showLoading</zg-button>
@@ -22,13 +22,9 @@
 
 <script>
   import DemoPanel from '../../../components/demoPanel/index.vue'
-  import ZgLoading from '../../../../src/components/loading/loading.vue'
-  import ZgButton from '../../../../src/components/button/button.vue'
 
   export default {
     components: {
-      ZgButton,
-      ZgLoading,
       DemoPanel},
     name: 'normalLoading',
     data () {

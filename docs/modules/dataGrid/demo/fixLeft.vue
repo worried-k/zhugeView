@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="固定列展示">
+    <demo-panel subtitle="固定列展示" jsFiddleName="d1104ff7">
       <zg-data-grid :store="store">
         <zg-grid-column v-for="column in columns"
                         :field="column.field"

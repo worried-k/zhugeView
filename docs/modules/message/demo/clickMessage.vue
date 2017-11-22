@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="点击关闭">
+    <demo-panel subtitle="点击关闭" jsFiddleName="0tqzn10s">
       <zg-button @click="onClick">弹出提示</zg-button>
     </demo-panel>
   </div>

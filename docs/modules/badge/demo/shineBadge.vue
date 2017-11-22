@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel subtitle="shine">
+    <demo-panel subtitle="shine" jsFiddleName="ygLhbxkd">
       <zg-badge mode="shine" useTip tip="this is message">
         <zg-button>message</zg-button>
       </zg-badge>

@@ -1,12 +1,12 @@
 <template>
   <div>
-    <demo-panel title="dataGrid" subtitle="普通表格">
+    <demo-panel title="dataGrid" subtitle="普通表格" jsFiddleName="0v4vs2je">
       <zg-data-grid :store="store" @click-cell="onClickCell" show-index>
         <zg-grid-column field="label0"
                         title="首列"
                         :width="130"
                         sort-able
-                        @click-cell="onClickFirstColumn">
+                        @clickCell="onClickFirstColumn">
           <template scope="scope">
             自定义展示：{{scope.data[scope.field]}}
           </template>
@@ -21,15 +21,11 @@
 </template>
 
 <script>
-  import ZgDataGrid from '../../../../src/components/dataGrid/dataGrid.vue'
-  import ZgGridColumn from '../../../../src/components/dataGrid/gridColumn.vue'
   import DemoPanel from '../../../components/demoPanel/index.vue'
 
   export default {
     components: {
-      DemoPanel,
-      ZgGridColumn,
-      ZgDataGrid},
+      DemoPanel},
     name: 'normalGrid',
     data () {
       return {

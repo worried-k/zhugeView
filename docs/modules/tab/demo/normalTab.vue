@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="tab" subtitle="them is normal">
+    <demo-panel title="tab" subtitle="them is normal" jsFiddleName="fnp7n0hd">
       <zg-tabs :tabWidth="150">
         <zg-tab-panel title="center">
           <zg-tabs placement="center">
