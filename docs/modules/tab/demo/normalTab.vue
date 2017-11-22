@@ -1,7 +1,8 @@
 <template>
   <div>
     <demo-panel title="tab" subtitle="them is normal" jsFiddleName="fnp7n0hd">
-      <zg-tabs :tabWidth="150">
+      {{chosenIndex}}
+      <zg-tabs :tabWidth="150" v-model="chosenIndex">
         <zg-tab-panel title="center">
           <zg-tabs placement="center">
             <zg-tab-panel title="tab1">
@@ -55,8 +56,13 @@
     name: 'normalTab',
     data () {
       return {
-        msg: 'normalTab'
+        chosenIndex: 1
       }
+    },
+    mounted () {
+      setTimeout(() => {
+        this.chosenIndex = 1
+      }, 1000)
     }
   }
 </script>

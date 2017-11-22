@@ -416,11 +416,15 @@
                 <div ref="handle" class={this.handleClass}
                      style={this.handleStyle}
                      onClick={this.onClickHandle}>
-                  <span v-show={this.resultLabel} class="zg-select-label">{this.$slots.default || this.resultLabel}</span>
                   {(() => {
-                    if (!this.$slots.default) {
+                    if (this.$slots.default) {
+                      return this.$slots.default
+                    } else {
                       return (
-                        <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                        <span>
+                          <span v-show={this.resultLabel} class="zg-select-label">{this.resultLabel}</span>
+                          <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                        </span>
                       )
                     }
                   })()}
@@ -434,15 +438,19 @@
                      onClick={this.onClickHandle}
                      slot="handle">
                   <span class="zg-label">
-                    <span v-show={this.resultLabel} class="zg-value">{this.$slots.default || this.resultLabel}</span>
                     {(() => {
-                      if (!this.$slots.default) {
+                      if (this.$slots.default) {
+                        return this.$slots.default
+                      } else {
                         return (
-                          <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                          <span>
+                            <span v-show={this.resultLabel} class="zg-value">{this.resultLabel}</span>
+                            <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                            <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
+                          </span>
                         )
                       }
                     })()}
-                    <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
                   </span>
                   <i class={this.arrowIcon}></i>
                 </div>

@@ -6,6 +6,10 @@
     mixins: [emitter],
     components: {zgTab},
     props: {
+      value: {
+        type: Number,
+        default: 0
+      },
       /**
        * @description tab标签的位置，当标签组纵向排列时，left等同于top，center等同middle, right等同于bottom
        */
@@ -36,7 +40,7 @@
     data () {
       return {
         tabs: [],
-        activeIndex: 0
+        activeIndex: this.value || 0
       }
     },
     computed: {
@@ -50,6 +54,11 @@
         }
       }
     },
+    watch: {
+      value (value) {
+        this.activeIndex = value
+      }
+    },
     mounted () {
       const tabs = this.children('zgTabPanel')
       if (tabs.length) {
@@ -60,6 +69,7 @@
       onClickTab (tab) {
         this.activeIndex = tab.index
         this.$emit('change', tab)
+        this.$emit('input', tab.index)
       },
       addTab (tab) {
         tab.index = this.tabs.length
