@@ -60,14 +60,9 @@
 
 <script>
   import DemoPanel from '../../../components/demoPanel/index.vue'
-//  import ZgTooltip from '../../../../src/components/tooltip/tooltip.vue'
-//  import ZgButton from '../../../../src/components/button/button.vue'
 
   export default {
-    components: {
-//      ZgButton,
-//      ZgTooltip,
-      DemoPanel},
+    components: {DemoPanel},
     name: 'normalTooltip',
     data () {
       return {

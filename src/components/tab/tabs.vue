@@ -83,9 +83,11 @@
             })}
           </div>
           {this.tabs.map((tab, index) => {
-            return (
-              <div v-show={index === this.activeIndex} class="zg-tab-panel">{tab.slot}</div>
-            )
+            if (index === this.activeIndex) {
+              return (
+                <div class="zg-tab-panel">{tab.slot}</div>
+              )
+            }
           })}
         </div>
       )

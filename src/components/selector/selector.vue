@@ -417,7 +417,13 @@
                      style={this.handleStyle}
                      onClick={this.onClickHandle}>
                   <span v-show={this.resultLabel} class="zg-select-label">{this.$slots.default || this.resultLabel}</span>
-                  <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                  {(() => {
+                    if (!this.$slots.default) {
+                      return (
+                        <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                      )
+                    }
+                  })()}
                   <i class={this.arrowIcon}></i>
                 </div>
               )
@@ -429,7 +435,13 @@
                      slot="handle">
                   <span class="zg-label">
                     <span v-show={this.resultLabel} class="zg-value">{this.$slots.default || this.resultLabel}</span>
-                    <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                    {(() => {
+                      if (!this.$slots.default) {
+                        return (
+                          <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
+                        )
+                      }
+                    })()}
                     <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
                   </span>
                   <i class={this.arrowIcon}></i>
