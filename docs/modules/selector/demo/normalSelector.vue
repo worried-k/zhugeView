@@ -12,6 +12,7 @@
     </demo-panel>
     <demo-panel subtitle="多选" jsFiddleName="s5rjhjwj">
       <zg-selector v-model="multipleResult"
+                   theme="noborder"
                    keyField="id"
                    :store="multipleStore"
                    labelField="label"

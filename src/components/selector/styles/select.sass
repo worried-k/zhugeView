@@ -6,7 +6,6 @@
   font-size: $size-font-content
   position: relative
   vertical-align: middle
-  background: $color-white
   .zg-select-handle
     min-width: 50px
     height: 100%
@@ -14,6 +13,7 @@
     border: 1px solid $color-border-normal
     border-radius: $border-radius
     padding: 0 20px 0 10px
+    background: $color-white
     .zg-select-label
       display: inline-block
       width: 100%
@@ -24,7 +24,7 @@
       color: $color-font-placeholder
     &.noborder
       border: none
-      .zg-label
+      .zg-label>span
         display: flex
         flex-direction: row
         &.zg-placeholder
