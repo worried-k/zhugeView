@@ -114,5 +114,8 @@
   "bugs": {
     "url": "https://github.com/struggling-bird/zhugeView/issues"
   },
-  "homepage": "https://github.com/struggling-bird/zhugeView#readme"
+  "homepage": "https://github.com/struggling-bird/zhugeView#readme",
+  "dependencies": {
+    "echarts": "^3.8.5"
+  }
 }

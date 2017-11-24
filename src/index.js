@@ -11,6 +11,8 @@ import loading from './components/loading/index'
 import {tabs, tabPanel} from './components/tab/index'
 import dialog from './components/dialog'
 
+import {charts} from './components/echarts'
+
 import msg from './components/message'
 
 import directives from './directives/main'
@@ -29,7 +31,9 @@ const components = [
   loading,
   tabs,
   tabPanel,
-  dialog
+  dialog,
+
+  charts
 ]
 
 const install = function (Vue) {

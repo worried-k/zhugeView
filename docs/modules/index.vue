@@ -30,7 +30,8 @@ export default {
         'loading',
         'tab',
         'message',
-        'dialog'
+        'dialog',
+        'charts'
       ]
     }
   },

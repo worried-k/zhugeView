@@ -10,6 +10,14 @@
             自定义展示：{{scope.data[scope.field]}}
           </template>
         </zg-grid-column>
+        <zg-grid-column field="label"
+                        title="aaa"
+                        :width="130"
+                        sortAble>
+          <template scope="scope">
+            ~~~
+          </template>
+        </zg-grid-column>
 
         <zg-grid-column field="numbers" title="数据展示">
           <zg-grid-column field="label0"
