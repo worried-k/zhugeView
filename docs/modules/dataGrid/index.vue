@@ -3,6 +3,7 @@
     <normal-grid></normal-grid>
     <fix-left></fix-left>
     <cols-header></cols-header>
+    <pagination-grid></pagination-grid>
     <doc-markdown :api="json.grid" title="dataGrid"></doc-markdown>
     <doc-markdown :api="json.column" title="gridColumn"></doc-markdown>
   </div>
@@ -16,8 +17,10 @@
 
   import dataGridJson from './dataGrid.json'
   import gridColumnJson from './gridColumn.json'
+  import PaginationGrid from './demo/paginationGrid.vue'
   export default {
     components: {
+      PaginationGrid,
       DocMarkdown,
       ColsHeader,
       FixLeft,

@@ -11,21 +11,54 @@
       ZgGridHeader
     },
     props: {
+      /**
+       * @description 表格的id
+       */
       gridId: {
         type: [String, Number],
         required: true
       },
+      /**
+       * @description 显示索引列
+       */
       showIndex: {
         type: Boolean,
         default: false
       },
+      /**
+       * @description 表结构
+       */
       structure: {
         type: Array,
         required: true
       },
+      /**
+       * @description 数据集
+       */
       store: {
         type: Array,
         required: true
+      },
+      /**
+       * @description 是否可分页
+       */
+      pagination: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @description 每页数据量
+       */
+      pageSize: {
+        type: Number,
+        default: 10
+      },
+      /**
+       * @description 当前页码，从1开始
+       */
+      pageNum: {
+        type: Number,
+        default: 1
       }
     },
     computed: {
@@ -109,6 +142,12 @@
           <tbody class="zg-grid-body">
           {
             this.store.map((item, i) => {
+              if (this.pagination) {
+                const startIndex = (this.pageNum - 1) * this.pageSize
+                const endIndex = this.pageNum * this.pageSize
+
+                if (i <= startIndex || i > endIndex) return
+              }
               let rowClass = {
                 'zg-grid-row': true
               }

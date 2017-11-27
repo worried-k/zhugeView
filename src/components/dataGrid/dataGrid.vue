@@ -35,6 +35,27 @@
       showIndex: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 是否可分页
+       */
+      pagination: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @description 每页数据量
+       */
+      pageSize: {
+        type: Number,
+        default: 10
+      },
+      /**
+       * @description 当前页码，从1开始
+       */
+      pageNum: {
+        type: Number,
+        default: 1
       }
     },
     data () {
@@ -122,6 +143,9 @@
                              structure={this.structure.left}
                              store={this.store}
                              showIndex={this.showIndex}
+                             pagination={this.pagination}
+                             pageNum={this.pageNum}
+                             pageSize={this.pageSize}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
@@ -137,6 +161,9 @@
                              structure={this.structure.center}
                              store={this.store}
                              showIndex={this.showIndex && !this.structure.left.length}
+                             pagination={this.pagination}
+                             pageNum={this.pageNum}
+                             pageSize={this.pageSize}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
@@ -152,6 +179,9 @@
                              structure={this.structure.right}
                              store={this.store}
                              showIndex={this.showIndex && !this.structure.left.length && !this.structure.center.length}
+                             pagination={this.pagination}
+                             pageNum={this.pageNum}
+                             pageSize={this.pageSize}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
