@@ -58,7 +58,7 @@
         validator (rules) {
           for (const key in rules) {
             const rule = rules[key]
-            // value格式为：{type: 'bar/line/eg...', index: 0}
+            // value格式为：{type: 'bar/line/eg...', index: 0, options: {}} option为echarts中yAxis的标准配置
             if (!rule.hasOwnProperty('index')) {
               return false
             }
@@ -155,41 +155,7 @@
               show: false
             }
           },
-          yAxis: (() => {
-            const axis = {
-              splitNumber: 5,
-              axisTick: {
-                show: false
-              },
-              axisLabel: {
-                formatter (value) {
-                  if (parseFloat(value) >= 1000) {
-                    return util.toThousands((value / 1000).toFixed(1)) + 'k'
-                  } else {
-                    return value
-                  }
-                },
-                textStyle: {
-                  color: '#777'
-                }
-              },
-              splitLine: {
-                lineStyle: {
-                  color: '#ddd',
-                  width: 1,
-                  type: 'dotted'
-                }
-              },
-              type: 'value',
-              axisLine: {
-                show: false
-              }
-            }
-            if (this.doubleY) {
-              return [axis, axis]
-            }
-            return axis
-          })(),
+          yAxis: this.getYAxis(),
           series: this.getSeries()
         }
       }
@@ -204,6 +170,46 @@
       this.chart.setOption(this.option)
     },
     methods: {
+      getYAxis () {
+        const axis = {
+          splitNumber: 5,
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            formatter (value) {
+              if (parseFloat(value) >= 1000) {
+                return util.toThousands((value / 1000).toFixed(1)) + 'k'
+              } else {
+                return value
+              }
+            },
+            textStyle: {
+              color: '#777'
+            }
+          },
+          splitLine: {
+            lineStyle: {
+              color: '#ddd',
+              width: 1,
+              type: 'dotted'
+            }
+          },
+          type: 'value',
+          axisLine: {
+            show: false
+          }
+        }
+        if (this.doubleY) {
+          let result = []
+          for (let key in this.yAxisRule) {
+            const rule = this.yAxisRule[key]
+            result[rule.index] = util.mergeObject(rule.option || {}, util.clone(axis))
+          }
+          return result
+        }
+        return axis
+      },
       getSeries () {
         let seriesList = []
         let context = this

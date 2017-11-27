@@ -29,8 +29,12 @@
             type: 'bar'
           },
           click: {
-            index: 1,
-            type: 'line'
+            index: 2,
+            type: 'line',
+            option: {
+              show: false,
+              max: 100
+            }
           }
         }
       }
