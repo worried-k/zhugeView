@@ -26,11 +26,9 @@
         json: json.app_data,
         yAxisRule: {
           '曝光': {
-            type: 'line',
             index: 0
           },
           '点击': {
-            type: 'line',
             index: 1
           }
         }

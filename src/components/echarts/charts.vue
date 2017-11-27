@@ -59,7 +59,7 @@
           for (const key in rules) {
             const rule = rules[key]
             // value格式为：{type: 'bar/line/eg...', index: 0}
-            if (!rule.hasOwnProperty('type') || !rule.hasOwnProperty('index')) {
+            if (!rule.hasOwnProperty('index')) {
               return false
             }
           }
