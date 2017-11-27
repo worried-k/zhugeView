@@ -12,7 +12,7 @@ import loading from '../modules/loading/index.vue'
 import tab from '../modules/tab/index.vue'
 import message from '../modules/message/index.vue'
 import dialog from '../modules/dialog/index.vue'
-import charts from '../modules/charts/index.vue'
+import charts from '../modules/echarts/index.vue'
 
 Vue.use(Router)
 

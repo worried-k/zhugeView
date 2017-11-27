@@ -23,6 +23,9 @@ let util = {
   equal (a, b) {
     return JSON.stringify(a) === JSON.stringify(b)
   },
+  random (min, max) {
+    return Math.round(Math.random() * (max - min)) + min
+  },
   clone (obj) {
     if (this.isObject(obj)) {
       let result = {}

@@ -43,6 +43,30 @@
         }
       },
       /**
+       * @description 是否启用双Y轴，为true时，yAxis为必传项
+       */
+      doubleY: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @description doubleY启用时，为必传项
+       * @tip rules为对象，key与series中的names相对应，names为数组，则通过join('-')转为字符串
+       */
+      yAxisRule: {
+        type: Object,
+        validator (rules) {
+          for (const key in rules) {
+            const rule = rules[key]
+            // value格式为：{type: 'bar/line/eg...', index: 0}
+            if (!rule.hasOwnProperty('type') || !rule.hasOwnProperty('index')) {
+              return false
+            }
+          }
+          return true
+        }
+      },
+      /**
        * @description tooltip自定义显示
        */
       tooltipFormatter: {
@@ -131,37 +155,48 @@
               show: false
             }
           },
-          yAxis: {
-            splitNumber: 5,
-            axisTick: {
-              show: false
-            },
-            axisLabel: {
-              formatter (value) {
-                if (parseFloat(value) >= 1000) {
-                  return util.toThousands((value / 1000).toFixed(1)) + 'k'
-                } else {
-                  return value
+          yAxis: (() => {
+            const axis = {
+              splitNumber: 5,
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                formatter (value) {
+                  if (parseFloat(value) >= 1000) {
+                    return util.toThousands((value / 1000).toFixed(1)) + 'k'
+                  } else {
+                    return value
+                  }
+                },
+                textStyle: {
+                  color: '#777'
                 }
               },
-              textStyle: {
-                color: '#777'
+              splitLine: {
+                lineStyle: {
+                  color: '#ddd',
+                  width: 1,
+                  type: 'dotted'
+                }
+              },
+              type: 'value',
+              axisLine: {
+                show: false
               }
-            },
-            splitLine: {
-              lineStyle: {
-                color: '#ddd',
-                width: 1,
-                type: 'dotted'
-              }
-            },
-            type: 'value',
-            axisLine: {
-              show: false
             }
-          },
+            if (this.doubleY) {
+              return [axis, axis]
+            }
+            return axis
+          })(),
           series: this.getSeries()
         }
+      }
+    },
+    watch: {
+      option () {
+        this.chart.setOption(this.option)
       }
     },
     mounted () {
@@ -180,17 +215,18 @@
         }
       },
       getBarSeries () {
-        return this.each((name, series) => {
+        return this.each(function (name, series) {
           return {
             name,
             type: 'bar',
             barMaxWidth: 35,
-            data: series.values
+            data: series.values,
+            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
           }
         })
       },
       getLineSeries () {
-        return this.each((name, series) => {
+        return this.each(function (name, series) {
           return {
             name,
             type: 'line',
@@ -198,6 +234,7 @@
             symbol: 'circle',
             symbolSize: 5,
             showAllSymbol: true,
+            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
             itemStyle: {
               normal: {
                 lineStyle: {width: 1}
@@ -210,7 +247,7 @@
         return this.store.series.map(series => {
           const name = series.names.join('-')
           if (util.isArray(this.showList) && !this.showListMap[name]) return
-          return handle(name, series)
+          return handle.call(this, name, series)
         })
       },
       getAxisPointerType () {
