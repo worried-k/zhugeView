@@ -1,8 +1,9 @@
 <template>
   <div>
-    <!--<bar-chart></bar-chart>-->
-    <!--<line-chart></line-chart>-->
+    <bar-chart></bar-chart>
+    <line-chart></line-chart>
     <double-line></double-line>
+    <multiple-chart></multiple-chart>
     <doc-markdown :api="api"></doc-markdown>
   </div>
 </template>
@@ -13,9 +14,11 @@
   import DocMarkdown from '../../components/docMarkdown/index.vue'
   import api from './charts.json'
   import DoubleLine from './demo/doubleLine.vue'
+  import MultipleChart from './demo/multipleChart.vue'
 
   export default {
     components: {
+      MultipleChart,
       DoubleLine,
       DocMarkdown,
       LineChart,

@@ -205,43 +205,47 @@
     },
     methods: {
       getSeries () {
-        switch (this.type) {
-          case 'bar':
-            return this.getBarSeries()
-          case 'line':
-            return this.getLineSeries()
-          default:
-            console.error('未支持的图表类型', this.type)
+        let seriesList = []
+        let context = this
+        this.each(function (name, series) {
+          seriesList.push((() => {
+            const type = context.doubleY ? (context.yAxisRule[name].type || context.type) : context.type
+            switch (type) {
+              case 'bar':
+                return context.getBarSeries(name, series)
+              case 'line':
+                return context.getLineSeries(name, series)
+              default:
+                console.error('未支持的图表类型', context.type)
+            }
+          })())
+        })
+        return seriesList
+      },
+      getBarSeries (name, series) {
+        return {
+          name,
+          type: 'bar',
+          barMaxWidth: 35,
+          data: series.values,
+          yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
         }
       },
-      getBarSeries () {
-        return this.each(function (name, series) {
-          return {
-            name,
-            type: 'bar',
-            barMaxWidth: 35,
-            data: series.values,
-            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
-          }
-        })
-      },
-      getLineSeries () {
-        return this.each(function (name, series) {
-          return {
-            name,
-            type: 'line',
-            data: series.values,
-            symbol: 'circle',
-            symbolSize: 5,
-            showAllSymbol: true,
-            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
-            itemStyle: {
-              normal: {
-                lineStyle: {width: 1}
-              }
+      getLineSeries (name, series) {
+        return {
+          name,
+          type: 'line',
+          data: series.values,
+          symbol: 'circle',
+          symbolSize: 5,
+          showAllSymbol: true,
+          yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
+          itemStyle: {
+            normal: {
+              lineStyle: {width: 1}
             }
           }
-        })
+        }
       },
       each (handle) {
         return this.store.series.map(series => {
