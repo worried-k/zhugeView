@@ -180,9 +180,7 @@
         }
       },
       getBarSeries () {
-        return this.store.series.map(series => {
-          const name = series.names.join('-')
-          if (util.isArray(this.showList) && !this.showListMap[name]) return
+        return this.each((name, series) => {
           return {
             name,
             type: 'bar',
@@ -192,9 +190,7 @@
         })
       },
       getLineSeries () {
-        return this.store.series.map(series => {
-          const name = series.names.join('-')
-          if (util.isArray(this.showList) && !this.showListMap[name]) return
+        return this.each((name, series) => {
           return {
             name,
             type: 'line',
@@ -208,6 +204,13 @@
               }
             }
           }
+        })
+      },
+      each (handle) {
+        return this.store.series.map(series => {
+          const name = series.names.join('-')
+          if (util.isArray(this.showList) && !this.showListMap[name]) return
+          return handle(name, series)
         })
       },
       getAxisPointerType () {
