@@ -49,7 +49,8 @@
         type: Function
       },
       /**
-       * @description todo 显示数据项（从store中过滤）
+       * @description 显示数据项（从store中过滤），对应series中的names字段
+       * @格式[['group', 'item1'], ['group', 'item2']]或['item1', 'item2']
        */
       showList: {
         type: Array
@@ -61,6 +62,19 @@
       }
     },
     computed: {
+      showListMap () {
+        let map = {}
+        if (util.isArray(this.showList)) {
+          this.showList.forEach(item => {
+            if (util.isArray(item)) {
+              map[item.join('-')] = true
+            } else if (util.isString(item)) {
+              map[item] = true
+            }
+          })
+        }
+        return map
+      },
       style () {
         let style = {
           height: this.height + 'px'
@@ -167,8 +181,10 @@
       },
       getBarSeries () {
         return this.store.series.map(series => {
+          const name = series.names.join('-')
+          if (util.isArray(this.showList) && !this.showListMap[name]) return
           return {
-            name: series.names.join('-'),
+            name,
             type: 'bar',
             barMaxWidth: 35,
             data: series.values
@@ -177,8 +193,10 @@
       },
       getLineSeries () {
         return this.store.series.map(series => {
+          const name = series.names.join('-')
+          if (util.isArray(this.showList) && !this.showListMap[name]) return
           return {
-            name: series.names.join('-'),
+            name,
             type: 'line',
             data: series.values,
             symbol: 'circle',

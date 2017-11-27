@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="line">
-      <zg-charts type="line" :store="json"></zg-charts>
+      <zg-charts type="line" :store="json" :showList="showList"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -17,7 +17,8 @@
     name: 'lineChart',
     data () {
       return {
-        json: json.app_data
+        json: json.app_data,
+        showList: ['zgsee']
       }
     }
   }
