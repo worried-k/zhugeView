@@ -80,9 +80,14 @@
      * 计算行高
      */
     updated () {
-      // todo 分页时需要修改循环数
       let styleSheet = []
       this.store.forEach((item, i) => {
+        if (this.pagination) {
+          const startIndex = (this.pageNum - 1) * this.pageSize
+          const endIndex = this.pageNum * this.pageSize
+
+          if (i <= startIndex || i > endIndex) return
+        }
         const className = `.zg-row-${this._uid}-${i}`
         const rows = document.querySelectorAll(className)
         let heights = []
