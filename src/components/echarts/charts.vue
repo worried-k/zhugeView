@@ -51,7 +51,7 @@
       },
       /**
        * @description doubleY启用时，为必传项
-       * @tip rules为对象，key与series中的names相对应，names为数组，则通过join('-')转为字符串
+       * @tip rules为对象，key与series中的names相对应，names为数组，则通过join('-')转为字符串,value中，type如果不传，则默认值与type参数一致
        */
       yAxisRule: {
         type: Object,
