@@ -1,5 +1,7 @@
 <template>
-  <div class="zg-charts" ref="toChart" :style="style">
+  <div class="zg-charts" :style="style">
+    <div class="zg-charts-main" ref="toChart"></div>
+    <div v-show="!store.series.length" :style="{'line-height': height + 'px'}" class="zg-charts-empty">暂无数据</div>
   </div>
 </template>
 
