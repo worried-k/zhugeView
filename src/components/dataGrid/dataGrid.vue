@@ -241,6 +241,7 @@
               }
             })()}
           </div>
+          <div v-show={!this.store.length} class="zg-grid-empty">暂无数据</div>
         </div>
       )
     }
