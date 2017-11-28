@@ -146,7 +146,7 @@
                 const startIndex = (this.pageNum - 1) * this.pageSize
                 const endIndex = this.pageNum * this.pageSize
 
-                if (i <= startIndex || i > endIndex) return
+                if (i < startIndex || i > endIndex) return
               }
               let rowClass = {
                 'zg-grid-row': true
