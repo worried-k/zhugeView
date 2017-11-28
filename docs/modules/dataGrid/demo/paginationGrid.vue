@@ -1,6 +1,6 @@
 <template>
   <div>
-    <demo-panel title="dataGrid" subtitle="普通表格" jsFiddleName="0v4vs2je">
+    <demo-panel title="dataGrid" subtitle="分页表格" jsFiddleName="0v4vs2je">
       <zg-data-grid :store="store" @click-cell="onClickCell" show-index
         pagination :pageNum="3" :pageSize="10">
         <zg-grid-column field="label0"

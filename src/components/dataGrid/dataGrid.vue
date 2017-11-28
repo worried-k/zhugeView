@@ -1,5 +1,5 @@
 <script type="text/jsx">
-  import {dom} from '../../utils/index'
+  import {util, dom} from '../../utils/index'
   import {emitter} from '../../mixins/main'
 
   import ZgGridHeader from './gridHeader.vue'
@@ -64,6 +64,11 @@
           left: [],
           right: [],
           center: []
+        },
+        childCheckResult: {
+          left: false,
+          right: false,
+          center: false
         }
       }
     },
@@ -74,6 +79,23 @@
           style.width = `${this.width}px`
         }
         return style
+      },
+      headerRowspan () {
+        let positions = ['left', 'right', 'center']
+        this.childCheckResult = {
+          left: false,
+          right: false,
+          center: false
+        }
+        positions.forEach(position => {
+          this.structure[position].forEach(column => {
+            if (column.children) {
+              this.childCheckResult[position] = true
+            }
+          })
+        })
+
+        return (this.childCheckResult.left || this.childCheckResult.right || this.childCheckResult.center) ? 2 : 1
       }
     },
     /**
@@ -81,6 +103,7 @@
      */
     updated () {
       let styleSheet = []
+      // 调整body中单元格高度
       this.store.forEach((item, i) => {
         if (this.pagination) {
           const startIndex = (this.pageNum - 1) * this.pageSize
@@ -98,6 +121,26 @@
           'height', `${Math.max.apply(Math, heights)}px`
         ]])
       })
+
+      // 调整thead高度
+      const childExist = this.childCheckResult
+      if (this.headerRowspan > 1) {
+        // 取thead的最大高度，然后赋值给没有合并单元格的grid的thead中的tr
+        let maxHeight = []
+        this.$refs.main.querySelectorAll('thead').forEach(head => {
+          maxHeight.push(head.offsetHeight)
+        })
+        maxHeight = Math.max.apply(Math, maxHeight)
+
+        const position = ['right', 'center', 'left']
+        position.forEach(p => {
+          if (this.$refs[p] && !childExist[p]) {
+            this.$refs[p].querySelectorAll('thead tr').forEach(tr => {
+              tr.style.height = `${maxHeight}px`
+            })
+          }
+        })
+      }
       dom.addStyleSheet(`zgDataGrid_${this._uid}`, styleSheet)
     },
     methods: {
@@ -134,7 +177,7 @@
     render (h) {
       const listeners = this.$listeners
       return (
-        <div class="zg-data-grid" style={this.gridStyle}>
+        <div class="zg-data-grid" style={this.gridStyle} ref="main">
           <div class="zg-hidden-structure">
             {this.$slots.default}
             <span class="zg-grid-hover-color"></span>
@@ -151,6 +194,7 @@
                              pagination={this.pagination}
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
+                             headerRowspan={this.headerRowspan}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
@@ -169,6 +213,7 @@
                              pagination={this.pagination}
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
+                             headerRowspan={this.headerRowspan}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
@@ -187,6 +232,7 @@
                              pagination={this.pagination}
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
+                             headerRowspan={this.headerRowspan}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>

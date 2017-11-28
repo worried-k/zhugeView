@@ -59,17 +59,19 @@
       pageNum: {
         type: Number,
         default: 1
+      },
+      headerRowspan: {
+        type: Number,
+        default: 1
       }
     },
     computed: {
       structureParser () {
         let headStructure = [[], []]
         let bodyStructure = []
-        let childExist = false
+
         this.structure.forEach(item => {
           if (item.children) {
-            childExist = true
-            item.rowspan = 1
             headStructure[0].push(item)
             item.children.forEach(column => {
               headStructure[1].push(column)
@@ -80,13 +82,6 @@
             bodyStructure.push(item)
           }
         })
-
-        if (childExist) {
-          headStructure[0].forEach(column => {
-            if (!column.rowspan) column.rowspan = 2
-          })
-        }
-
         return {
           headStructure,
           bodyStructure
@@ -115,22 +110,28 @@
         <table class="zg-grid">
           <thead class="zg-grid-header">
           {this.structureParser.headStructure.map((row, rowIndex) => {
+            if (!row.length) return
             return (
               <tr class="zg-grid-header-row">
                 {(() => {
                   if (this.showIndex && rowIndex === 0) {
                     return (
-                      <zg-grid-header title={'index'} column={{}} rowspan={this.structureParser.headStructure[1].length ? 2 : 1}></zg-grid-header>
+                      <zg-grid-header
+                        title={'index'}
+                        column={{}}
+                        rowspan={this.headerRowspan}>
+                      </zg-grid-header>
                     )
                   }
                 })()}
                 {row.map(column => {
+                  const rowspan = (rowIndex === 0 && !column.children) ? this.headerRowspan : 1
                   return (
                     <zg-grid-header title={column.title}
                                     sortAble={column.sortAble}
                                     column={column}
                                     width={column.width}
-                                    rowspan={column.rowspan}
+                                    rowspan={rowspan}
                                     colspan={column.colspan}
                                     onSort={listeners.sort}></zg-grid-header>
                   )

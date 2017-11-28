@@ -5,6 +5,7 @@
         <zg-grid-column field="label0"
                         title="首列"
                         :width="130"
+                        fix="left"
                         sortAble>
           <template scope="scope">
             自定义展示：{{scope.data[scope.field]}}
