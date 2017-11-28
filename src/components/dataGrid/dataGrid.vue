@@ -86,7 +86,7 @@
           const startIndex = (this.pageNum - 1) * this.pageSize
           const endIndex = this.pageNum * this.pageSize
 
-          if (i < startIndex || i > endIndex) return
+          if (i < startIndex || i >= endIndex) return
         }
         const className = `.zg-row-${this._uid}-${i}`
         const rows = document.querySelectorAll(className)
