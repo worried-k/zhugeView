@@ -24,11 +24,6 @@
         }
       }
     },
-    data () {
-      return {
-        msg: 'reload'
-      }
-    },
     mounted () {
       const container = this.$refs.reload.parentElement
       dom.setPosition(container)
