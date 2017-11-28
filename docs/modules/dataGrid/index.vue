@@ -1,9 +1,9 @@
 <template>
   <div>
-    <normal-grid></normal-grid>
-    <fix-left></fix-left>
+    <!--<normal-grid></normal-grid>-->
+    <!--<fix-left></fix-left>-->
     <cols-header></cols-header>
-    <pagination-grid></pagination-grid>
+    <!--<pagination-grid></pagination-grid>-->
     <doc-markdown :api="json.grid" title="dataGrid"></doc-markdown>
     <doc-markdown :api="json.column" title="gridColumn"></doc-markdown>
   </div>

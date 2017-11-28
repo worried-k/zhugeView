@@ -35,7 +35,7 @@
               column2：{{scope.data[scope.field]}}
             </template>
           </zg-grid-column>
-          <zg-grid-column field="label0"
+          <zg-grid-column v-if="showColumn3" field="label3"
                           title="column3"
                           sortAble>
             <template scope="scope">
@@ -44,7 +44,7 @@
           </zg-grid-column>
         </zg-grid-column>
 
-        <zg-grid-column field="label0"
+        <zg-grid-column v-if="showColumn4" field="label4"
                         title="column4"
                         sortAble>
           <template scope="scope">
@@ -88,8 +88,16 @@
             store.push(item)
           }
           return store
-        })()
+        })(),
+        showColumn4: true,
+        showColumn3: true
       }
+    },
+    mounted () {
+      setInterval(() => {
+//        this.showColumn4 = !this.showColumn4
+        this.showColumn3 = !this.showColumn3
+      }, 4000)
     }
   }
 </script>

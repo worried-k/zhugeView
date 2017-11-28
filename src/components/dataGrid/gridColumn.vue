@@ -1,5 +1,6 @@
 <script type="text/jsx">
   import {emitter} from '../../mixins/main'
+  import {util} from '../../utils'
   export default {
     name: 'zgGridColumn',
     mixins: [emitter],
@@ -8,7 +9,8 @@
        * @description 用于显示字段名
        */
       field: {
-        type: String
+        type: String,
+        required: true
       },
       /**
        * @description 列头标题
@@ -47,7 +49,7 @@
 
       if (this.$slots.default) {
         let colspanColumn = {
-          field: '',
+          field: this.field,
           title: this.title,
           colspan: 0,
           children: []
@@ -80,6 +82,28 @@
         }
         structure.push(column)
       }
+    },
+    // todo 子组实现逻辑需要优化，好用于监测子组的增减
+    beforeDestroy () {
+      let structure = this.parent('zgDataGrid').$data.structure[this.fix]
+      const field = this.field
+      let hasDel = false
+      structure.forEach((column, i) => {
+        if (hasDel) return
+        if (column.field === field) {
+          structure.splice(i, 1)
+          hasDel = true
+        }/* else if (column.children && column.children.length) {
+          column.children.forEach((child, j) => {
+            if (hasDel) return
+            if (child.field === field) {
+              column.children.splice(j, 1)
+              column.colspan = column.colspan - 1
+              hasDel = true
+            }
+          })
+        }*/
+      })
     },
     render (h) {
       return ('')
