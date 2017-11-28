@@ -10,6 +10,7 @@ import badge from './components/badge/index'
 import loading from './components/loading/index'
 import {tabs, tabPanel} from './components/tab/index'
 import dialog from './components/dialog'
+import reload from './components/reload'
 
 import {charts} from './components/echarts'
 
@@ -32,6 +33,7 @@ const components = [
   tabs,
   tabPanel,
   dialog,
+  reload,
 
   charts
 ]

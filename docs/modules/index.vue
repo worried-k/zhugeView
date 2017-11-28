@@ -31,7 +31,8 @@ export default {
         'tab',
         'message',
         'dialog',
-        'charts'
+        'charts',
+        'reload'
       ]
     }
   },
