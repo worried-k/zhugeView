@@ -118,13 +118,11 @@
           ],
           backgroundColor: 'white',
           grid: {
-            width: '90%',
-            height: '70%',
-            left: '5%',
-            right: '5%',
+            containLabel: false,
             show: false,
-            containLabel: true
+            borderColor: 'red'
           },
+          legend: this.getLegend(),
           tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -141,7 +139,7 @@
             data: this.store.x_axis,
             axisLabel: {
               textStyle: {
-                color: '#777'
+                color: '#404245'
               }
             },
             splitArea: {
@@ -164,12 +162,12 @@
     },
     watch: {
       option () {
-        this.chart.setOption(this.option)
+        this.setOption(this.option)
       }
     },
     mounted () {
       this.chart = echarts.init(this.$refs.toChart)
-      this.chart.setOption(this.option)
+      this.setOption(this.option)
     },
     methods: {
       getYAxis () {
@@ -187,7 +185,7 @@
               }
             },
             textStyle: {
-              color: '#777'
+              color: '#75787D'
             }
           },
           splitLine: {
@@ -229,6 +227,22 @@
           })())
         })
         return seriesList
+      },
+      getLegend () {
+        let legendList = []
+        this.each(function (name) {
+          legendList.push({
+            name
+          })
+        })
+        return {
+          type: 'scroll',
+          data: legendList,
+          borderColor: 'red',
+          borderWidth: 0,
+          width: '60%',
+          show: legendList.length > 1
+        }
       },
       getBarSeries (name, series) {
         return {
@@ -275,6 +289,32 @@
             console.error('未支持的图表类型', this.type)
         }
         return type
+      },
+      setOption (option) {
+        if (!this.chart) return
+        this.chart.setOption(this.resizeGrid(util.clone(option)))
+      },
+      /**
+       * @description 对图像大小间距进行调整
+       * @param option
+       */
+      resizeGrid (option) {
+        const containerWidth = this.chart.getWidth()
+        const containerHeight = this.chart.getHeight()
+        const legendHeight = option.legend.show ? 24 : 0
+        const margin = {
+          top: 20,
+          right: 20,
+          bottom: 10,
+          left: 0
+        }
+        const xAxisHeight = 24 // todo x轴条目太多，则进行x轴文本旋转处理，旋转后高度需计算
+        const yAxisWidth = 80
+        option.grid.width = containerWidth - yAxisWidth * (this.doubleY ? 2 : 1) - margin.left - margin.right
+        option.grid.top = legendHeight + margin.top
+        option.grid.left = yAxisWidth
+        option.grid.height = containerHeight - option.grid.top - xAxisHeight - margin.bottom
+        return option
       }
     }
   }
