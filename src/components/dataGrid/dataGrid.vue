@@ -56,6 +56,13 @@
       pageNum: {
         type: Number,
         default: 1
+      },
+      /**
+       * @description 自定义排序
+       * @tip 参数：[itemA, itemB, columnField, sortStatus(1：正序；-1：倒序)]
+       */
+      customSort: {
+        type: Function
       }
     },
     data () {
@@ -145,8 +152,7 @@
     },
     methods: {
       /**
-       * 1：正序；-1：倒序
-       * @param status
+       * @param status 1：正序；-1：倒序
        * @param column
        */
       onSort (status, column) {
@@ -158,12 +164,16 @@
         })
         const field = column.field
         this.store.sort((a, b) => {
-          if (a[field] > b[field]) {
-            return 1 * status
-          } else if (a[field] < b[field]) {
-            return -1 * status
+          if (this.customSort) {
+            return this.customSort(a, b, field, status)
+          } else {
+            if (a[field] > b[field]) {
+              return 1 * status
+            } else if (a[field] < b[field]) {
+              return -1 * status
+            }
+            return 0
           }
-          return 0
         })
       },
       onScroll (event) {
