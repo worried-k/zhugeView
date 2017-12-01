@@ -47,7 +47,7 @@ module.exports = {
             }
             return url
           },
-          limit: 10,
+          limit: 1024 * 100,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
