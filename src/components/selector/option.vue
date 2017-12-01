@@ -80,7 +80,7 @@
         if (this.disable) return
         if (this.multiple) {
           this.$emit('click', this.active, this.data)
-        } else {
+        } else if (!this.active) {
           this.active = !this.active
           this.$emit('click', this.active, this.data)
         }
