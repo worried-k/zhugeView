@@ -5,6 +5,7 @@
       <zg-button type="primary">primary</zg-button>
       <zg-button type="danger">danger</zg-button>
       <zg-button type="secondary">secondary</zg-button>
+      <zg-button type="warning">warning</zg-button>
       <zg-button type="success">success</zg-button>
     </demo-panel>
   </div>

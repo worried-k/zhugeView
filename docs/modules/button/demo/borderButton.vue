@@ -6,6 +6,7 @@
       <zg-button type="danger" theme="border">danger</zg-button>
       <zg-button type="secondary" theme="border">secondary</zg-button>
       <zg-button type="success" theme="border">success</zg-button>
+      <zg-button type="warning" theme="border">warning</zg-button>
     </demo-panel>
   </div>
 </template>

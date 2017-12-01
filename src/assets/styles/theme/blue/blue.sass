@@ -1,12 +1,19 @@
 //--------------------品牌色
-$color-brand: #0EA1EB
+$color-brand: #0ea1eb
+$color-brand-light: #f0faff
 $color-brand-black: #354052
 
 //--------------------状态标准色
-$color-info: #0EA1EB
-$color-warning: #E6AD12
-$color-danger: #EB6767
-$color-success: #29BD76
+$color-info: #09aef5
+$color-info-light: $color-brand-light
+$color-warning: #e07800
+$color-warning-light: #fff7e6
+$color-danger: #f55858
+$color-danger-light: #ffebeb
+$color-secondary: #0EA1EB
+$color-secondary-light: #f0faff
+$color-success: #29bd76
+$color-success-light: #ebfff5
 
 //--------------------常用标准色
 $color-white: #FFFFFF
@@ -16,7 +23,7 @@ $color-black: #000000
 //系统背景色
 $color-background-system: #EEF0F3
 //深色背景(常用于模块区分)
-$color-background-dark: #E4E7EB
+$color-background-dark: #e6e8eb
 //中深色背景(常用语菜单选中背景和tag背景)
 $color-background-medium: #EBEDF0
 //浅色背景(常用于模块区分)
@@ -32,21 +39,21 @@ $color-border-split: $color-border-normal
 
 //--------------------文本颜色
 //主题文字（功能文字的颜色,如：文字按钮）
-$color-font-brand: #E69100
+$color-font-brand: $color-brand
 //提示文字，文字高亮
 $color-font-highlight: $color-info
 //主标题
 $color-font-title: $color-brand-black
 //次标题
-$color-font-subtitle: #2F3F57
+$color-font-subtitle: #404245
 //内容文字
 $color-font-content: #75787D
 //常用于标题后的辅助信息
-$color-font-assist: #93989E
+$color-font-assist: #bcbec2
 //悬停提示文本
 $color-font-placeholder: #BCBEC2
-//icon字体
-$color-font-icon-normal: #A5A7A8
+//icon字体o
+$color-font-icon-normal: #c8cacc
 //禁用状态文本
 $color-font-disabled: #E1E3E6
 
@@ -71,20 +78,23 @@ $size-font-title-specially: 36px
 //--------------------动作颜色（主要用于按钮背景相关）
 //一级交互
 $color-action-primary-default: $color-brand
-$color-action-primary-hover: #F5B95F
-$color-action-primary-active: #F09F26
+$color-action-primary-hover: #1eb4ff
+$color-action-primary-active: #14abf7
 //危险交互
 $color-action-danger-default: $color-danger
-$color-action-danger-hover: #FA7D7D
-$color-action-danger-active: #EB5959
+$color-action-danger-hover: #ff7575
+$color-action-danger-active: #f56262
 //成功
 $color-action-success-default: $color-success
-$color-action-success-hover: #31CC81
-$color-action-success-active: #1EAB67
-
+$color-action-success-hover: #31cc81
+$color-action-success-active: #22bf73
+//警告
+$color-action-warning-default: $color-warning
+$color-action-warning-hover: #ed8e21
+$color-action-warning-active: #e68312
 //普通交互
-$color-action-normal-default: $color-white
-$color-action-normal-hover: #FBFBFB
+$color-action-normal-default: #fafafa
+$color-action-normal-hover: #fff
 $color-action-normal-active: #F0FAFF
 
 //次级交互
@@ -128,9 +138,11 @@ $color-brand-android: #78C257
 $color-brand-apple: #666666
 
 //--------------------外阴影
-$shadow-normal: 0 2px 8px rgba(0, 0, 0, .33)
+$shadow-normal: 0 1px 4px rgba(53, 64, 82, .5)
+$layer: rgba(53, 64, 82, .5)
 
 //--------------------其它
 $font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif
-$border-radius: 5px
+$border-radius: 3px
 $z-index-base: 100
+$z-index-max: 999999999

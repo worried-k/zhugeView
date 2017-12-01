@@ -19,7 +19,7 @@ export default {
       type: String,
       default: 'normal',
       validator (value) {
-        let rules = ['normal', 'primary', 'danger', 'secondary', 'success']
+        let rules = ['normal', 'primary', 'danger', 'secondary', 'warning', 'success']
         return rules.includes(value)
       }
     },

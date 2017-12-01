@@ -77,6 +77,17 @@
       border-color: $color-action-success-active
       background: $color-action-success-active
 
+  &.zg-button-normal-warning
+    color: $color-white
+    border: none
+    background: $color-action-warning-default
+    &:hover
+      border-color: $color-action-warning-hover
+      background: $color-action-warning-hover
+    &:active
+      border-color: $color-action-warning-active
+      background: $color-action-warning-active
+
   &.zg-button-border-normal
     border: 1px solid $color-border-normal
     color: $color-brand-black
@@ -95,7 +106,7 @@
     border: 1px solid $color-brand
     background: $color-white
     &:hover
-      background: $color-warning-light
+      background: $color-brand-light
     &:active
       background: $btn-border-primary-bg-active
 
@@ -125,6 +136,15 @@
       background: $color-success-light
     &:active
       background: $btn-border-success-bg-active
+
+  &.zg-button-border-warning
+    color: $color-warning
+    border: 1px solid $color-warning
+    background: $color-white
+    &:hover
+      background: $color-warning-light
+    &:active
+      background: $btn-border-warning-bg-active
 
   &.zg-disable
     border: 0
