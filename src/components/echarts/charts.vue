@@ -137,6 +137,7 @@
           },
           xAxis: {
             data: this.store.x_axis,
+            boundaryGap: this.getBoundaryGap(), // 判断是否有柱状图，包含柱状图为true，其它为false
             axisLabel: {
               textStyle: {
                 color: '#404245'
@@ -170,6 +171,22 @@
       this.setOption(this.option)
     },
     methods: {
+      /**
+       * @description 判断是否有柱状图，包含柱状图为true，其它为false
+       */
+      getBoundaryGap () {
+        const likeBarTypes = ['bar']
+        let boundaryGap = this.type ? likeBarTypes.includes(this.type) : false
+        if (this.yAxisRule) {
+          for (const key in this.yAxisRule) {
+            const item = this.yAxisRule[key]
+            if (likeBarTypes.includes(item.type)) {
+              boundaryGap = true
+            }
+          }
+        }
+        return boundaryGap
+      },
       getYAxis () {
         const axis = {
           splitNumber: 5,
@@ -260,7 +277,7 @@
           data: series.values,
           symbol: 'circle',
           symbolSize: 5,
-          showAllSymbol: true,
+          showAllSymbol: false,
           yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
           itemStyle: {
             normal: {
@@ -304,7 +321,7 @@
         const legendHeight = option.legend.show ? 24 : 0
         const margin = {
           top: 20,
-          right: 20,
+          right: 40,
           bottom: 10,
           left: 0
         }
