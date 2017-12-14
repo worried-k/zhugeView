@@ -1,7 +1,7 @@
 <template>
   <div class="zg-charts" :style="style">
     <div class="zg-charts-main" ref="toChart"></div>
-    <div v-show="!store.series.length" :style="{'line-height': height + 'px'}" class="zg-charts-empty">暂无数据</div>
+    <div v-show="!chartStore.series.length" :style="{'line-height': height + 'px'}" class="zg-charts-empty">暂无数据</div>
   </div>
 </template>
 
@@ -74,12 +74,40 @@
       tooltipFormatter: {
         type: Function
       },
+      xAxisFormatter: {
+        type: Function
+      },
       /**
        * @description 显示数据项（从store中过滤），对应series中的names字段
        * @格式[['group', 'item1'], ['group', 'item2']]或['item1', 'item2']
        */
       showList: {
         type: Array
+      },
+      /**
+       * @description 是否将series中每项数据的names转为新的x轴
+       * @tip 目前只有柱状图时有效
+       */
+      reverseXAxis: {
+        type: Boolean,
+        default: false
+      },
+      /**
+       * @description reverseXAxis为true时，该项必填
+       */
+      seriesName: {
+        type: String
+      },
+      colors: {
+        type: Array,
+        default () {
+          return [
+            '#00a0e9', '#f4b93b', '#85bd41', '#f29c9f', '#8f82bc',
+            '#0068b7', '#f29b76', '#13b5b1', '#ea68a2', '#fff100',
+            '#1ec0ff', '#f9a11b', '#8cd790', '#40ccca', '#aaabd3',
+            '#2b90d9', '#ec7a4a', '#f29b76', '#ea68a2', '#ffdd38'
+          ]
+        }
       }
     },
     data () {
@@ -88,6 +116,25 @@
       }
     },
     computed: {
+      chartStore () {
+        if (this.reverseXAxis) {
+          let series = {
+            names: [this.seriesName],
+            values: []
+          }
+          let store = {
+            series: [series],
+            x_axis: []
+          }
+          this.store.series.forEach(seriesItem => {
+            store.x_axis.push(seriesItem.names.join('-'))
+            series.values.push(seriesItem.values[0])
+          })
+          return store
+        } else {
+          return this.store
+        }
+      },
       showListMap () {
         let map = {}
         if (util.isArray(this.showList)) {
@@ -109,13 +156,8 @@
         return style
       },
       option () {
-        return {
-          color: [
-            '#00a0e9', '#f4b93b', '#85bd41', '#f29c9f', '#8f82bc',
-            '#0068b7', '#f29b76', '#13b5b1', '#ea68a2', '#fff100',
-            '#1ec0ff', '#f9a11b', '#8cd790', '#40ccca', '#aaabd3',
-            '#2b90d9', '#ec7a4a', '#f29b76', '#ea68a2', '#ffdd38'
-          ],
+        let option = {
+          color: this.colors,
           backgroundColor: 'white',
           grid: {
             containLabel: false,
@@ -136,12 +178,13 @@
             formatter: this.tooltipFormatter
           },
           xAxis: {
-            data: this.store.x_axis,
+            data: (this.reverseXAxis && this.showList) ? this.showList : this.chartStore.x_axis,
             boundaryGap: this.getBoundaryGap(), // 判断是否有柱状图，包含柱状图为true，其它为false
             axisLabel: {
               textStyle: {
                 color: '#404245'
-              }
+              },
+              formatter: this.xAxisFormatter
             },
             splitArea: {
               show: false
@@ -159,6 +202,7 @@
           yAxis: this.getYAxis(),
           series: this.getSeries()
         }
+        return option
       }
     },
     watch: {
@@ -262,12 +306,39 @@
         }
       },
       getBarSeries (name, series) {
-        return {
-          name,
-          type: 'bar',
-          barMaxWidth: 35,
-          data: series.values,
-          yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
+        if (this.reverseXAxis) {
+          return {
+            name,
+            type: 'bar',
+            barMaxWidth: 35,
+            data: (() => {
+              let data = []
+              series.values.forEach((value, index) => {
+                if (this.reverseXAxis &&
+                  this.showList &&
+                  !this.showListMap[this.store.series[index].names.join('-')]) return
+                data.push({
+                  name: this.chartStore.x_axis[index],
+                  value: value,
+                  itemStyle: {
+                    normal: {
+                      color: this.colors[data.length]
+                    }
+                  }
+                })
+              })
+              return data
+            })(),
+            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
+          }
+        } else {
+          return {
+            name,
+            type: 'bar',
+            barMaxWidth: 35,
+            data: series.values,
+            yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
+          }
         }
       },
       getLineSeries (name, series) {
@@ -287,9 +358,9 @@
         }
       },
       each (handle) {
-        return this.store.series.map(series => {
+        return this.chartStore.series.map(series => {
           const name = series.names.join('-')
-          if (util.isArray(this.showList) && !this.showListMap[name]) return
+          if (util.isArray(this.showList) && !this.showListMap[name] && !this.reverseXAxis) return
           return handle.call(this, name, series)
         })
       },

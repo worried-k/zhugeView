@@ -4,6 +4,7 @@
     <line-chart></line-chart>
     <double-line></double-line>
     <multiple-chart></multiple-chart>
+    <reverse></reverse>
     <doc-markdown :api="api"></doc-markdown>
   </div>
 </template>
@@ -15,9 +16,11 @@
   import api from './charts.json'
   import DoubleLine from './demo/doubleLine.vue'
   import MultipleChart from './demo/multipleChart.vue'
+  import Reverse from './demo/reverse'
 
   export default {
     components: {
+      Reverse,
       MultipleChart,
       DoubleLine,
       DocMarkdown,

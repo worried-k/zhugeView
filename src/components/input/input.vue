@@ -75,6 +75,16 @@
       readOnly: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description todo 输入框类型
+       */
+      type: {
+        type: String,
+        default: 'text',
+        validator (value) {
+          return ['text', 'password'].includes(value)
+        }
       }
     },
     data () {
