@@ -57,6 +57,8 @@ let util = {
     }
   },
   mergeObject (defaults, option) {
+    defaults = defaults || {}
+    option = option || {}
     for (let prop in defaults) {
       if (this.isObject(defaults[prop])) {
         option[prop] = option[prop] ? option[prop] : {}

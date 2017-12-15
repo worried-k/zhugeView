@@ -1,5 +1,6 @@
 <template>
   <div>
+    <stack-bar-chart></stack-bar-chart>
     <bar-chart></bar-chart>
     <line-chart></line-chart>
     <double-line></double-line>
@@ -17,9 +18,11 @@
   import DoubleLine from './demo/doubleLine.vue'
   import MultipleChart from './demo/multipleChart.vue'
   import Reverse from './demo/reverse'
+  import StackBarChart from './demo/stackBarChart'
 
   export default {
     components: {
+      StackBarChart,
       Reverse,
       MultipleChart,
       DoubleLine,

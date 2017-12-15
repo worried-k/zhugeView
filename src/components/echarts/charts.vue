@@ -108,6 +108,28 @@
             '#2b90d9', '#ec7a4a', '#f29b76', '#ea68a2', '#ffdd38'
           ]
         }
+      },
+      /**
+       * @description 当以堆叠柱状图展示的话，series的values元素，需要为对象形式
+       * @tip 该属性只对柱形图有效
+       */
+      stack: {
+        type: Array,
+        validator (stack) {
+          // demo
+          // stack = [
+          //   {
+          //     field: 'percent',
+          //     name: '百分比',
+          //     option: null // series原生配置
+          //   },
+          //   {
+          //     field: 'value',
+          //     name: '人数'
+          //   }
+          // ]
+          return util.isArray(stack)
+        }
       }
     },
     data () {
@@ -306,8 +328,9 @@
         }
       },
       getBarSeries (name, series) {
+        let result = null
         if (this.reverseXAxis) {
-          return {
+          result = {
             name,
             type: 'bar',
             barMaxWidth: 35,
@@ -332,7 +355,7 @@
             yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
           }
         } else {
-          return {
+          result = {
             name,
             type: 'bar',
             barMaxWidth: 35,
@@ -340,6 +363,11 @@
             yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0
           }
         }
+        if (series.stack) {
+          result.stack = series.stack
+          result = util.mergeObject(series.option, result)
+        }
+        return result
       },
       getLineSeries (name, series) {
         return {
@@ -358,10 +386,24 @@
         }
       },
       each (handle) {
-        return this.chartStore.series.map(series => {
+        this.chartStore.series.forEach((series, index) => {
           const name = series.names.join('-')
           if (util.isArray(this.showList) && !this.showListMap[name] && !this.reverseXAxis) return
-          return handle.call(this, name, series)
+
+          if (this.stack && this.type === 'bar') {
+            this.stack.forEach(stack => {
+              handle.call(this, `${name} ${stack.name}`, {
+                names: series.names.concat([stack.name]),
+                values: series.values.map(v => {
+                  return v[stack.field]
+                }),
+                stack: `stack-${index}`,
+                option: stack.option
+              })
+            })
+          } else {
+            handle.call(this, name, series)
+          }
         })
       },
       getAxisPointerType () {
