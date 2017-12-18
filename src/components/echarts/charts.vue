@@ -75,7 +75,17 @@
         type: Function
       },
       xAxisFormatter: {
-        type: Function
+        type: Function,
+        default (label) {
+          if (/^\d{4}-\d{2}-\d{2}$/.test(label)) { // 处理日期
+            return label.replace(/\d{4}-/, '')
+          } else if (/^\d{4}-\d{2}-\d{2}\|\d{4}-\d{2}-\d{2}$/.test(label)) { // 周、月日期
+            let dates = label.match(/\d{4}-\d{2}-\d{2}/g)
+            return dates[0].replace(/\d{4}-/, '') + '~' + dates[1].replace(/\d{4}-/, '')
+          } else {
+            return label
+          }
+        }
       },
       /**
        * @description 显示数据项（从store中过滤），对应series中的names字段
