@@ -82,7 +82,7 @@
             xLabel = dates[0].replace(/\d{4}-/, '') + '~' + dates[1].replace(/\d{4}-/, '')
           }
           return `<span>${xLabel}</span><br>` + params.map(item => {
-            return `${item.marker}${item.seriesName}: <span style="color:#66ccff;">${item.value}</span>`
+            return `${item.marker}${item.seriesName}: <span style="color:#66ccff;">${util.toThousands(item.value)}</span>`
           }).join('<br>')
         }
       },
