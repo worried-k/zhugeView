@@ -74,6 +74,16 @@
       tooltipFormatter: {
         type: Function
       },
+      yAxisFormatter: {
+        type: Function,
+        default (value) {
+          if (parseFloat(value) >= 1000) {
+            return util.toThousands((value / 1000).toFixed(1)) + 'k'
+          } else {
+            return value
+          }
+        }
+      },
       xAxisFormatter: {
         type: Function,
         default (label) {
@@ -270,13 +280,7 @@
             show: false
           },
           axisLabel: {
-            formatter (value) {
-              if (parseFloat(value) >= 1000) {
-                return util.toThousands((value / 1000).toFixed(1)) + 'k'
-              } else {
-                return value
-              }
-            },
+            formatter: this.yAxisFormatter,
             textStyle: {
               color: '#75787D'
             }
