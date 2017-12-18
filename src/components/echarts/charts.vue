@@ -72,7 +72,19 @@
        * @description tooltip自定义显示
        */
       tooltipFormatter: {
-        type: Function
+        type: Function,
+        default (params) {
+          let xLabel = params[0].name
+          if (/^\d{4}-\d{2}-\d{2}$/.test(xLabel)) { // 处理日期
+            xLabel = xLabel.replace(/\d{4}-/, '')
+          } else if (/^\d{4}-\d{2}-\d{2}\|\d{4}-\d{2}-\d{2}$/.test(xLabel)) { // 周、月日期
+            let dates = xLabel.match(/\d{4}-\d{2}-\d{2}/g)
+            xLabel = dates[0].replace(/\d{4}-/, '') + '~' + dates[1].replace(/\d{4}-/, '')
+          }
+          return `<span>${xLabel}</span><br>` + params.map(item => {
+            return `${item.marker}${item.seriesName}: <span style="color:#66ccff;">${item.value}</span>`
+          }).join('<br>')
+        }
       },
       yAxisFormatter: {
         type: Function,
