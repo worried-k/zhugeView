@@ -42,7 +42,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           publicPath: function (url) {
-            if (process.env.NODE_ENV === 'lib') {
+            if (process.env.NODE_ENV === 'production') {
               url = url.replace('theme-default/', '')
             }
             return url
@@ -56,7 +56,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           publicPath: function (url) {
-            if (process.env.NODE_ENV === 'lib') {
+            if (process.env.NODE_ENV === 'production') {
               url = url.replace('theme-default/', '')
             }
             return url
@@ -70,7 +70,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           publicPath: function (url) {
-            if (process.env.NODE_ENV === 'lib') {
+            if (process.env.NODE_ENV === 'production') {
               url = url.replace('theme-default/', '')
             }
             return url
