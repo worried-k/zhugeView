@@ -109,6 +109,12 @@
           }
         }
       },
+      legendFormatter: {
+        type: Function,
+        default (label) {
+          return label
+        }
+      },
       /**
        * @description 显示数据项（从store中过滤），对应series中的names字段
        * @格式[['group', 'item1'], ['group', 'item2']]或['item1', 'item2']
@@ -350,7 +356,8 @@
           borderColor: 'red',
           borderWidth: 0,
           width: '60%',
-          show: legendList.length > 1
+          show: legendList.length > 1,
+          formatter: this.legendFormatter
         }
       },
       getBarSeries (name, series) {
