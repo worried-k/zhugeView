@@ -69,13 +69,13 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          publicPath: function (url) {
-            if (process.env.NODE_ENV === 'production') {
-              url = url.replace('theme-default/', '')
-            }
-            return url
-          },
-          limit: 10,
+          // publicPath: function (url) {
+          //   if (process.env.NODE_ENV === 'production') {
+          //     url = url.replace('theme-default/', '')
+          //   }
+          //   return url
+          // },
+          // limit: 10,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       },
