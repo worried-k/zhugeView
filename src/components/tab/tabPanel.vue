@@ -1,4 +1,5 @@
 <script type="text/jsx">
+  import Vue from 'vue'
   import {emitter} from '../../mixins/main'
   export default {
     name: 'zgTabPanel',
@@ -12,14 +13,20 @@
         required: true
       }
     },
+    data () {
+      return {
+        templateData: {
+          title: this.title,
+          slot: this.$slots.default
+        }
+      }
+    },
     created () {
       const parent = this.parent('zgTabs')
-      parent.addTab({
-        title: this.title,
-        slot: this.$slots.default
-      })
+      parent.addTab(this.templateData)
     },
     render (h) {
+      Vue.set(this.templateData, 'slot', this.$slots.default)
       return ''
     }
   }
