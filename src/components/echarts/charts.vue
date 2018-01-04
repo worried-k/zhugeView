@@ -32,7 +32,7 @@
         type: String,
         default: 'bar',
         validator (value) {
-          return ['bar', 'line'].includes(value)
+          return ['bar', 'line', 'area'].includes(value)
         }
       },
       /**
@@ -336,6 +336,8 @@
                 return context.getBarSeries(name, series)
               case 'line':
                 return context.getLineSeries(name, series)
+              case 'area':
+                return context.getAreaSeries(name, series)
               default:
                 console.error('未支持的图表类型', context.type)
             }
@@ -418,6 +420,24 @@
           }
         }
       },
+      getAreaSeries (name, series) {
+        return {
+          name,
+          type: 'line',
+          data: series.values,
+          symbol: 'circle',
+          symbolSize: 5,
+          showAllSymbol: false,
+          yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
+          stack: 'area',
+          areaStyle: {normal: {}},
+          itemStyle: {
+            normal: {
+              lineStyle: {width: 1}
+            }
+          }
+        }
+      },
       each (handle) {
         this.chartStore.series.forEach((series, index) => {
           const name = series.names.join('-')
@@ -446,6 +466,7 @@
             type = 'shadow'
             break
           case 'line':
+          case 'area':
             type = 'line'
             break
           default:

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <area-chart></area-chart>
     <stack-bar-chart></stack-bar-chart>
     <bar-chart></bar-chart>
     <line-chart></line-chart>
@@ -19,9 +20,11 @@
   import MultipleChart from './demo/multipleChart.vue'
   import Reverse from './demo/reverse'
   import StackBarChart from './demo/stackBarChart'
+  import AreaChart from './demo/areaChart'
 
   export default {
     components: {
+      AreaChart,
       StackBarChart,
       Reverse,
       MultipleChart,
