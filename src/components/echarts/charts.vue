@@ -296,6 +296,7 @@
        * TODO 颜色待定
        */
       getMarkLine () {
+        if (!this.markLine) return []
         let arr = []
         let xMap = {}
         this.getXAxis().forEach((label, i) => {
