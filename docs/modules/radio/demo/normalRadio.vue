@@ -1,7 +1,9 @@
 <template>
   <div>
     <demo-panel title="Radio" subtitle="normal radio">
-      <zg-radio :store="store" v-model="value"></zg-radio>
+      <zg-radio :store="store" v-model="value">
+        <template scope="scope">->>>  {{scope.data.label}}</template>
+      </zg-radio>
       <div>
         {{value}}
       </div>

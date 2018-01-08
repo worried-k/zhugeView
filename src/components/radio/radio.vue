@@ -1,5 +1,9 @@
 <script type="text/jsx">
+  import ZgRadioLabel from './radioLabel'
+
   export default {
+    components: {
+      ZgRadioLabel},
     name: 'zgRadio',
     props: {
       /**
@@ -16,9 +20,6 @@
           return []
         }
       }
-    },
-    data () {
-      return {}
     },
     methods: {
       onClickRadio (item) {
@@ -39,7 +40,7 @@
             return (
               <li class={itemClass} onClick={this.onClickRadio(item)}>
                 <span class="zg-cycle"></span>
-                {item.label}
+                <zg-radio-label data={item} scopedSlots={{default: this.$scopedSlots.default}}></zg-radio-label>
               </li>
             )
           })}
