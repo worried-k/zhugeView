@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="区域图">
-      <zg-charts :store="json" type="area"></zg-charts>
+      <zg-charts :store="json" type="area" :markLine="markLine"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -32,8 +32,11 @@
         store.series[2].values.push(three)
       })
       console.log(util.clone(store))
+
+
       return {
-        json: store
+        json: store,
+        markLine: ["2017-11-19", "2017-11-20", "2017-11-22"]
       }
     }
   }

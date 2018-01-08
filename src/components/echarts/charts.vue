@@ -8,7 +8,7 @@
 <script>
   import echarts from 'echarts'
   import {util} from '../../utils'
-  // todo 对图表grid进行自适应计算
+  // todo 对图表grid进行resize自适应计算
   export default {
     name: 'zgCharts',
     props: {
@@ -168,6 +168,13 @@
           // ]
           return util.isArray(stack)
         }
+      },
+      /**
+       * @description 标记线
+       * @tip 数组元素如果为字符串类型，则进行值匹配，如果为数字类型，则当做下标处理
+       */
+      markLine: {
+        type: Array
       }
     },
     data () {
@@ -238,7 +245,7 @@
             formatter: this.tooltipFormatter
           },
           xAxis: {
-            data: (this.reverseXAxis && this.showList) ? this.showList : this.chartStore.x_axis,
+            data: this.getXAxis(),
             boundaryGap: this.getBoundaryGap(), // 判断是否有柱状图，包含柱状图为true，其它为false
             axisLabel: {
               textStyle: {
@@ -250,7 +257,10 @@
               show: false
             },
             splitLine: {
-              show: false
+              show: Boolean(this.markLine),
+              lineStyle: {
+                color: this.getMarkLine()
+              }
             },
             axisTick: {
               show: false
@@ -275,6 +285,32 @@
       this.setOption(this.option)
     },
     methods: {
+      /**
+       * @description 获取x轴数据
+       */
+      getXAxis () {
+        return (this.reverseXAxis && this.showList) ? this.showList : this.chartStore.x_axis
+      },
+      /**
+       * @description 获取标记线的颜色组
+       * TODO 颜色待定
+       */
+      getMarkLine () {
+        let arr = []
+        let xMap = {}
+        this.getXAxis().forEach((label, i) => {
+          xMap[label] = i
+          arr[i] = 'none'
+        })
+        this.markLine.forEach(item => {
+          if (util.isString(item)) {
+            arr[xMap[item]] = 'red'
+          } else if (util.isNumber(item)) {
+            arr[item] = 'red'
+          }
+        })
+        return arr
+      },
       /**
        * @description 判断是否有柱状图，包含柱状图为true，其它为false
        */
