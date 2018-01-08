@@ -2,10 +2,10 @@
 .zg-radio-list
   display: inline-block
   color: $color-font-title
-  cursor: pointer
   white-space: nowrap
   font-size: $size-font-content
   .zg-radio-item
+    cursor: pointer
     .zg-cycle
       vertical-align: middle
       margin-right: 10px
@@ -29,7 +29,9 @@
           height: 6px
           border-radius: 50%
           background: $color-brand
-    &.zg-disable .zg-cycle
-      border-color: $color-action-disabled-default
-      &:after
-        background: $color-action-disabled-default
+    &.zg-disable
+      cursor: not-allowed
+      .zg-cycle
+        border-color: $color-action-disabled-default
+        &:after
+          background: $color-action-disabled-default

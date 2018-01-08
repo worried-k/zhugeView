@@ -2,7 +2,14 @@
   export default {
     name: 'zgRadio',
     props: {
+      /**
+       * @description value
+       */
       value: null,
+      /**
+       * @description radio组数据源
+       * @tip 组内数据项需要为对象，结构为：{value: '', label: '', disable: false}
+       */
       store: {
         type: Array,
         default () {
@@ -16,7 +23,7 @@
     methods: {
       onClickRadio (item) {
         return () => {
-          this.$emit('input', item)
+          if (!item.disable) this.$emit('input', item.value)
         }
       }
     },
@@ -26,8 +33,8 @@
           {this.store.map(item => {
             let itemClass = {
               'zg-radio-item': true,
-              'zg-disable': true,
-              'zg-checked': item === this.value
+              'zg-disable': item.disable,
+              'zg-checked': item.value === this.value
             }
             return (
               <li class={itemClass} onClick={this.onClickRadio(item)}>

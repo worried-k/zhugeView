@@ -20,14 +20,15 @@
         store: [
           {
             value: 1,
-            label: 'radio a'
+            label: 'radio a',
+            disable: true
           },
           {
             value: 2,
             label: 'radio b'
           }
         ],
-        value: null
+        value: 1
       }
     }
   }
