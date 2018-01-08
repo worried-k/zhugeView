@@ -23,6 +23,7 @@ export default {
         'button',
         'input',
         'checkbox',
+        'radio',
         'select',
         'grid',
         'tooltip',

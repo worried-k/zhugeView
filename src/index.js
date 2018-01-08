@@ -11,6 +11,7 @@ import loading from './components/loading/index'
 import {tabs, tabPanel} from './components/tab/index'
 import dialog from './components/dialog'
 import reload from './components/reload'
+import radio from './components/radio'
 
 import {charts} from './components/echarts'
 
@@ -34,6 +35,7 @@ const components = [
   tabPanel,
   dialog,
   reload,
+  radio,
 
   charts
 ]

@@ -14,6 +14,7 @@ import message from '../modules/message/index.vue'
 import dialog from '../modules/dialog/index.vue'
 import charts from '../modules/echarts/index.vue'
 import reload from '../modules/reload/index.vue'
+import radio from '../modules/radio/index'
 
 Vue.use(Router)
 
@@ -39,6 +40,11 @@ export default new Router({
           path: '/checkbox',
           name: 'checkbox',
           component: Checkbox
+        },
+        {
+          path: '/radio',
+          name: 'radio',
+          component: radio
         },
         {
           path: '/select',

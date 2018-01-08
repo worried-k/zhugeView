@@ -293,7 +293,6 @@
       },
       /**
        * @description 获取标记线的颜色组
-       * TODO 颜色待定
        */
       getMarkLine () {
         if (!this.markLine) return []
@@ -305,9 +304,9 @@
         })
         this.markLine.forEach(item => {
           if (util.isString(item)) {
-            arr[xMap[item]] = 'red'
+            arr[xMap[item]] = 'rgb(254,177,177)'
           } else if (util.isNumber(item)) {
-            arr[item] = 'red'
+            arr[item] = 'rgb(254,177,177)'
           }
         })
         return arr

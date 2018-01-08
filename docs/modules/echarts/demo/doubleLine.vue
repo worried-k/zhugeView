@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="doubleY: line">
-      <zg-charts :store="json" type="line" doubleY :yAxisRule="yAxisRule"></zg-charts>
+      <zg-charts :store="json" type="line" doubleY :yAxisRule="yAxisRule" :markLine="markLine"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -25,7 +25,15 @@
           '点击': {
             index: 1
           }
-        }
+        },
+        markLine: [
+          "00:05:00",
+          "00:25:00",
+          "01:30:00",
+          "01:40:00",
+          "02:05:00",
+          "03:10:00"
+        ]
       }
     }
   }

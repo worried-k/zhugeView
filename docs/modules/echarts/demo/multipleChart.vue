@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="doubleY: line&bar">
-      <zg-charts :store="json" doubleY :yAxisRule="yAxisRule"></zg-charts>
+      <zg-charts :store="json" doubleY :yAxisRule="yAxisRule" :markLine="markLine"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -36,7 +36,12 @@
               max: 100
             }
           }
-        }
+        },
+        markLine: [
+          "17:15:00",
+          "20:00:00",
+          "21:00:00"
+        ]
       }
     }
   }
