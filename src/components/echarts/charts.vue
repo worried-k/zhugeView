@@ -466,7 +466,11 @@
           showAllSymbol: false,
           yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
           stack: 'area',
-          areaStyle: {normal: {}},
+          areaStyle: {
+            normal: {
+              opacity: 0.3
+            }
+          },
           itemStyle: {
             normal: {
               lineStyle: {width: 1}
