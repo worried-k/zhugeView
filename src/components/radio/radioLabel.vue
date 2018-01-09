@@ -10,6 +10,9 @@
   export default {
     name: 'zgRadioLabel',
     props: {
+      /**
+       *
+       */
       data: {
         type: Object
       }

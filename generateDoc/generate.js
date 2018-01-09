@@ -27,7 +27,7 @@ fsUtil.readDir(config.basePath, (filePath, file, stat) => {
     fs.readFile(path.resolve(filePath, file), (err, data) => {
       const fileContent = data.toString()
       const matchProps = fileContent.match(reg.props)
-      if (!matchProps) return
+      if (!matchProps || !/\{[\s\S]*\}/.test(matchProps[0])) return
       const propContent = matchProps[0].match(/\{[\s\S]*\}/)[0]
       const props = propContent.split(reg.commentAndName)
       const comments = propContent.match(reg.commentAndName)

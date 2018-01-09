@@ -12,11 +12,13 @@
       value: null,
       /**
        * @description radio组数据源
-       * @tip 组内数据项需要为对象，结构为：{value: '', label: '', disable: false}
+       * @tip 组内数据项需要为对象
+       * @default []
        */
       store: {
         type: Array,
         default () {
+          // 结构为：{value: '', label: '', disable: false}
           return []
         }
       }
