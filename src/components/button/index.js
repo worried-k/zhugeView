@@ -1,8 +1,13 @@
-import ZgButton from './button.vue'
+import button from './button.vue'
+import radioButton from './radioButton'
 
-/* istanbul ignore next */
-ZgButton.install = function (Vue) {
-  Vue.component(ZgButton.name, ZgButton)
+[button, radioButton].forEach((component) => {
+  component.install = function (Vue) {
+    Vue.component(component.name, component)
+  }
+})
+
+export {
+  button,
+  radioButton
 }
-
-export default ZgButton

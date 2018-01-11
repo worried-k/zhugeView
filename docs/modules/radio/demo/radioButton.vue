@@ -10,7 +10,7 @@
 
 <script>
   import ZgRadio from '../../../../src/components/radio/radio'
-  import ZgRadioButton from '../../../../src/components/radio/radioButton'
+  import ZgRadioButton from '../../../../src/components/button/radioButton'
 
   export default {
     components: {

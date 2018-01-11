@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import ZgButton from '../button/button'
+  import ZgButton from './button'
 
   export default {
     components: {ZgButton},
