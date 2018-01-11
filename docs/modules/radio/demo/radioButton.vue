@@ -19,7 +19,7 @@
     name: 'radioButton',
     data () {
       return {
-        value: null,
+        value: 2,
         store: [
           {
             value: 1,
@@ -27,7 +27,8 @@
           },
           {
             value: 2,
-            label: 'item b'
+            label: 'item b',
+            disable: false,
           },
           {
             value: 3,
@@ -39,6 +40,12 @@
           }
         ]
       }
+    },
+    mounted () {
+      setTimeout(() => {
+        this.value = 4
+        this.store[1].disable = true
+      }, 2000)
     }
   }
 </script>

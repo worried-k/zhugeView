@@ -6,6 +6,7 @@
                :theme="theme"
                :size="size"
                :type="type"
+               :disable="item.disable"
                @click="onClickItem(item)"
                :icon="item.icon">
       <slot :data="item">
@@ -71,13 +72,30 @@
       }
     },
     data () {
+      let checked = null
+      this.store.forEach(item => {
+        if (item.value === this.value) {
+          checked = item
+        }
+      })
       return {
-        checked: null
+        checked
+      }
+    },
+    watch: {
+      value (value) {
+        this.store.forEach(item => {
+          if (item.value === value) {
+            this.checked = item
+          }
+        })
       }
     },
     methods: {
       onClickItem (item) {
         this.checked = item
+        this.$emit('input', item.value)
+        this.$emit('change', item)
       }
     }
   }
