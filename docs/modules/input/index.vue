@@ -8,6 +8,8 @@
       <zg-input icon="zgicon-list"
                 clear-able
                 placeholder="有清除有icon"
+                @blur="onBlur"
+                @focus="onFocus"
                 v-model="value"></zg-input>
       <span>输入值：{{value}}</span>
     </demo-panel>
@@ -31,6 +33,14 @@
       return {
         json,
         value: '默认值'
+      }
+    },
+    methods: {
+      onBlur () {
+        console.log('on blur')
+      },
+      onFocus () {
+        console.log('on focus')
       }
     }
   }

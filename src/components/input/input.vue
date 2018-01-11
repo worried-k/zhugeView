@@ -8,8 +8,8 @@
            :placeholder="placeholder"
            v-model="inputValue"
            :readonly="readOnly"
-           @focus="active = true"
-           @blur="active = false"
+           @focus="onFocus"
+           @blur="onBlur"
            @keyup="onKey"
     />
     <i v-if="clearAble && inputValue"
@@ -132,6 +132,14 @@
       },
       onKey (event) {
         this.$emit('key', event)
+      },
+      onFocus () {
+        this.active = true
+        this.$emit('focus')
+      },
+      onBlur () {
+        this.active = false
+        this.$emit('blur')
       },
       focus () {
         this.$refs.input.focus()
