@@ -405,6 +405,7 @@
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
+        this.$emit('change')
       }
     },
     render (h) {

@@ -109,6 +109,7 @@
      * 计算行高
      */
     updated () {
+      if (this._isDestroyed) return
       let styleSheet = []
       // 调整body中单元格高度
       this.store.forEach((item, i) => {
