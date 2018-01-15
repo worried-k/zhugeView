@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="line">
-      <zg-charts type="line" :store="json" :showList="showList"></zg-charts>
+      <zg-charts type="line" :store="json" :showList="showList" :markLine="markLine"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -18,7 +18,10 @@
     data () {
       return {
         json: json.app_data,
-        showList: ['zgsee']
+        showList: ['新增用户'],
+        markLine: [
+          '2017-02-02'
+        ]
       }
     }
   }
