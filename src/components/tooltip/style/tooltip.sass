@@ -1,6 +1,6 @@
 @import "../../../assets/styles/constants"
 $arrow-size: 4px
-.zg-tooltip
+.zg-tooltip-dark,.zg-tooltip-light
   display: inline-block
   position: absolute
   background: $color-brand-black
@@ -81,5 +81,11 @@ $arrow-size: 4px
     text-decoration: underline
     margin-left: 10px
     cursor: pointer
+.zg-tooltip-light
+  background: $color-background-light
+  color: $color-brand-black
+  &:after
+    background: $color-background-light
+    box-shadow: 3px 3px 3px rgba(53, 64, 82, .2)
 .zg-tooltip-trigger
   display: inline-block

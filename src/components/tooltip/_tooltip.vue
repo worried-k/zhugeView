@@ -13,6 +13,8 @@
         autoHide: true,
         width: 0,
         customRender: null,
+        customClass: '',
+        theme: '',
         onHide: null
       }
     },
@@ -35,12 +37,12 @@
           'left-bottom', 'right-bottom',
           'bottom-left', 'bottom', 'bottom-right'
         ]
-        let clazz = {
-          'zg-tooltip': true
-        }
+        let clazz = {}
+        clazz[`zg-tooltip-` + this.theme] = true
         rules.forEach(placement => {
           clazz[`zg-${placement}`] = this.placement === placement
         })
+        clazz[this.customClass] = true
         return clazz
       }
     },

@@ -39,6 +39,23 @@
        */
       width: {
         type: Number
+      },
+      /**
+       * @description 自定义样式
+       */
+      customClass: {
+        type: String,
+        default: ''
+      },
+      /**
+       * @description 主题，支持dark和light两种
+       */
+      theme: {
+        type: String,
+        default: 'dark',
+        validator (value) {
+          return ['dark', 'light'].includes(value)
+        }
       }
     },
     data () {
@@ -84,6 +101,8 @@
           autoHide: this.autoHide,
           width: this.width,
           customRender: this.$slots.tooltip,
+          customClass: this.customClass,
+          theme: this.theme,
           onHide: this.$listeners ? this.$listeners.hide : null
         }
       }).$mount()
