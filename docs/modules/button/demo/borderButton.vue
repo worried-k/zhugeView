@@ -7,6 +7,7 @@
       <zg-button type="secondary" theme="border">secondary</zg-button>
       <zg-button type="success" theme="border">success</zg-button>
       <zg-button type="warning" theme="border">warning</zg-button>
+      <zg-button type="primary" theme="border" :show-loading="showLoading" @click="onLoad">loading</zg-button>
     </demo-panel>
   </div>
 </template>
@@ -19,7 +20,15 @@
     name: 'borderButton',
     data () {
       return {
-        msg: 'borderButton'
+        showLoading: false
+      }
+    },
+    methods: {
+      onLoad () {
+        this.showLoading = true
+        setTimeout(() => {
+          this.showLoading = false
+        }, 2000)
       }
     }
   }

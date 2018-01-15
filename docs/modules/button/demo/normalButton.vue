@@ -7,6 +7,7 @@
       <zg-button type="secondary">secondary</zg-button>
       <zg-button type="warning">warning</zg-button>
       <zg-button type="success">success</zg-button>
+      <zg-button type="primary" :show-loading="showLoading" @click="onLoad">loading</zg-button>
     </demo-panel>
   </div>
 </template>
@@ -22,7 +23,15 @@
     name: 'normalButton',
     data () {
       return {
-        msg: 'normalButton'
+        showLoading: false
+      }
+    },
+    methods: {
+      onLoad () {
+        this.showLoading = true
+        setTimeout(() => {
+          this.showLoading = false
+        }, 2000)
       }
     }
   }

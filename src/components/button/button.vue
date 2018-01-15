@@ -5,11 +5,15 @@
     :disabled="disable"
     :class="buttonClass">
     <i class="zg-icon" :class="icon" v-if="icon"></i>
+    <zg-loading v-show="showLoading" size="small" :showTip="false"></zg-loading>
     <span><slot></slot></span>
   </button>
 </template>
 <script>
+import ZgLoading from '../loading/loading'
+
 export default {
+  components: {ZgLoading},
   name: 'ZgButton',
   props: {
     /**
@@ -65,6 +69,13 @@ export default {
       validator (value) {
         return ['button', 'submit', 'reset'].includes(value)
       }
+    },
+    /**
+     * @description 显示loading
+     */
+    showLoading: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
