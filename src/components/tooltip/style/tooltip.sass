@@ -86,6 +86,13 @@ $arrow-size: 4px
   color: $color-brand-black
   &:after
     background: $color-background-light
+  &.zg-top:after,&.zg-top-left:after,&.zg-top-right:after
     box-shadow: 3px 3px 3px rgba(53, 64, 82, .2)
+  &.zg-bottom:after,&.zg-bottom-left:after,&.zg-bottom-right:after
+    box-shadow: -1px -1px 1px rgba(53, 64, 82, .1)
+  &.zg-left-top:after,&.zg-left:after,&.zg-left-bottom:after
+    box-shadow: 2px -2px 2px rgba(53, 64, 82, .2)
+  &.zg-right:after,&.zg-right-top:after,&.zg-right-bottom:after
+    box-shadow: -2px 2px 2px rgba(53, 64, 82, .2)
 .zg-tooltip-trigger
   display: inline-block
