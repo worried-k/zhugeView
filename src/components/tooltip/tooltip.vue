@@ -68,6 +68,11 @@
         if (this.tooltip) {
           this.tooltip.$data.placement = value
         }
+      },
+      customClass (value) {
+        if (this.tooltip) {
+          this.tooltip.$data.customClass = value
+        }
       }
     },
     methods: {

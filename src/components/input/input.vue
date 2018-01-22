@@ -4,7 +4,7 @@
     <zg-tooltip :placement="placement"
                 :autoHide="false"
                 :width="tipWidth"
-                :customClass="tipClass"
+                :customClass="tipClazz"
                 :theme="theme" ref="tip">
       <template slot="tooltip">
         <slot name="tooltip">{{message}}</slot>
@@ -138,7 +138,7 @@
        */
       tipClass: {
         type: String,
-        default: 'zg-tooltip-error'
+        default: ''
       },
       /**
        * @description tooltip主题，支持dark和light两种
@@ -149,12 +149,29 @@
         validator (value) {
           return ['dark', 'light'].includes(value)
         }
+      },
+      /**
+       * @description 输入框校验方法，需要返回boolean值
+       */
+      validator: {
+        type: Function,
+        default: function () {
+          return true
+        }
+      },
+      /**
+       * @description 是否自动校验，自动校验的话，失去焦点进行校验
+       */
+      autoValid: {
+        type: Boolean,
+        default: true
       }
     },
     data () {
       return {
         inputValue: this.value,
-        active: this.autoFocus
+        active: this.autoFocus,
+        invalid: false
       }
     },
     mounted () {
@@ -162,8 +179,10 @@
     },
     computed: {
       clazz () {
-        let clazz = []
-        if (this.active) clazz.push('zg-active')
+        let clazz = {
+          'zg-active': this.active,
+          'zg-error': this.invalid
+        }
         return clazz
       },
       style () {
@@ -177,6 +196,12 @@
           'padding-left': this.icon ? '25px' : '10px',
           'padding-right': this.clearAble ? '25px' : '10px'
         }
+      },
+      tipClazz () {
+        let style = []
+        if (this.invalid) style.push('zg-tooltip-error')
+        if (this.tipClass) style.push(this.tipClass)
+        return style.join(' ')
       }
     },
     watch: {
@@ -193,27 +218,33 @@
       },
       _onClear () {
         this.inputValue = ''
+        this.$refs.tip.hide()
+        this.invalid = false
       },
       _onKey (event) {
         this.$emit('key', event)
       },
       _onFocus () {
         this.active = true
-        this.showTip()
         this.$emit('focus')
       },
       _onBlur () {
         this.active = false
+        if (this.autoValid) this.validate()
         this.$emit('blur')
       },
       focus () {
         this.$refs.input.focus()
       },
-      showTip () {
-        this.$refs.tip.show()
-      },
-      hideTip () {
-        this.$refs.tip.hide()
+      validate () {
+        const flag = this.validator()
+        this.invalid = !flag
+        if (flag) {
+          this.$refs.tip.hide()
+        } else {
+          this.$refs.tip.show()
+        }
+        return flag
       }
     }
   }
