@@ -85,10 +85,12 @@
       })
     },
     beforeDestroy () {
+      console.log(this)
       this.$el.remove()
     },
     methods: {
       hide () {
+        this.$destroy()
         if (util.isFunction(this.onHide)) this.onHide()
       }
     },

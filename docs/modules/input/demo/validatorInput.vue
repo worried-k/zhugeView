@@ -2,8 +2,8 @@
   <div>
     <demo-panel subtitle="带有校验功能">
       <zg-input :validator="validator"
+                :message="message"
                 v-model="val">
-        <template slot="tooltip">{{message}}</template>
       </zg-input>
       <span style="margin-left: 15px">: {{val}}</span>
       <br>

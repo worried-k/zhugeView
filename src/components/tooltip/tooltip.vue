@@ -108,11 +108,13 @@
        * @description 供外部主动调用
        */
       hide () {
+        console.log('tooltip中销毁tooltip实例')
         if (this.tooltip) this.tooltip.$destroy()
         this.tooltip = null
       }
     },
     beforeDestroy () {
+      console.log('销毁之前')
       if (this.tooltip) this.tooltip.$destroy()
     },
     render (h) {
