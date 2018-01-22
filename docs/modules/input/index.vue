@@ -11,10 +11,11 @@
                 @blur="onBlur"
                 @focus="onFocus"
                 v-model="value">
-        <template slot="tooltip">自定义tooltip</template>
       </zg-input>
       <span>输入值：{{value}}</span>
     </demo-panel>
+
+    <validator-input></validator-input>
 
     <doc-markdown :api="json" title="input"></doc-markdown>
   </div>
@@ -25,9 +26,11 @@
   import ZgInput from "../../../src/components/input/input.vue";
   import json from './input.json'
   import DocMarkdown from '../../components/docMarkdown/index.vue'
+  import ValidatorInput from './demo/validatorInput'
 
   export default {
     components: {
+      ValidatorInput,
       DocMarkdown,
       ZgInput,
       DemoPanel},

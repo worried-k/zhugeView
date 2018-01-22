@@ -60,7 +60,8 @@
     },
     data () {
       return {
-        showTip: false
+        showTip: false,
+        tooltip: null
       }
     },
     watch: {
@@ -77,44 +78,42 @@
     },
     methods: {
       onHoverTrigger () {
-        if (this.autoHide) this.tooltip.$data.show = true
+        if (this.autoHide && !this.tooltip) this.show()
       },
       onMouseLeave () {
-        if (this.autoHide) this.tooltip.$data.show = false
+        if (this.autoHide) this.hide()
       },
       /**
        * @method show
        * @description 供外部主动调用
        */
       show () {
-        this.tooltip.$data.show = true
+        this.tooltip = new Tooltip({
+          data: {
+            content: this.content,
+            placement: this.placement,
+            trigger: this.$refs.trigger,
+            autoHide: this.autoHide,
+            width: this.width,
+            customRender: this.$slots.tooltip,
+            customClass: this.customClass,
+            theme: this.theme,
+            onHide: this.$listeners ? this.$listeners.hide : null
+          }
+        }).$mount()
+        document.body.appendChild(this.tooltip.$el)
       },
       /**
        * @method hide
        * @description 供外部主动调用
        */
       hide () {
-        this.tooltip.$data.show = false
+        if (this.tooltip) this.tooltip.$destroy()
+        this.tooltip = null
       }
     },
-    mounted () {
-      this.tooltip = new Tooltip({
-        data: {
-          content: this.content,
-          placement: this.placement,
-          trigger: this.$refs.trigger,
-          autoHide: this.autoHide,
-          width: this.width,
-          customRender: this.$slots.tooltip,
-          customClass: this.customClass,
-          theme: this.theme,
-          onHide: this.$listeners ? this.$listeners.hide : null
-        }
-      }).$mount()
-      document.body.appendChild(this.tooltip.$el)
-    },
     beforeDestroy () {
-      this.tooltip.$destroy()
+      if (this.tooltip) this.tooltip.$destroy()
     },
     render (h) {
       return (
