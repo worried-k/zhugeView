@@ -1,27 +1,38 @@
 <template>
-  <span class="zg-input" :class="clazz" :style="style" @click="onClick">
+  <span class="zg-input" :class="clazz" :style="style" @click="_onClick">
     <i class="zg-input-icon" :class="icon"></i>
-    <input ref="input"
-           class="zg-input-input"
-           type="text"
-           :style="inputStyle"
-           :placeholder="placeholder"
-           v-model="inputValue"
-           :readonly="readOnly"
-           @focus="onFocus"
-           @blur="onBlur"
-           @keyup="onKey"
-    />
+    <zg-tooltip :placement="placement"
+                :autoHide="false"
+                :width="tipWidth"
+                :customClass="tipClass"
+                :theme="theme" ref="tip">
+      <template slot="tooltip">
+        <slot name="tooltip">{{message}}</slot>
+      </template>
+      <input ref="input"
+             class="zg-input-input"
+             type="text"
+             :style="inputStyle"
+             :placeholder="placeholder"
+             v-model="inputValue"
+             :readonly="readOnly"
+             @focus="_onFocus"
+             @blur="_onBlur"
+             @keyup="_onKey"
+      />
+    </zg-tooltip>
     <i v-if="clearAble && inputValue"
        class="zg-input-clear zgicon-delete-little1"
-       @click="onClear"
+       @click="_onClear"
     ></i>
   </span>
 </template>
 
 <script>
   import {util} from '../../utils/index'
+  import ZgTooltip from '../tooltip/tooltip'
   export default {
+    components: {ZgTooltip},
     name: 'ZgInput',
     props: {
       /**
@@ -85,6 +96,59 @@
         validator (value) {
           return ['text', 'password'].includes(value)
         }
+      },
+      /**
+       * @description tooltip内容
+       */
+      message: {
+        type: String
+      },
+      /**
+       * @description tooltip展示位置top-left, top, top-right, left-top, right-top,left, right,left-bottom, right-bottom,bottom-left, bottom, bottom-right
+       */
+      placement: {
+        type: String,
+        default: 'bottom-left',
+        validator (value) {
+          let rules = [
+            'top-left', 'top', 'top-right',
+            'left-top', 'right-top',
+            'left', 'right',
+            'left-bottom', 'right-bottom',
+            'bottom-left', 'bottom', 'bottom-right'
+          ]
+          return rules.indexOf(value) > -1
+        }
+      },
+      /**
+       * @description tooltip是否自动显示隐藏，默认为hover显示，mouseLeave隐藏
+       */
+      autoHide: {
+        type: Boolean,
+        default: true
+      },
+      /**
+       * @description tooltip展示宽度，默认不限制
+       */
+      tipWidth: {
+        type: Number
+      },
+      /**
+       * @description tooltip自定义样式
+       */
+      tipClass: {
+        type: String,
+        default: 'zg-tooltip-error'
+      },
+      /**
+       * @description tooltip主题，支持dark和light两种
+       */
+      theme: {
+        type: String,
+        default: 'dark',
+        validator (value) {
+          return ['dark', 'light'].includes(value)
+        }
       }
     },
     data () {
@@ -124,25 +188,32 @@
       }
     },
     methods: {
-      onClick () {
+      _onClick () {
         this.$refs.input.focus()
       },
-      onClear () {
+      _onClear () {
         this.inputValue = ''
       },
-      onKey (event) {
+      _onKey (event) {
         this.$emit('key', event)
       },
-      onFocus () {
+      _onFocus () {
         this.active = true
+        this.showTip()
         this.$emit('focus')
       },
-      onBlur () {
+      _onBlur () {
         this.active = false
         this.$emit('blur')
       },
       focus () {
         this.$refs.input.focus()
+      },
+      showTip () {
+        this.$refs.tip.show()
+      },
+      hideTip () {
+        this.$refs.tip.hide()
       }
     }
   }

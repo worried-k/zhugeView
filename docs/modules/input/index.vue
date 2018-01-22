@@ -10,7 +10,9 @@
                 placeholder="有清除有icon"
                 @blur="onBlur"
                 @focus="onFocus"
-                v-model="value"></zg-input>
+                v-model="value">
+        <template slot="tooltip">自定义tooltip</template>
+      </zg-input>
       <span>输入值：{{value}}</span>
     </demo-panel>
 
