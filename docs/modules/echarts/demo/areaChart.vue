@@ -31,9 +31,6 @@
         store.series[1].values.push(two)
         store.series[2].values.push(three)
       })
-      console.log(util.clone(store))
-
-
       return {
         json: store,
         markLine: ["2017-11-19", "2017-11-20", "2017-11-22"]

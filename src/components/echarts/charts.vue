@@ -258,6 +258,7 @@
             },
             splitLine: {
               show: Boolean(this.markLine),
+              interval: this.markLine ? 0 : 'auto',
               lineStyle: {
                 color: this.getMarkLine()
               }
