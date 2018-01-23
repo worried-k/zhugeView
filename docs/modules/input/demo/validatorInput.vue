@@ -1,7 +1,11 @@
 <template>
   <div>
     <demo-panel subtitle="带有校验功能">
-      <zg-input :validator="validator"
+      <zg-input icon="zgicon-list"
+                clear-able
+                placeholder="不能为空且不能含有数字"
+                :width="250"
+                :validator="validator"
                 :message="message"
                 v-model="val">
       </zg-input>

@@ -9,6 +9,16 @@
   line-height: 28px
 
   position: relative
+  .zg-tooltip-trigger
+    width: 100%
+    height: 100%
+    vertical-align: top
+    .zg-input-input
+      display: block
+      width: 100%
+      height: 100%
+      border: none
+      border-radius: $border-radius
   &.zg-active
     border-color: $color-action-primary-active
   &.zg-error
@@ -24,14 +34,6 @@
   .zg-input-clear
     right: 8px
     cursor: pointer
-
-  .zg-input-input
-    width: 100%
-    height: 100%
-    vertical-align: text-top
-
-    border: none
-    border-radius: $border-radius
 .zg-tooltip-error
   background: $color-danger!important
   color: $color-white!important

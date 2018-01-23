@@ -46,7 +46,7 @@
       }
     },
     mounted () {
-      setTimeout(() => {
+      this.$nextTick(() => {
         const triggerRect = this.trigger.getBoundingClientRect()
         const tipRect = this.$refs.tooltip.getBoundingClientRect()
 
@@ -85,7 +85,6 @@
       })
     },
     beforeDestroy () {
-      console.log(this)
       this.$el.remove()
     },
     methods: {

@@ -88,33 +88,34 @@
        * @description 供外部主动调用
        */
       show () {
-        this.tooltip = new Tooltip({
-          data: {
-            content: this.content,
-            placement: this.placement,
-            trigger: this.$refs.trigger,
-            autoHide: this.autoHide,
-            width: this.width,
-            customRender: this.$slots.tooltip,
-            customClass: this.customClass,
-            theme: this.theme,
-            onHide: this.$listeners ? this.$listeners.hide : null
-          }
-        }).$mount()
-        document.body.appendChild(this.tooltip.$el)
+        this.$nextTick(() => {
+          if (this.tooltip) this.hide()
+          this.tooltip = new Tooltip({
+            data: {
+              content: this.content,
+              placement: this.placement,
+              trigger: this.$refs.trigger,
+              autoHide: this.autoHide,
+              width: this.width,
+              customRender: this.$slots.tooltip,
+              customClass: this.customClass,
+              theme: this.theme,
+              onHide: this.$listeners ? this.$listeners.hide : null
+            }
+          }).$mount()
+          document.body.appendChild(this.tooltip.$el)
+        })
       },
       /**
        * @method hide
        * @description 供外部主动调用
        */
       hide () {
-        console.log('tooltip中销毁tooltip实例')
         if (this.tooltip) this.tooltip.$destroy()
         this.tooltip = null
       }
     },
     beforeDestroy () {
-      console.log('销毁之前')
       if (this.tooltip) this.tooltip.$destroy()
     },
     render (h) {
