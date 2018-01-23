@@ -34,7 +34,7 @@
       },
       clazz () {
         return {
-          'zg-click-able': this.$listeners.click
+          // todo 'zg-click-able': this.$listeners.click
         }
       }
     },

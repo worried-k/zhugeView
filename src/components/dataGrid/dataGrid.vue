@@ -37,6 +37,13 @@
         default: false
       },
       /**
+       * @description 索引列名称
+       */
+      indexTitle: {
+        type: String,
+        default: 'index'
+      },
+      /**
        * @description 是否可分页
        */
       pagination: {
@@ -202,6 +209,7 @@
                              structure={this.structure.left}
                              store={this.store}
                              showIndex={this.showIndex}
+                             indexTitle={this.indexTitle}
                              pagination={this.pagination}
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
@@ -221,6 +229,7 @@
                              structure={this.structure.center}
                              store={this.store}
                              showIndex={this.showIndex && !this.structure.left.length}
+                             indexTitle={this.indexTitle}
                              pagination={this.pagination}
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}

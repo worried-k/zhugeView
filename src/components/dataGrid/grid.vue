@@ -26,6 +26,13 @@
         default: false
       },
       /**
+       * @description 索引列名称
+       */
+      indexTitle: {
+        type: String,
+        default: 'index'
+      },
+      /**
        * @description 表结构
        */
       structure: {
@@ -117,7 +124,7 @@
                   if (this.showIndex && rowIndex === 0) {
                     return (
                       <zg-grid-header
-                        title={'index'}
+                        title={this.indexTitle}
                         column={{}}
                         rowspan={this.headerRowspan}>
                       </zg-grid-header>
@@ -160,7 +167,7 @@
                     if (this.showIndex) {
                       return (
                         <zg-grid-cell store={{index: i}}
-                                      labelField={'index'}
+                                      labelField="index"
                                       index={i}
                         ></zg-grid-cell>
                       )
