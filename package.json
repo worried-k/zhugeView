@@ -116,6 +116,6 @@
   },
   "homepage": "https://github.com/struggling-bird/zhugeView#readme",
   "dependencies": {
-    "echarts": "^3.8.5"
+    "echarts": "^4.0.2"
   }
 }

@@ -463,7 +463,7 @@
           type: 'line',
           data: series.values,
           symbol: 'circle',
-          symbolSize: 5,
+          symbolSize: 0,
           showAllSymbol: false,
           yAxisIndex: this.doubleY ? this.yAxisRule[name].index : 0,
           stack: 'area',
