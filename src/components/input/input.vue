@@ -243,6 +243,7 @@
           this.$refs.tip.hide()
         } else {
           this.$refs.tip.show()
+          this.focus()
         }
         return flag
       }
