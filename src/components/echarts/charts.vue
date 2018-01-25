@@ -360,7 +360,7 @@
           let result = []
           for (let key in this.yAxisRule) {
             const rule = this.yAxisRule[key]
-            result[rule.index] = util.mergeObject(rule.option || {}, util.clone(axis))
+            result[rule.index] = util.mergeObject(axis, util.clone(rule.option || {}))
           }
           return result
         }
