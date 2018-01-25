@@ -5,10 +5,10 @@
  *
  */
 export default {
-  on (dom, eventName, handle) {
+  on (dom, eventName, handle, useCapture = false) {
     if (!dom || !eventName || !handle) return
     if (document.addEventListener) {
-      dom.addEventListener(eventName, handle, false)
+      dom.addEventListener(eventName, handle, useCapture)
     } else {
       dom.attachEvent('on' + eventName, handle)
     }

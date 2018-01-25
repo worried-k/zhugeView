@@ -5,7 +5,9 @@
  *
  */
 import clickOutside from './clickOutside'
+import resize from './resize'
 
 export default {
-  clickOutside
+  clickOutside,
+  resize
 }

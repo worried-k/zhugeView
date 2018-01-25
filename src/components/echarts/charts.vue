@@ -1,5 +1,5 @@
 <template>
-  <div class="zg-charts" :style="style">
+  <div class="zg-charts" :style="style" v-resize="onResize">
     <div class="zg-charts-main" ref="toChart"></div>
     <div v-show="!chartStore.series.length" :style="{'line-height': height + 'px'}" class="zg-charts-empty">暂无数据</div>
   </div>
@@ -8,7 +8,6 @@
 <script>
   import echarts from 'echarts'
   import {util} from '../../utils'
-  // todo 对图表grid进行resize自适应计算
   export default {
     name: 'zgCharts',
     props: {
@@ -524,7 +523,7 @@
        * @param option
        */
       resizeGrid (option) {
-        const containerWidth = this.chart.getWidth()
+        const containerWidth = this.$refs.toChart.offsetWidth
         const containerHeight = this.chart.getHeight()
         const legendHeight = option.legend.show ? 24 : 0
         const margin = {
@@ -540,6 +539,12 @@
         option.grid.left = yAxisWidth
         option.grid.height = containerHeight - option.grid.top - xAxisHeight - margin.bottom
         return option
+      },
+      onResize () {
+        this.setOption(this.option)
+        this.$nextTick(() => {
+          this.chart.resize()
+        })
       }
     }
   }
