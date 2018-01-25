@@ -284,6 +284,11 @@
       this.chart = echarts.init(this.$refs.toChart)
       this.setOption(this.option)
     },
+    beforeDestroy () {
+      if (!this.chart) return
+      this.chart.dispose()
+      this.chart = null
+    },
     methods: {
       /**
        * @description 获取x轴数据
