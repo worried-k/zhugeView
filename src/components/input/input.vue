@@ -18,8 +18,9 @@
              :readonly="readOnly"
              @focus="_onFocus"
              @blur="_onBlur"
-             @keyup="_onKey"
+             @keydown="_onKey"
       />
+      <span class="temp" ref="temp">{{inputValue}}</span>
     </zg-tooltip>
     <i v-if="clearAble && inputValue"
        class="zg-input-clear zgicon-delete-little1"
@@ -65,6 +66,21 @@
           }
           return value > 0
         }
+      },
+      /**
+       * @description 最大宽度
+       * @tip 当width为auto时有效
+       */
+      maxWidth: {
+        type: Number
+      },
+      /**
+       * @description 最小宽度
+       * @tip 当width为auto时有效
+       */
+      minWidth: {
+        type: Number,
+        default: 100
       },
       /**
        * @description 是否可清空内容
@@ -171,11 +187,14 @@
       return {
         inputValue: this.value,
         active: this.autoFocus,
-        invalid: false
+        invalid: false,
+        realWidth: this.minWidth
       }
     },
     mounted () {
       this.autoFocus && this.focus()
+      // 初始化realWidth值
+      this._computeWidth()
     },
     computed: {
       clazz () {
@@ -186,8 +205,12 @@
         return clazz
       },
       style () {
+        let width = util.isNumber(this.width) ? `${this.width}px` : this.width
+        if (this.width === 'auto') {
+          width = this.realWidth + 'px'
+        }
         let style = {
-          width: util.isNumber(this.width) ? `${this.width}px` : this.width
+          width: width
         }
         return style
       },
@@ -209,10 +232,27 @@
         this.inputValue = value
       },
       inputValue () {
+        this._computeWidth()
         this.$emit('input', this.inputValue)
       }
     },
     methods: {
+      /**
+       * 计算input真实宽度
+       * @private
+       */
+      _computeWidth () {
+        this.$nextTick(() => {
+          const temp = this.$refs.temp
+          const inputStyle = window.getComputedStyle(this.$refs.input)
+          let width = parseFloat(inputStyle['padding-left']) +
+            parseFloat(inputStyle['padding-right']) +
+            temp.offsetWidth
+          width = width < this.minWidth ? this.minWidth : width
+          width = width > this.maxWidth ? this.maxWidth : width
+          this.realWidth = width
+        })
+      },
       _onClick () {
         this.$refs.input.focus()
       },

@@ -1,21 +1,8 @@
 <template>
   <div>
-    <demo-panel
-      title="输入框"
-      subtitle="普通输入框"
-      jsFiddleName="Lqxvqar4"
-    >
-      <zg-input icon="zgicon-list"
-                clear-able
-                placeholder="有清除有icon"
-                @blur="onBlur"
-                @focus="onFocus"
-                v-model="value">
-      </zg-input>
-      <span>输入值：{{value}}</span>
-    </demo-panel>
-
-    <validator-input></validator-input>
+    <!--<normal-input></normal-input>-->
+    <auto-width-input></auto-width-input>
+    <!--<validator-input></validator-input>-->
 
     <doc-markdown :api="json" title="input"></doc-markdown>
   </div>
@@ -27,9 +14,13 @@
   import json from './input.json'
   import DocMarkdown from '../../components/docMarkdown/index.vue'
   import ValidatorInput from './demo/validatorInput'
+  import AutoWidthInput from './demo/autoWidthInput'
+  import NormalInput from './demo/normalInput'
 
   export default {
     components: {
+      NormalInput,
+      AutoWidthInput,
       ValidatorInput,
       DocMarkdown,
       ZgInput,
