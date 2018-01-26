@@ -26,7 +26,7 @@ export default {
       context: vnode
     })
   },
-  unBind (el, binding, vnode) {
+  unbind (el, binding, vnode) {
     let current = {
       node: el,
       handle: binding.value,

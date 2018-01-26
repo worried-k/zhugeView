@@ -59,7 +59,7 @@
         validator (rules) {
           for (const key in rules) {
             const rule = rules[key]
-            // value格式为：{type: 'bar/line/eg...', index: 0, options: {}} option为echarts中yAxis的标准配置
+            // value格式为：{type: 'bar/line/eg...', index: 0, option: {}} option为echarts中yAxis的标准配置
             if (!rule.hasOwnProperty('index')) {
               return false
             }
