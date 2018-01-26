@@ -520,7 +520,6 @@
         return type
       },
       setOption (option) {
-        if (!this.chart) return
         this.chart.setOption(this.resizeGrid(util.clone(option)))
       },
       /**
@@ -546,6 +545,7 @@
         return option
       },
       onResize () {
+        if (!this.chart) return
         this.setOption(this.option)
         this.$nextTick(() => {
           this.chart.resize()
