@@ -247,7 +247,8 @@
           const inputStyle = window.getComputedStyle(this.$refs.input)
           let width = parseFloat(inputStyle['padding-left']) +
             parseFloat(inputStyle['padding-right']) +
-            temp.offsetWidth
+            temp.offsetWidth + 3
+          // 另加的3像素，是为了消除误差
           width = width < this.minWidth ? this.minWidth : width
           width = width > this.maxWidth ? this.maxWidth : width
           this.realWidth = width

@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="宽度自适应">
-      <zg-input v-model="msg" width="auto" clearAble :max-width="400" :min-width="50"></zg-input>
+      <zg-input v-model="msg" width="auto" clearAble :max-width="400" :min-width="14"></zg-input>
       <div>
         {{msg}}
       </div>
