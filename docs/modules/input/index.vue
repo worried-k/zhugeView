@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!--<normal-input></normal-input>-->
+    <normal-input></normal-input>
     <auto-width-input></auto-width-input>
-    <!--<validator-input></validator-input>-->
+    <validator-input></validator-input>
 
     <doc-markdown :api="json" title="input"></doc-markdown>
   </div>
