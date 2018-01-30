@@ -242,6 +242,7 @@
        * @private
        */
       _computeWidth () {
+        if (this.width !== 'auto') return
         this.$nextTick(() => {
           const temp = this.$refs.temp
           const inputStyle = window.getComputedStyle(this.$refs.input)

@@ -17,7 +17,7 @@
     name: 'autoWidthInput',
     data () {
       return {
-        msg: 'autoWidthInput'
+        msg: '我需要一个很长很长很长很长很长很长的文案'
       }
     }
   }
