@@ -33,13 +33,14 @@
       })
       return {
         json: store,
-        markLine: ["2017-11-19", "2017-11-20", "2017-11-22"]
+        markLine: ['2017-11-19', '2017-11-20', '2017-11-22']
       }
     },
     methods: {
       customSeries (series) {
         if (series.name === '版本-1') {
-          series.areaStyle.normal.color = 'red'
+          series.areaStyle.normal.color = '#ADB1B8'
+          series.itemStyle.normal.color = '#ADB1B8'
         }
         return series
       }
