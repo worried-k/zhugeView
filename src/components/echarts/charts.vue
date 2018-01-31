@@ -174,6 +174,15 @@
        */
       markLine: {
         type: Array
+      },
+      /**
+       * @description series包装器，用来series的自定义配置
+       */
+      seriesWrapper: {
+        type: Function,
+        default (series) {
+          return series
+        }
       }
     },
     data () {
@@ -372,16 +381,21 @@
         this.each(function (name, series) {
           seriesList.push((() => {
             const type = context.doubleY ? (context.yAxisRule[name].type || context.type) : context.type
+            let seriesItem = null
             switch (type) {
               case 'bar':
-                return context.getBarSeries(name, series)
+                seriesItem = context.getBarSeries(name, series)
+                break
               case 'line':
-                return context.getLineSeries(name, series)
+                seriesItem = context.getLineSeries(name, series)
+                break
               case 'area':
-                return context.getAreaSeries(name, series)
+                seriesItem = context.getAreaSeries(name, series)
+                break
               default:
                 console.error('未支持的图表类型', context.type)
             }
+            return this.seriesWrapper(seriesItem)
           })())
         })
         return seriesList

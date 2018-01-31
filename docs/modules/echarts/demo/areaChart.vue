@@ -1,7 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="区域图">
-      <zg-charts :store="json" type="area" :markLine="markLine"></zg-charts>
+      <zg-charts :store="json" type="area" :markLine="markLine" :series-wrapper="customSeries"></zg-charts>
     </demo-panel>
   </div>
 </template>
@@ -34,6 +34,14 @@
       return {
         json: store,
         markLine: ["2017-11-19", "2017-11-20", "2017-11-22"]
+      }
+    },
+    methods: {
+      customSeries (series) {
+        if (series.name === '版本-1') {
+          series.areaStyle.normal.color = 'red'
+        }
+        return series
       }
     }
   }
