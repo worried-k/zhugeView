@@ -33,7 +33,8 @@ export default {
         'message',
         'dialog',
         'charts',
-        'reload'
+        'reload',
+        'scroll'
       ]
     }
   },
