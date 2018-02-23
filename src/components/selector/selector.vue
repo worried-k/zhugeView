@@ -124,6 +124,16 @@
       multiple: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 下拉框尺寸
+       */
+      size: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          return ['small', 'medium', 'big', 'normal'].includes(value)
+        }
       }
     },
     data () {
@@ -190,11 +200,13 @@
         }
       },
       handleClass () {
-        return {
+        let clazz = {
           'zg-select-handle': true,
           active: this.showOptions,
           noborder: this.theme === 'noborder'
         }
+        clazz['zg-size-' + this.size] = true
+        return clazz
       },
       handleStyle () {
         let style = {}
