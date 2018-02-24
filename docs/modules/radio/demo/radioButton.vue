@@ -23,7 +23,7 @@
         store: [
           {
             value: 1,
-            label: 'item a'
+            icon: 'zgicon-add'
           },
           {
             value: 2,

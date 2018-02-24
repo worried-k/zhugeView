@@ -359,7 +359,6 @@
         }
       },
       onClickOption (checked, data) {
-        this.time('clickOption')
         if (!this.multiple) {
           this.chosenList = []
           this.store.forEach(option => {
@@ -389,8 +388,8 @@
           }
           this.$emit('input', this.chosenList)
         }
-        this.timeEnd('clickOption')
-        this.$emit('change')
+        this.timeEnd('clickOption', data, this.chosenList, this)
+        this.$emit('change', this.chosenList, this)
       },
       onScroll () {
         const panel = this.$refs.options
@@ -417,7 +416,7 @@
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
-        this.$emit('change')
+        this.$emit('change', this.chosenList, this)
       }
     },
     render (h) {
