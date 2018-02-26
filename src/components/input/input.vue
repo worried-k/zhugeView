@@ -292,11 +292,13 @@
       validate () {
         const flag = this.validator()
         this.invalid = !flag
-        if (flag) {
-          this.$refs.tip.hide()
-        } else {
-          this.$refs.tip.show()
-          this.focus()
+        if (!this._isBeingDestroyed && !this._isDestroyed) {
+          if (flag) {
+            this.$refs.tip.hide()
+          } else {
+            this.$refs.tip.show()
+            this.focus()
+          }
         }
         return flag
       }
