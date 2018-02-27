@@ -15,6 +15,7 @@ import dialog from '../modules/dialog/index.vue'
 import charts from '../modules/echarts/index.vue'
 import reload from '../modules/reload/index.vue'
 import radio from '../modules/radio/index'
+import scroll from '../modules/scroll/index'
 
 Vue.use(Router)
 
@@ -95,6 +96,11 @@ export default new Router({
           path: '/reload',
           name: 'reload',
           component: reload
+        },
+        {
+          path: '/scroll',
+          name: 'scroll',
+          component: scroll
         }
       ]
     }

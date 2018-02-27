@@ -1,11 +1,12 @@
 
-const getChildren = (parent, childName, result) => {
+const getChildren = ({parent, childName, deep = false}, result) => {
   let children = result || []
   if (parent.$children) {
     parent.$children.forEach(item => {
       if (item.$options.name === childName) {
         children.push(item)
       }
+      if (!deep) return
       getChildren(item, childName, children)
     })
   }
@@ -28,8 +29,12 @@ export default {
         parent[eventName].apply(parent, params)
       }
     },
-    children (componentName) {
-      return getChildren(this, componentName)
+    children (componentName, deep = false) {
+      return getChildren({
+        parent: this,
+        childName: componentName,
+        deep: deep
+      })
     },
     parent (parentName) {
       let parent = this.$parent

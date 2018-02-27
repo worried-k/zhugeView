@@ -12,7 +12,7 @@ import {tabs, tabPanel} from './components/tab/index'
 import dialog from './components/dialog'
 import reload from './components/reload'
 import radio from './components/radio'
-
+import {scrollContainer, scrollLazyPanel} from './components/scroll'
 import {charts} from './components/echarts'
 
 import msg from './components/message'
@@ -37,6 +37,8 @@ const components = [
   dialog,
   reload,
   radio,
+  scrollContainer,
+  scrollLazyPanel,
 
   charts
 ]

@@ -2,6 +2,7 @@
   <div>
     <demo-panel subtitle="带有校验功能">
       <zg-input icon="zgicon-list"
+                v-if="show"
                 clear-able
                 placeholder="不能为空且不能含有数字"
                 :width="250"
@@ -12,6 +13,7 @@
       <span style="margin-left: 15px">: {{val}}</span>
       <br>
       {{message}}
+      <zg-checkbox v-model="show">显示</zg-checkbox>
     </demo-panel>
   </div>
 </template>
@@ -25,7 +27,8 @@
     data () {
       return {
         val: '',
-        message: '默认提示信息'
+        message: '默认提示信息',
+        show: true
       }
     },
     methods: {
