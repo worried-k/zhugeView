@@ -290,16 +290,18 @@
         this.$refs.input.focus()
       },
       validate () {
+        if (this._isBeingDestroyed || this._isDestroyed) return false
         const flag = this.validator()
         this.invalid = !flag
-        if (!this._isBeingDestroyed && !this._isDestroyed) {
+        this.$nextTick(() => {
+          if (this._isBeingDestroyed || this._isDestroyed) return false
           if (flag) {
             this.$refs.tip.hide()
           } else {
             this.$refs.tip.show()
             this.focus()
           }
-        }
+        })
         return flag
       }
     }
