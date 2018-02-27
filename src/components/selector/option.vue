@@ -15,7 +15,6 @@
 <script>
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import emitter from '../../mixins/emitter'
-//  import {util} from '../../utils/index'
   export default {
     components: {ZgCheckbox},
     name: 'ZgOption',

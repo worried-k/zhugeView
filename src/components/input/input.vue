@@ -68,6 +68,16 @@
         }
       },
       /**
+       * @description 输入框尺寸
+       */
+      size: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          return ['small', 'medium', 'big', 'normal'].includes(value)
+        }
+      },
+      /**
        * @description 最大宽度
        * @tip 当width为auto时有效
        */
@@ -202,6 +212,7 @@
           'zg-active': this.active,
           'zg-error': this.invalid
         }
+        clazz['zg-size-' + this.size] = true
         return clazz
       },
       style () {
@@ -281,11 +292,13 @@
       validate () {
         const flag = this.validator()
         this.invalid = !flag
-        if (flag) {
-          this.$refs.tip.hide()
-        } else {
-          this.$refs.tip.show()
-          this.focus()
+        if (!this._isBeingDestroyed && !this._isDestroyed) {
+          if (flag) {
+            this.$refs.tip.hide()
+          } else {
+            this.$refs.tip.show()
+            this.focus()
+          }
         }
         return flag
       }

@@ -124,6 +124,16 @@
       multiple: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 下拉框尺寸
+       */
+      size: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          return ['small', 'medium', 'big', 'normal'].includes(value)
+        }
       }
     },
     data () {
@@ -190,11 +200,13 @@
         }
       },
       handleClass () {
-        return {
+        let clazz = {
           'zg-select-handle': true,
           active: this.showOptions,
           noborder: this.theme === 'noborder'
         }
+        clazz['zg-size-' + this.size] = true
+        return clazz
       },
       handleStyle () {
         let style = {}
@@ -347,7 +359,6 @@
         }
       },
       onClickOption (checked, data) {
-        this.time('clickOption')
         if (!this.multiple) {
           this.chosenList = []
           this.store.forEach(option => {
@@ -377,8 +388,8 @@
           }
           this.$emit('input', this.chosenList)
         }
-        this.timeEnd('clickOption')
-        this.$emit('change')
+        this.timeEnd('clickOption', data, this.chosenList, this)
+        this.$emit('change', this.chosenList, this)
       },
       onScroll () {
         const panel = this.$refs.options
@@ -405,7 +416,7 @@
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
-        this.$emit('change')
+        this.$emit('change', this.chosenList, this)
       }
     },
     render (h) {
