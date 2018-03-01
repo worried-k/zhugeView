@@ -46,7 +46,6 @@
     },
     mounted () {
       let structure = this.parent('zgDataGrid').$data.structure[this.fix]
-
       if (this.$slots.default) {
         let colspanColumn = {
           field: this.field,
@@ -58,14 +57,14 @@
           if (!slot.tag || slot.componentOptions.tag !== 'zg-grid-column') return
           const props = slot.componentOptions.propsData
           const listeners = slot.componentOptions.listeners
-
           colspanColumn.children.push({
             field: props.field,
             title: props.title,
             width: props.width,
             sortAble: props.sortAble,
             clickCell: listeners ? listeners.clickCell : undefined,
-            cellFormatter: slot.data.scopedSlots ? slot.data.scopedSlots.default : undefined
+            cellFormatter: slot.data.scopedSlots ? slot.data.scopedSlots.default : undefined,
+            headFormatter: slot.data.scopedSlots ? slot.data.scopedSlots.header : undefined
           })
           colspanColumn.colspan += 1
         })
@@ -78,7 +77,8 @@
           width: this.width,
           sortAble: this.sortAble,
           clickCell: listeners.clickCell,
-          cellFormatter: this.$scopedSlots.default
+          cellFormatter: this.$scopedSlots.default,
+          headFormatter: this.$scopedSlots.header
         }
         structure.push(column)
       }
