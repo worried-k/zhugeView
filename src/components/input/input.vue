@@ -147,13 +147,6 @@
         }
       },
       /**
-       * @description tooltip是否自动显示隐藏，默认为hover显示，mouseLeave隐藏
-       */
-      autoHide: {
-        type: Boolean,
-        default: true
-      },
-      /**
        * @description tooltip展示宽度，默认不限制
        */
       tipWidth: {
