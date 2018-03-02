@@ -16,6 +16,7 @@ import charts from '../modules/echarts/index.vue'
 import reload from '../modules/reload/index.vue'
 import radio from '../modules/radio/index'
 import scroll from '../modules/scroll/index'
+import copy from '../modules/copy/index'
 
 Vue.use(Router)
 
@@ -101,6 +102,11 @@ export default new Router({
           path: '/scroll',
           name: 'scroll',
           component: scroll
+        },
+        {
+          path: '/copy',
+          name: 'copy',
+          component: copy
         }
       ]
     }

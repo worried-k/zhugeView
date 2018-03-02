@@ -16,6 +16,7 @@ import {scrollContainer, scrollLazyPanel} from './components/scroll'
 import {charts} from './components/echarts'
 
 import msg from './components/message'
+import copy from './components/copy'
 
 import directives from './directives/main'
 
@@ -39,6 +40,7 @@ const components = [
   radio,
   scrollContainer,
   scrollLazyPanel,
+  copy,
 
   charts
 ]

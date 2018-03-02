@@ -134,6 +134,13 @@
         validator (value) {
           return ['small', 'medium', 'big', 'normal'].includes(value)
         }
+      },
+      /**
+       * @description 禁用下拉框
+       */
+      disable: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -203,6 +210,7 @@
         let clazz = {
           'zg-select-handle': true,
           active: this.showOptions,
+          disable: this.disable,
           noborder: this.theme === 'noborder'
         }
         clazz['zg-size-' + this.size] = true
@@ -350,6 +358,7 @@
         this.showOptions = false
       },
       onClickHandle () {
+        if (this.disable) return
         this.showOptions = !this.showOptions
         this.pageNum = 0
         if (this.showOptions && this.filterOption) {

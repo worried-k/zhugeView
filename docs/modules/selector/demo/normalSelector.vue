@@ -2,7 +2,12 @@
   <div>
     <demo-panel title="普通下拉框" subtitle="单选" jsFiddleName="s5rjhjwj">
 
-      <zg-selector keyField="id" :store="store" placeholder="单选" labelField="label" :disableOptions="disableList" v-model="result">
+      <zg-selector keyField="id"
+                   :store="store"
+                   placeholder="单选"
+                   labelField="label"
+                   :disableOptions="disableList"
+                   v-model="result">
         <template scope="scope">
           <span>自定义展示{{scope.data.label}}</span>
         </template>
