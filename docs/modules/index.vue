@@ -34,8 +34,7 @@ export default {
         'dialog',
         'charts',
         'reload',
-        'scroll',
-        'copy'
+        'scroll'
       ]
     }
   },
