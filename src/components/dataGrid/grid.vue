@@ -133,7 +133,6 @@
                 })()}
                 {row.map(column => {
                   const rowspan = (rowIndex === 0 && !column.children) ? this.headerRowspan : 1
-                  console.log(column)
                   return (
                     <zg-grid-header title={column.title}
                                     sortAble={column.sortAble}
