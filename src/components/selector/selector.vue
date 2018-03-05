@@ -2,14 +2,13 @@
   import ZgOption from './option.vue'
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import ZgOptGroup from './optGroup.vue'
-  import {util} from '../../mixins/main'
+  import {util} from '../../utils'
   export default {
     components: {
       ZgOptGroup,
       ZgCheckbox,
       ZgOption},
     name: 'zgSelector',
-    mixins: [util],
     props: {
       /**
        * @description 选项唯一标识字段
@@ -141,6 +140,12 @@
       disable: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 自定义筛选
+       */
+      customFilter: {
+        type: Function
       }
     },
     data () {
@@ -244,7 +249,6 @@
        * 用于处理数据分页
        */
       showMap () {
-        this.time('showMap')
         let map = {
           count: 0
         }
@@ -253,34 +257,34 @@
         let filter = this.filter
         this.renderStore = []
         this.store.forEach(item => {
+          // 有分组
           if (this.childrenField) {
             let haveChildren = false
             item[this.childrenField].forEach((child, i) => {
               let flag = map.count < maxCount
               if (flag &&
-                (!filter || child[this.labelField].indexOf(filter) > -1)
+                (!filter || this.filterData(child))
               ) {
                 map[child[this.keyField]] = flag
                 map.count++
                 haveChildren = true
               }
-              if (!filter || child[this.labelField].indexOf(filter) > -1) totalCount++
+              if (!filter || this.filterData(child)) totalCount++
             })
             if (haveChildren) this.renderStore.push(item)
             map[item[this.keyField]] = haveChildren
-          } else {
+          } else { // 没分组
             let flag = map.count < maxCount
-            if (flag && ((!filter || item[this.labelField].indexOf(filter) > -1))) {
+            if (flag && ((!filter || this.filterData(item)))) {
               map[item[this.keyField]] = flag
               map.count++
               this.renderStore.push(item)
             }
-            if (!filter || item[this.labelField].indexOf(filter) > -1) totalCount++
+            if (!filter || this.filterData(item)) totalCount++
           }
         })
         this.totalCount = totalCount
         this.noMatch = filter && totalCount === 0
-        this.timeEnd('showMap')
         return map
       }
     },
@@ -294,7 +298,6 @@
         this.chosenList = []
         this.$set(this, 'checkedMap', {})
         if (!value) return
-        this.time('同步value')
         if (!this.multiple) {
           this.store.forEach(option => {
             if (this.childrenField) {
@@ -336,7 +339,6 @@
           })
           this.$emit('input', this.chosenList)
         }
-        this.timeEnd('同步value')
       }
     },
     mounted () {
@@ -354,6 +356,16 @@
       }
     },
     methods: {
+      filterData (data) {
+        let filterReg = util.getRegExp(this.filter.toLowerCase())
+        let flag = true
+        if (this.customFilter) {
+          flag = this.customFilter(filterReg, data, this.filter)
+        } else {
+          flag = filterReg.test(data[this.labelField].toLowerCase())
+        }
+        return flag
+      },
       onClickOutside () {
         this.showOptions = false
       },
@@ -397,7 +409,6 @@
           }
           this.$emit('input', this.chosenList)
         }
-        this.timeEnd('clickOption', data, this.chosenList, this)
         this.$emit('change', this.chosenList, this)
       },
       onScroll () {

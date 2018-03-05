@@ -7,6 +7,7 @@
                    placeholder="单选"
                    labelField="label"
                    :disableOptions="disableList"
+                   filterOption
                    v-model="result">
         <template scope="scope">
           <span>自定义展示{{scope.data.label}}</span>

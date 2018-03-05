@@ -5,11 +5,10 @@
     <normal-big-data-selector></normal-big-data-selector>
     <group-big-data-selector></group-big-data-selector>
 
-    <!--<demo></demo>-->
     <doc-markdown :api="api.select" title="select"></doc-markdown>
-    <!--<doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>-->
-    <!--<doc-markdown :api="api.option" title="option"></doc-markdown>-->
-    <!--<doc-markdown :api="api.optGroup" title="optionGroup"></doc-markdown>-->
+    <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
+    <doc-markdown :api="api.option" title="option"></doc-markdown>
+    <doc-markdown :api="api.optGroup" title="optionGroup"></doc-markdown>
   </div>
 </template>
 
@@ -21,11 +20,9 @@
   import GroupSelector from './demo/groupSelector.vue'
   import NormalBigDataSelector from './demo/normalBigDataSelector.vue'
   import GroupBigDataSelector from './demo/groupBigDataSelector.vue'
-  import Demo from './renderTest/demo.vue'
   import selectApi from './selector.json'
   export default {
     components: {
-      Demo,
       GroupBigDataSelector,
       NormalBigDataSelector,
       GroupSelector,

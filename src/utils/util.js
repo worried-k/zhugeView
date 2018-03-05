@@ -89,6 +89,18 @@ let util = {
     let source = String(num).split('.') // 按小数点分成2部分
     source[0] = source[0].replace(new RegExp('(\\d)(?=(\\d{3})+$)', 'ig'), '$1,') // 只将整数部分进行都好分割
     return source.join('.') // 再将小数部分合并进来
+  },
+  getRegExp (str) {
+    let keyWords = /\\|\^|\$|\*|\+|\?|\{|\}|\[|\]|\.|:|=|\||-|\/|<|!|\(|\)/
+    let words = []
+    str.split(/\s{0}/).forEach(code => {
+      if (keyWords.test(code)) {
+        words.push(`\\${code}`)
+      } else {
+        words.push(code)
+      }
+    })
+    return new RegExp(words.join(''))
   }
 }
 
