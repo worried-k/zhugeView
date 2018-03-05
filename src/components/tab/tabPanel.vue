@@ -11,12 +11,19 @@
       title: {
         type: String,
         required: true
+      },
+      /**
+       * @description tab标签icon
+       */
+      icon: {
+        type: String
       }
     },
     data () {
       return {
         templateData: {
           title: this.title,
+          icon: this.icon,
           slot: this.$slots.default
         }
       }

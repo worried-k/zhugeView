@@ -3,7 +3,7 @@
     <demo-panel title="tab" subtitle="them is normal" jsFiddleName="fnp7n0hd">
       {{chosenIndex}}
       <zg-tabs :tabWidth="150" v-model="chosenIndex">
-        <zg-tab-panel title="center">
+        <zg-tab-panel title="center" icon="zgicon-add">
           <zg-tabs placement="center">
             <zg-tab-panel title="tab1">
               this is tab1

@@ -1,6 +1,6 @@
 <template>
   <span :class="clazz" :style="style" @click="onClick">
-    {{tab.title}}
+    <i v-show="tab.icon" :class="tab.icon"></i>{{tab.title}}
   </span>
 </template>
 
