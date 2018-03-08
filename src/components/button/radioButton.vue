@@ -1,22 +1,4 @@
-<template>
-  <div class="zg-radio-button">
-    <zg-button v-for="item in store"
-               :class="{'zg-checked': checked === item}"
-               :key="item.value"
-               :theme="theme"
-               :size="size"
-               :type="type"
-               :disable="item.disable"
-               @click="onClickItem(item)"
-               :icon="item.icon">
-      <slot :data="item">
-        {{item.label}}
-      </slot>
-    </zg-button>
-  </div>
-</template>
-
-<script>
+<script type="text/jsx">
   import ZgButton from './button'
 
   export default {
@@ -97,6 +79,42 @@
         this.$emit('input', item.value)
         this.$emit('change', item)
       }
+    },
+    render (h) {
+      return (
+        <div class="zg-radio-button">
+          {this.store.map(item => {
+            let className = {
+              'zg-checked': this.checked === item,
+              'zg-radio-item': true
+            }
+            if (this.$scopedSlots.default) {
+              return this.$scopedSlots.default({
+                data: item,
+                className,
+                onClick: () => {
+                  this.onClickItem(item)
+                }
+              })
+            } else {
+              return (
+                <zg-button class={className}
+                           key={item.value}
+                           theme={this.theme}
+                           size={this.size}
+                           type={this.type}
+                           disable={item.disable}
+                           onClick={() => {
+                             this.onClickItem(item)
+                           }}
+                           icon={item.icon}>
+                  {item.label}
+                </zg-button>
+              )
+            }
+          })}
+    </div>
+      )
     }
   }
 </script>

@@ -25,6 +25,16 @@
         type: String
       },
       /**
+       * @description 隐藏分组的head, 参数应为组的id map
+       * @tip 不隐藏组内其它项，如需要隐藏整个组，需要在外部数据源上做整体处理
+       */
+      hiddenGroupMap: {
+        type: Object,
+        default () {
+          return {}
+        }
+      },
+      /**
        * @description 数据源
        */
       store: {
@@ -522,6 +532,7 @@
                                     keyField={this.keyField}
                                     labelField={this.labelField}
                                     multiple={this.multiple}
+                                    hideHead={this.hiddenGroupMap[option[this.keyField]]}
                                     onClick={this.onClickOption}
                                     scopedSlots={{
                                       default: this.$scopedSlots.default,

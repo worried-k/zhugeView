@@ -32,6 +32,10 @@
       multiple: {
         type: Boolean,
         default: false
+      },
+      hideHead: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -49,6 +53,7 @@
         <ul class="zg-opt-group" v-show={this.show}>
           <zg-group-header groupData={this.groupData}
                            labelField={this.labelField}
+                           show={!this.hideHead}
                            scopedSlots={{default: this.$scopedSlots.header}}></zg-group-header>
           {this.store.map(option => {
             if (this.showMap[option[this.keyField]]) {

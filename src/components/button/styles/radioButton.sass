@@ -1,7 +1,7 @@
 @import "../../../assets/styles/constants"
 .zg-radio-button
   display: inline-block
-  .zg-button
+  .zg-radio-item
     border-radius: 0
     position: relative
     margin-left: -1px
@@ -14,3 +14,5 @@
       border-bottom-right-radius: $border-radius
     &:hover,&.zg-checked
       z-index: 100
+    &.zg-disable,&.zg-disable:hover
+      z-index: 99

@@ -1,7 +1,15 @@
 <template>
   <div>
     <demo-panel subtitle="radioButton">
-      <zg-radio-button :store="store" v-model="value" type="normal" theme="border"></zg-radio-button>
+      <zg-radio-button :store="store" v-model="value">
+        <template scope="scope">
+          <zg-button type="normal"
+                     theme="border"
+                     size="large"
+                     :class="scope.className"
+                     :icon="scope.data.icon" @click="scope.onClick"></zg-button>
+        </template>
+      </zg-radio-button>
       <br>
       {{value}}
     </demo-panel>
@@ -27,16 +35,16 @@
           },
           {
             value: 2,
-            label: 'item b',
             disable: false,
+            icon: 'zgicon-fullscreen'
           },
           {
             value: 3,
-            label: 'item c'
+            icon: 'zgicon-exit'
           },
           {
             value: 4,
-            label: 'item d'
+            icon: 'zgicon-edit'
           }
         ]
       }

@@ -1,5 +1,5 @@
 <template>
-  <li class="zg-header">
+  <li class="zg-header" v-show="show">
     <slot :data="groupData">
       {{groupData[labelField]}}
     </slot>
@@ -17,6 +17,10 @@
       groupData: {
         type: Object,
         required: true
+      },
+      show: {
+        type: Boolean,
+        default: true
       }
     }
   }
