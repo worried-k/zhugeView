@@ -181,6 +181,7 @@
                                     width={column.width}
                                     index={i}
                                     scopedSlots={{default: column.cellFormatter}}
+                                    ableClick={column.clickCell ? true : false}
                                     onClick={column.clickCell || listeners.clickCell}
                       ></zg-grid-cell>
                     )

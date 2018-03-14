@@ -1,5 +1,8 @@
 <template>
-  <td class="zg-grid-cell" :class="clazz" :style="style" @click="onClick">
+  <td :class="clazz" :style="style" @click="onClick" v-if="ableClick">
+    <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
+  </td>
+  <td v-else :class="clazz" :style="style">
     <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
   </td>
 </template>
@@ -20,6 +23,10 @@
         type: Number,
         required: true
       },
+      ableClick: {
+        type: Boolean,
+        default: false
+      },
       width: null
     },
     computed: {
@@ -34,7 +41,8 @@
       },
       clazz () {
         return {
-          // todo 'zg-click-able': this.$listeners.click
+          'zg-grid-cell': true,
+          'zg-click-able': this.ableClick
         }
       }
     },
