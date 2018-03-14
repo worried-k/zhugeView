@@ -175,11 +175,15 @@
                     }
                   })()}
                   {this.structureParser.bodyStructure.map(column => {
+                    let clazz = {
+                      'zg-click-able': column.clickCell
+                    }
                     return (
                       <zg-grid-cell store={item}
                                     labelField={column.field}
                                     width={column.width}
                                     index={i}
+                                    class={clazz}
                                     scopedSlots={{default: column.cellFormatter}}
                                     onClick={column.clickCell || listeners.clickCell}
                       ></zg-grid-cell>

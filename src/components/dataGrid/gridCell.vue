@@ -1,5 +1,5 @@
 <template>
-  <td class="zg-grid-cell" :class="clazz" :style="style" @click="onClick">
+  <td class="zg-grid-cell" :style="style" @click="onClick">
     <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
   </td>
 </template>
@@ -31,11 +31,6 @@
           style.minWidth = `${this.width}px`
         }
         return style
-      },
-      clazz () {
-        return {
-          // todo 'zg-click-able': this.$listeners.click
-        }
       }
     },
     methods: {
