@@ -70,6 +70,20 @@
        */
       customSort: {
         type: Function
+      },
+      /**
+       * @description 自定义选中单元格
+       */
+      chosenCells: {
+        type: Array,
+        default () {
+          // let item = {
+          //   rule: [x1, y1, x2, y2], // x1,y1组成第一个单元格坐标,x2,y2组成最后一个单元格坐标
+          //   className: '',
+          //   ...// 可以增加其它自定义属性
+          // }
+          return []
+        }
       }
     },
     data () {
@@ -215,6 +229,7 @@
                              pageSize={this.pageSize}
                              headerRowspan={this.headerRowspan}
                              onSort={this.onSort}
+                             chosenCells={this.chosenCells}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
                   </div>
@@ -234,6 +249,8 @@
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
                              headerRowspan={this.headerRowspan}
+                             chosenCells={this.chosenCells}
+                             startColumnIndex={this.structure.left.length}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
@@ -253,6 +270,8 @@
                              pageNum={this.pageNum}
                              pageSize={this.pageSize}
                              headerRowspan={this.headerRowspan}
+                             chosenCells={this.chosenCells}
+                             startColumnIndex={this.structure.left.length + this.structure.center.length}
                              onSort={this.onSort}
                              onClickCell={listeners.clickCell || (() => {})}
                     ></zg-grid>
