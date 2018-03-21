@@ -8,6 +8,7 @@
                    labelField="label"
                    :disableOptions="disableList"
                    filterOption
+                   icon-field="icon"
                    v-model="result">
       </zg-selector>
 
@@ -43,7 +44,8 @@
           for (let i = 0; i < 20; i++) {
             store.push({
               id: i,
-              label: 'option_' + i
+              label: 'option_' + i,
+              icon: 'zgicon-edit'
             })
           }
           return store
