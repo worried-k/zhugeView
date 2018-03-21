@@ -83,7 +83,7 @@
       },
       iconClass () {
         let clazz = {
-          icon: true
+          'zg-icon': true
         }
         clazz[this.data[this.iconField]] = true
         return clazz
