@@ -1,6 +1,6 @@
 <template>
   <td :class="clazz" :style="style" @click="onClick">
-    <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
+    <slot :data="store" :field="labelField" :row="index" :column="column">{{store[labelField]}}</slot>
   </td>
 </template>
 

@@ -29,6 +29,12 @@
         type: String,
         required: true
       },
+      /**
+       * @description 别名字段，设置别名后，优先展示别名
+       */
+      aliasField: {
+        type: String
+      },
       multiple: {
         type: Boolean,
         default: false
@@ -63,6 +69,7 @@
                            disable={this.disableOptions.indexOf(option[this.keyField]) > -1}
                            data={option}
                            labelField={this.labelField}
+                           aliasField={this.aliasField}
                            multiple={this.multiple}
                            onClick={this.onClickOption}
                            scopedSlots={{default: this.$scopedSlots.default}}

@@ -91,6 +91,12 @@
         required: true
       },
       /**
+       * @description 别名字段，设置别名后，优先展示别名
+       */
+      aliasField: {
+        type: String
+      },
+      /**
        * @description 默认提示文本
        */
       placeholder: {
@@ -245,7 +251,7 @@
       },
       resultLabel () {
         return this.chosenList.map(option => {
-          return option[this.labelField]
+          return option[this.aliasField] || option[this.labelField]
         }).join(',')
       },
       filterClass () {
@@ -372,7 +378,7 @@
         if (this.customFilter) {
           flag = this.customFilter(filterReg, data, this.filter)
         } else {
-          flag = filterReg.test(data[this.labelField].toLowerCase())
+          flag = filterReg.test((data[this.aliasField] || data[this.labelField]).toLowerCase())
         }
         return flag
       },
@@ -531,6 +537,7 @@
                                     disableOptions={this.disableOptions}
                                     keyField={this.keyField}
                                     labelField={this.labelField}
+                                    aliasField={this.aliasField}
                                     multiple={this.multiple}
                                     hideHead={this.hiddenGroupMap[option[this.keyField]]}
                                     onClick={this.onClickOption}
@@ -547,6 +554,7 @@
                                  disable={this.disableOptions.indexOf(option[this.keyField]) > -1}
                                  data={option}
                                  labelField={this.labelField}
+                                 aliasField={this.aliasField}
                                  multiple={this.multiple}
                                  onClick={this.onClickOption}
                                  scopedSlots={{default: this.$scopedSlots.default}}></zg-option>
