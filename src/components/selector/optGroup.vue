@@ -30,6 +30,13 @@
         required: true
       },
       /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
+      },
+      /**
        * @description 别名字段，设置别名后，优先展示别名
        */
       aliasField: {
@@ -70,6 +77,7 @@
                            data={option}
                            labelField={this.labelField}
                            aliasField={this.aliasField}
+                           iconField={this.iconField}
                            multiple={this.multiple}
                            onClick={this.onClickOption}
                            scopedSlots={{default: this.$scopedSlots.default}}

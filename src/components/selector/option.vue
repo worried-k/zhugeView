@@ -1,12 +1,12 @@
 <template>
   <li class="zg-option" :class="className" @click="onClick">
     <slot v-if="!multiple" :data="data" :active="active" :disable="disable">
-      <span>{{data[aliasField] || data[labelField]}}</span>
+      <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
     </slot>
 
     <zg-checkbox v-else @change="onClick" v-model="active" :disable="disable">
       <slot :data="data" :active="active" :disable="disable">
-        <span>{{data[aliasField] || data[labelField]}}</span>
+        <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
       </slot>
     </zg-checkbox>
   </li>
@@ -48,6 +48,13 @@
         type: String
       },
       /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
+      },
+      /**
        * @description 禁用选项
        */
       disable: {
@@ -73,6 +80,13 @@
           disable: this.disable,
           active: this.active && !this.multiple
         }
+      },
+      iconClass () {
+        let clazz = {
+          icon: true
+        }
+        clazz[this.data[this.iconField]] = true
+        return clazz
       }
     },
     watch: {

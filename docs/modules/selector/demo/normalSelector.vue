@@ -9,9 +9,6 @@
                    :disableOptions="disableList"
                    filterOption
                    v-model="result">
-        <template scope="scope">
-          <span>自定义展示{{scope.data.label}}</span>
-        </template>
       </zg-selector>
 
       <span>选中值</span>{{result}}<br>

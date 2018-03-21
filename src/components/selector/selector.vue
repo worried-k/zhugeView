@@ -97,6 +97,13 @@
         type: String
       },
       /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
+      },
+      /**
        * @description 默认提示文本
        */
       placeholder: {
@@ -538,6 +545,7 @@
                                     keyField={this.keyField}
                                     labelField={this.labelField}
                                     aliasField={this.aliasField}
+                                    iconField={this.iconField}
                                     multiple={this.multiple}
                                     hideHead={this.hiddenGroupMap[option[this.keyField]]}
                                     onClick={this.onClickOption}
@@ -555,6 +563,7 @@
                                  data={option}
                                  labelField={this.labelField}
                                  aliasField={this.aliasField}
+                                 iconField={this.iconField}
                                  multiple={this.multiple}
                                  onClick={this.onClickOption}
                                  scopedSlots={{default: this.$scopedSlots.default}}></zg-option>
