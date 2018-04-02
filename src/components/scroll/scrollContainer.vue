@@ -10,6 +10,15 @@ let timer = null
 export default {
   name: 'zgScrollContainer',
   mixins: [emitter],
+  props: {
+    /**
+     * @description 纵向滚动检测比例值，当scrollBottom在总高度*bottomRatio范围时，触发bottom（触底）事件
+     */
+    bottomRatio: {
+      type: Number,
+      default: 0.5
+    }
+  },
   data () {
     return {
       scrollBottom: 0
@@ -37,10 +46,11 @@ export default {
     checkInBottom () {
       const panel = this.$refs.panel
       const height = panel.getBoundingClientRect().height
-      const scrollBottom = panel.scrollHeight - height - panel.scrollTop
-      if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
-      this.scrollBottom = scrollBottom
-      if (scrollBottom <= (panel.scrollHeight - height) * 0.5) {
+
+      const canScrollHeight = panel.scrollHeight - height // 可滚动的总高度
+      const scrollBottom = canScrollHeight - panel.scrollTop // 未滚动的高度
+
+      if (scrollBottom <= Math.max(canScrollHeight * 0.05, height / 2)) {
         this.$emit('bottom')
       }
     }

@@ -3,8 +3,10 @@
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import ZgOptGroup from './optGroup.vue'
   import {util} from '../../utils'
+  import ZgScrollContainer from '../scroll/scrollContainer'
   export default {
     components: {
+      ZgScrollContainer,
       ZgOptGroup,
       ZgCheckbox,
       ZgOption},
@@ -435,16 +437,9 @@
         this.$emit('change', this.chosenList, this)
       },
       onScroll () {
-        const panel = this.$refs.options
-        const height = panel.getBoundingClientRect().height
-        const scrollBottom = panel.scrollHeight - height - panel.scrollTop
-        if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
-        this.scrollBottom = scrollBottom
-        if (scrollBottom <= (panel.scrollHeight - height) * 0.05) {
-          let count = (this.pageNum + 1) * this.pageSize
-          if (this.totalCount > count) {
-            this.pageNum++
-          }
+        let count = (this.pageNum + 1) * this.pageSize
+        if (this.totalCount > count) {
+          this.pageNum++
         }
       },
       onFilter (filterValue) {
@@ -532,7 +527,7 @@
                 </li>
               </div>
 
-              <div class="zg-content" ref="options" onScroll={this.onScroll}>
+              <zg-scroll-container class="zg-content" ref="options" onBottom={this.onScroll}>
                 {this.renderStore.map(option => {
                   if (this.childrenField) {
                     return (
@@ -576,7 +571,7 @@
                 <li v-show={this.noMatch} class="zg-option zg-error">
                   {this.noMatchText}
                 </li>
-              </div>
+              </zg-scroll-container>
             </ul>
           </transition>
           <div style="display: none">{this.showMap.count}</div>
