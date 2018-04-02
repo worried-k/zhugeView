@@ -16,7 +16,7 @@ export default {
      */
     bottomRatio: {
       type: Number,
-      default: 0.5
+      default: 0.05
     }
   },
   data () {
@@ -50,7 +50,7 @@ export default {
       const canScrollHeight = panel.scrollHeight - height // 可滚动的总高度
       const scrollBottom = canScrollHeight - panel.scrollTop // 未滚动的高度
 
-      if (scrollBottom <= Math.max(canScrollHeight * 0.05, height / 2)) {
+      if (scrollBottom <= Math.max(canScrollHeight * this.bottomRatio, height / 2)) {
         this.$emit('bottom')
       }
     }
