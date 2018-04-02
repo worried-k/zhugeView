@@ -1,5 +1,5 @@
 <template>
-  <div class="zg-scroll-container" @scroll="onScroll" v-resize="onScroll">
+  <div class="zg-scroll-container" @scroll="onScroll" v-resize="onScroll" ref="panel">
     <slot></slot>
   </div>
 </template>
@@ -10,6 +10,11 @@ let timer = null
 export default {
   name: 'zgScrollContainer',
   mixins: [emitter],
+  data () {
+    return {
+      scrollBottom: 0
+    }
+  },
   methods: {
     onScroll () {
       if (timer) {
@@ -23,6 +28,21 @@ export default {
           }
         })
       }, 100)
+
+      this.checkInBottom()
+    },
+    /**
+     * @description 检测是否滚动到了容器底部
+     */
+    checkInBottom () {
+      const panel = this.$refs.panel
+      const height = panel.getBoundingClientRect().height
+      const scrollBottom = panel.scrollHeight - height - panel.scrollTop
+      if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
+      this.scrollBottom = scrollBottom
+      if (scrollBottom <= (panel.scrollHeight - height) * 0.5) {
+        this.$emit('bottom')
+      }
     }
   }
 }
