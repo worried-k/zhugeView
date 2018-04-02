@@ -436,7 +436,7 @@
         }
         this.$emit('change', this.chosenList, this)
       },
-      onScroll () {
+      onBottom () {
         let count = (this.pageNum + 1) * this.pageSize
         if (this.totalCount > count) {
           this.pageNum++
@@ -527,7 +527,7 @@
                 </li>
               </div>
 
-              <zg-scroll-container class="zg-content" ref="options" onBottom={this.onScroll}>
+              <zg-scroll-container class="zg-content" ref="options" onBottom={this.onBottom}>
                 {this.renderStore.map(option => {
                   if (this.childrenField) {
                     return (
