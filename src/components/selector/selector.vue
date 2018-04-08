@@ -399,7 +399,7 @@
         this.showOptions = !this.showOptions
         this.pageNum = 0
         if (this.showOptions && this.filterOption) {
-          setTimeout(() => {
+          this.$nextTick(() => {
             this.$refs.optionFilter.focus()
           })
         }
@@ -481,7 +481,7 @@
                   <i class={this.arrowIcon}></i>
                 </div>
               )
-            } else {
+            } else if (this.theme === 'noborder') {
               return (
                 <div ref="handle" class={this.handleClass}
                      style={this.handleStyle}
