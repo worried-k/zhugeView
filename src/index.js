@@ -14,6 +14,7 @@ import reload from './components/reload'
 import radio from './components/radio'
 import {scrollContainer, scrollLazyPanel} from './components/scroll'
 import {charts} from './components/echarts'
+import tag from './components/tag'
 
 import msg from './components/message'
 
@@ -39,6 +40,7 @@ const components = [
   radio,
   scrollContainer,
   scrollLazyPanel,
+  tag,
 
   charts
 ]

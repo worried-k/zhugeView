@@ -16,6 +16,7 @@ import charts from '../modules/echarts/index.vue'
 import reload from '../modules/reload/index.vue'
 import radio from '../modules/radio/index'
 import scroll from '../modules/scroll/index'
+import tag from '../modules/tag/index'
 
 Vue.use(Router)
 
@@ -76,6 +77,11 @@ export default new Router({
           path: '/tab',
           name: 'tab',
           component: tab
+        },
+        {
+          path: '/tag',
+          name: 'tag',
+          component: tag
         },
         {
           path: '/message',
