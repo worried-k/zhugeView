@@ -4,12 +4,14 @@
   import ZgOptGroup from './optGroup.vue'
   import {util} from '../../utils'
   import ZgScrollContainer from '../scroll/scrollContainer'
+  import ZgSelectorHandle from './handle'
   export default {
     components: {
       ZgScrollContainer,
       ZgOptGroup,
       ZgCheckbox,
-      ZgOption},
+      ZgOption,
+      ZgSelectorHandle},
     name: 'zgSelector',
     props: {
       /**
@@ -229,39 +231,8 @@
       return data
     },
     computed: {
-      arrowIcon () {
-        return {
-          'zg-select-arrow': true,
-          'zgicon-down': this.theme === 'normal',
-          'zgicon-pulldown': this.theme === 'noborder'
-        }
-      },
-      handleClass () {
-        let clazz = {
-          'zg-select-handle': true,
-          active: this.showOptions,
-          disable: this.disable,
-          noborder: this.theme === 'noborder'
-        }
-        clazz['zg-size-' + this.size] = true
-        return clazz
-      },
-      handleStyle () {
-        let style = {}
-        if (this.theme === 'normal') {
-          style.width = this.width + 'px'
-        } else {
-          style.maxWidth = this.width + 'px'
-        }
-        return style
-      },
       noData () {
         return this.store.length === 0
-      },
-      resultLabel () {
-        return this.chosenList.map(option => {
-          return option[this.aliasField] || option[this.labelField]
-        }).join(',')
       },
       filterClass () {
         let clazz = ['zg-select-search']
@@ -460,53 +431,13 @@
     render (h) {
       return (
         <div class="zg-select" v-click-outside={this.onClickOutside}>
-          {(() => {
-            if (this.theme === 'normal') {
-              return (
-                <div ref="handle" class={this.handleClass}
-                     style={this.handleStyle}
-                     onClick={this.onClickHandle}>
-                  {(() => {
-                    if (this.$slots.default) {
-                      return this.$slots.default
-                    } else {
-                      return (
-                        <span>
-                          <span v-show={this.resultLabel} class="zg-select-label">{this.resultLabel}</span>
-                          <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
-                        </span>
-                      )
-                    }
-                  })()}
-                  <i class={this.arrowIcon}></i>
-                </div>
-              )
-            } else if (this.theme === 'noborder') {
-              return (
-                <div ref="handle" class={this.handleClass}
-                     style={this.handleStyle}
-                     onClick={this.onClickHandle}
-                     slot="handle">
-                  <span class="zg-label">
-                    {(() => {
-                      if (this.$slots.default) {
-                        return this.$slots.default
-                      } else {
-                        return (
-                          <span>
-                            <span v-show={this.resultLabel} class="zg-value">{this.resultLabel}</span>
-                            <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
-                            <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
-                          </span>
-                        )
-                      }
-                    })()}
-                  </span>
-                  <i class={this.arrowIcon}></i>
-                </div>
-              )
-            }
-          })()}
+          <zg-selector-handle chosenList={this.chosenList}
+                              theme={this.theme}
+                              placeholder={this.placeholder}
+                              labelField={this.labelField}
+                              aliasField={this.aliasField}
+                              width={this.width}
+                              onClick={this.onClickHandle}></zg-selector-handle>
 
           <transition enter-active-class="animated slideInDown">
             <ul v-show={this.showOptions} class="zg-drop-panel" ref="dropPanel">

@@ -1,7 +1,7 @@
 <template>
   <div class="zg-tag" :style="style" v-if="!closed">
     <slot></slot>
-    <i v-show="closable" class="zg-icon zgicon-delete-little1" @click="onClose"></i>
+    <i v-show="closeable" class="zg-icon zgicon-delete-little1" @click="onClose"></i>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 export default {
   name: 'zgTag',
   props: {
-    closable: {
+    closeable: {
       type: Boolean,
       default: false
     },
