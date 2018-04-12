@@ -9,6 +9,7 @@
   background: $color-white
   display: flex
   flex-direction: row
+  position: relative
   &.zg-size-small
     height: 24px
     line-height: 24px
@@ -33,10 +34,24 @@
   .zg-count
     width: 20px
     flex: none
-  &.noborder
+  &.zg-theme-noborder
     border-color: rgba(0, 0, 0, 0)
     &+.zg-drop-panel
       margin: 0
+  &.zg-theme-tag
+    display: inline-block
+    height: auto
+    .zg-tag
+      flex: none
+      line-height: initial
+      margin: 0 5px 5px 0
+    input[type='text']
+      //border: none
+      font-size: $size-font-tip
+    .zg-temp
+      position: absolute
+      font-size: $size-font-tip
+      top: -999999px
   &.disable
     border-color: $color-action-disabled-default
     color: $color-font-disabled

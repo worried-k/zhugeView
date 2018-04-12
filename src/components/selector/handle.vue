@@ -1,22 +1,43 @@
 <template>
   <div :class="handleClass" :style="handleStyle" @click="onClickHandle">
-    <slot>
-      <span v-show="!chosenList.length" class="zg-select-label zg-placeholder">{{placeholder}}</span>
-      <span v-show="chosenList.length" class="zg-select-label">{{resultLabel}}</span>
-      <span v-if="theme === 'noborder'" class="zg-count" v-show="chosenList.length > 1">({{chosenList.length}})</span>
+    <slot v-if="theme !== 'tag'">
+      <span v-show="!value.length" class="zg-select-label zg-placeholder">{{placeholder}}</span>
+      <span v-show="value.length" class="zg-select-label">{{resultLabel}}</span>
+      <span v-if="theme === 'noborder'" class="zg-count" v-show="value.length > 1">({{value.length}})</span>
+      <i :class="arrowIcon"></i>
     </slot>
-    <i :class="arrowIcon"></i>
+    <template v-else>
+      <span v-show="!value.length" class="zg-placeholder">{{placeholder}}</span>
+      <zg-tag v-for="item in value"
+              :key="item[keyField]" closeable @close="onDel(item)">
+        {{item[aliasField] || item[labelField]}}
+      </zg-tag>
+      <input type="text"
+             :style="inputStyle"
+             @keyup.enter="onEnter"
+             @keydown.delete="onDelete"
+             @keyup.up="onPre"
+             @keyup.left="onPre"
+             @keyup.down="onNext"
+             @keyup.right="onNext"
+             v-model="search"
+             ref="input"/>
+      <span class="zg-temp" ref="search">{{search}}</span>
+    </template>
   </div>
 </template>
 
 <script>
+  import ZgTag from '../tag/tag'
+
   export default {
+    components: {ZgTag},
     name: 'zgSelectorHandle',
     props: {
       /**
        * @description 已选列表
        */
-      chosenList: {
+      value: {
         type: Array,
         default () {
           return []
@@ -50,6 +71,13 @@
         type: String
       },
       /**
+       * @description 选项唯一标识字段
+       */
+      keyField: {
+        type: String,
+        required: true
+      },
+      /**
        * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应
        */
       width: {
@@ -72,21 +100,29 @@
       disable: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 下拉框是否处于选中状态
+       */
+      active: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
       return {
-        msg: 'handle'
+        search: '',
+        inputWidth: 15
       }
     },
     computed: {
       handleClass () {
         let clazz = {
           'zg-select-handle': true,
-          // active: this.showOptions,
-          disable: this.disable,
-          noborder: this.theme === 'noborder'
+          active: this.active,
+          disable: this.disable
         }
+        clazz[`zg-theme-${this.theme}`] = true
         clazz['zg-size-' + this.size] = true
         return clazz
       },
@@ -107,14 +143,64 @@
         }
       },
       resultLabel () {
-        return this.chosenList.map(option => {
+        return this.value.map(option => {
           return option[this.aliasField] || option[this.labelField]
         }).join(',')
+      },
+      inputStyle () {
+        return {
+          width: this.inputWidth + 'px'
+        }
+      }
+    },
+    watch: {
+      search (val) {
+        this.$nextTick(() => {
+          this.inputWidth = Math.max(this.$refs.search.offsetWidth, 10) + 5
+        })
+        this.$emit('search', val)
       }
     },
     methods: {
+      /**
+       * @description handle点击处理
+       */
       onClickHandle () {
+        if (this.theme === 'tag') {
+          this.$refs.input.focus()
+        }
         this.$emit('click')
+      },
+      /**
+       * @description 删除键处理
+       * @param data
+       */
+      onDel (data) {
+        let list = this.value.filter(item => {
+          return item[this.keyField] !== data[this.keyField]
+        })
+        this.$emit('input', list)
+      },
+      /**
+       * @description 回车处理，如果搜索内容在store中，没有完全匹配的，则
+       */
+      onEnter () {
+        if (!this.search) return
+        // let item = {}
+        // item[this.keyField] = this.search
+        // item[this.labelField] = this.search
+        // this.$emit('input', [{item}].concat(this.value))
+      },
+      onDelete () {
+        if (!this.search && this.value.length) {
+          this.onDel(this.value[this.value.length - 1])
+        }
+      },
+      onPre () {
+        this.$emit('pre')
+      },
+      onNext () {
+        this.$emit('next')
       }
     }
   }

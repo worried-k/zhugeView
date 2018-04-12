@@ -63,13 +63,13 @@
         default: 20
       },
       /**
-       * @description 主题，目前支持的主题有：normal、noborder
+       * @description 主题，目前支持的主题有：normal、noborder、tag
        */
       theme: {
         type: String,
         default: 'normal',
         validator (value) {
-          const themes = ['normal', 'noborder']
+          const themes = ['normal', 'noborder', 'tag']
           return themes.indexOf(value) > -1
         }
       },
@@ -180,6 +180,7 @@
         showOptions: false,
         checkedMap: {},
         chosenList: [],
+        innerStore: this.store, // prop中的store，转为私有属性，因为tag模式时，可能需要向store中增加或删除元素
         renderStore: this.store.slice(0, this.pageSize),
         pageNum: 0,
         totalCount: 0,
@@ -232,7 +233,7 @@
     },
     computed: {
       noData () {
-        return this.store.length === 0
+        return this.innerStore.length === 0
       },
       filterClass () {
         let clazz = ['zg-select-search']
@@ -252,7 +253,7 @@
         let totalCount = 0
         let filter = this.filter
         this.renderStore = []
-        this.store.forEach(item => {
+        this.innerStore.forEach(item => {
           // 有分组
           if (this.childrenField) {
             let haveChildren = false
@@ -285,6 +286,9 @@
       }
     },
     watch: {
+      store (store) {
+        this.innerStore = store
+      },
       /**
        * 保持对v-model的双向数据绑定
        * @param value
@@ -295,7 +299,7 @@
         this.$set(this, 'checkedMap', {})
         if (!value) return
         if (!this.multiple) {
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(child => {
                 if (child[this.keyField] === value[this.keyField]) {
@@ -314,7 +318,7 @@
           })
           if (this.noData) this.$emit('input', this.chosenList[0])
         } else {
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(child => {
                 value.forEach(defaultOption => {
@@ -378,7 +382,7 @@
       onClickOption (checked, data) {
         if (!this.multiple) {
           this.chosenList = []
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(children => {
                 this.$set(this.checkedMap, children[this.keyField], children[this.keyField] === data[this.keyField])
@@ -414,6 +418,7 @@
         }
       },
       onFilter (filterValue) {
+        this.showOptions = true
         if (this.filterTimeout) clearTimeout(this.filterTimeout)
         this.filterTimeout = setTimeout(() => {
           this.$refs.options.scrollTop = 0
@@ -426,22 +431,33 @@
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
         this.$emit('change', this.chosenList, this)
+      },
+      syncChosen (list) {
+        if (!this.multiple) {
+          this.$emit('input', list[0])
+        } else {
+          this.$emit('input', list)
+        }
       }
     },
     render (h) {
       return (
         <div class="zg-select" v-click-outside={this.onClickOutside}>
-          <zg-selector-handle chosenList={this.chosenList}
+          <zg-selector-handle value={this.chosenList}
                               theme={this.theme}
                               placeholder={this.placeholder}
                               labelField={this.labelField}
                               aliasField={this.aliasField}
                               width={this.width}
+                              active={this.showOptions}
+                              keyField={this.keyField}
+                              onInput={this.syncChosen}
+                              onSearch={this.onFilter}
                               onClick={this.onClickHandle}></zg-selector-handle>
 
           <transition enter-active-class="animated slideInDown">
             <ul v-show={this.showOptions} class="zg-drop-panel" ref="dropPanel">
-              <div class="zg-fixed">
+              <div class="zg-fixed" v-show={this.theme !== 'tag'}>
                 {(() => {
                   if (this.filterOption) {
                     return (
