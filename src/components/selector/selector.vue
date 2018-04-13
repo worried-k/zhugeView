@@ -178,16 +178,15 @@
     data () {
       let data = {
         showOptions: false,
-        checkedMap: {},
-        chosenList: [],
+        checkedMap: {}, // 选项选中状态map集合，为了便捷option的状态显示，选中的集合与chosenList相同
+        chosenList: [], // 选中的选项集合
         innerStore: this.store, // prop中的store，转为私有属性，因为tag模式时，可能需要向store中增加或删除元素
         renderStore: this.store.slice(0, this.pageSize),
         pageNum: 0,
-        totalCount: 0,
-        filter: '',
+        totalCount: 0, // 可展示的选项总数，有筛选条件时，则为符合条件的选项总数
+        filter: '', // 筛选条件
         filterTimeout: null,
-        noMatch: false,
-        logTime: false// 打印时间戳日志
+        noMatch: false
       }
       // 绑定默认值
       if (this.value) {
@@ -438,6 +437,32 @@
         } else {
           this.$emit('input', list)
         }
+      },
+      onEnter (option) {
+        if (option) { // 输入搜索内容后回车
+          let exit = false
+          this.innerStore.forEach(item => { // 此时exit还为false
+            if (item[this.labelField] === option[this.labelField] ||
+              (this.aliasField && item[this.aliasField] === option[this.aliasField])) {
+              exit = true
+              option = item
+            }
+          })
+          if (!exit) this.innerStore = [option].concat(this.innerStore) // 如果store列表中不存在该值，则插入该值
+          if (!this.checkedMap[option[this.keyField]]) this.onClickOption(true, option)
+        } else { // 选项上下移动时回车
+          // todo 选中或者取消选中当前hover的选项
+        }
+      },
+      onDelete (option) {
+        if (option.temp) { // 临时选项，从store中真实删除
+          this.innerStore.forEach((item, i) => {
+            if (item[this.keyField] === option[this.keyField]) {
+              this.innerStore.splice(i, 1)
+            }
+          })
+        }
+        this.onClickOption(false, option)
       }
     },
     render (h) {
@@ -453,6 +478,8 @@
                               keyField={this.keyField}
                               onInput={this.syncChosen}
                               onSearch={this.onFilter}
+                              onEnter={this.onEnter}
+                              onDelete={this.onDelete}
                               onClick={this.onClickHandle}></zg-selector-handle>
 
           <transition enter-active-class="animated slideInDown">
@@ -489,6 +516,7 @@
                                     aliasField={this.aliasField}
                                     iconField={this.iconField}
                                     multiple={this.multiple}
+                                    theme={this.theme}
                                     hideHead={this.hiddenGroupMap[option[this.keyField]]}
                                     onClick={this.onClickOption}
                                     scopedSlots={{
@@ -507,6 +535,7 @@
                                  aliasField={this.aliasField}
                                  iconField={this.iconField}
                                  multiple={this.multiple}
+                                 theme={this.theme}
                                  onClick={this.onClickOption}
                                  scopedSlots={{default: this.$scopedSlots.default}}></zg-option>
                     )

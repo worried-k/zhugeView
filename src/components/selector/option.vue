@@ -1,6 +1,6 @@
 <template>
   <li class="zg-option" :class="className" @click="onClick">
-    <slot v-if="!multiple" :data="data" :active="active" :disable="disable">
+    <slot v-if="!multiple || theme == 'tag'" :data="data" :active="active" :disable="disable">
       <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
     </slot>
 
@@ -67,6 +67,17 @@
       multiple: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 主题，目前支持的主题有：normal、noborder、tag
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder', 'tag']
+          return themes.indexOf(value) > -1
+        }
       }
     },
     data () {
@@ -78,7 +89,7 @@
       className () {
         return {
           disable: this.disable,
-          active: this.active && !this.multiple
+          active: this.active && (!this.multiple || this.theme === 'tag')
         }
       },
       iconClass () {
@@ -97,7 +108,7 @@
     methods: {
       onClick () {
         if (this.disable) return
-        if (this.multiple) {
+        if (this.multiple && this.theme !== 'tag') {
           this.$emit('click', this.active, this.data)
         } else if (!this.active) {
           this.active = !this.active

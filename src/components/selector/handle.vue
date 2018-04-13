@@ -7,7 +7,7 @@
       <i :class="arrowIcon"></i>
     </slot>
     <template v-else>
-      <span v-show="!value.length" class="zg-placeholder">{{placeholder}}</span>
+      <span v-show="!value.length && !focus" class="zg-placeholder">{{placeholder}}</span>
       <zg-tag v-for="item in value"
               :key="item[keyField]" closeable @close="onDel(item)">
         {{item[aliasField] || item[labelField]}}
@@ -20,6 +20,8 @@
              @keyup.left="onPre"
              @keyup.down="onNext"
              @keyup.right="onNext"
+             @focus="focus = true"
+             @blur="focus = false"
              v-model="search"
              ref="input"/>
       <span class="zg-temp" ref="search">{{search}}</span>
@@ -112,7 +114,8 @@
     data () {
       return {
         search: '',
-        inputWidth: 15
+        inputWidth: 15,
+        focus: false
       }
     },
     computed: {
@@ -176,20 +179,19 @@
        * @param data
        */
       onDel (data) {
-        let list = this.value.filter(item => {
-          return item[this.keyField] !== data[this.keyField]
-        })
-        this.$emit('input', list)
+        this.$emit('delete', data)
       },
       /**
        * @description 回车处理，如果搜索内容在store中，没有完全匹配的，则
        */
       onEnter () {
-        if (!this.search) return
-        // let item = {}
-        // item[this.keyField] = this.search
-        // item[this.labelField] = this.search
-        // this.$emit('input', [{item}].concat(this.value))
+        let item = {
+          temp: true // 表明选项为临时选项，删除时，从store中彻底删除
+        }
+        item[this.keyField] = this.search
+        item[this.labelField] = this.search
+        this.$emit('enter', this.search ? item : null)
+        this.search = ''
       },
       onDelete () {
         if (!this.search && this.value.length) {

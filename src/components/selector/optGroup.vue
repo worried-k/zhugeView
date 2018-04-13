@@ -49,6 +49,17 @@
       hideHead: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 主题，目前支持的主题有：normal、noborder、tag
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder', 'tag']
+          return themes.indexOf(value) > -1
+        }
       }
     },
     data () {
@@ -79,6 +90,7 @@
                            aliasField={this.aliasField}
                            iconField={this.iconField}
                            multiple={this.multiple}
+                           theme={this.theme}
                            onClick={this.onClickOption}
                            scopedSlots={{default: this.$scopedSlots.default}}
                 ></zg-option>
