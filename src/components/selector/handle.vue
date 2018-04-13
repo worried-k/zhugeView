@@ -7,7 +7,7 @@
       <i :class="arrowIcon"></i>
     </slot>
     <template v-else>
-      <span v-show="!value.length && !focus" class="zg-placeholder">{{placeholder}}</span>
+      <span v-show="!value.length && !focus && !active" class="zg-placeholder">{{placeholder}}</span>
       <zg-tag v-for="item in value"
               :key="item[keyField]" closeable @close="onDel(item)">
         {{item[aliasField] || item[labelField]}}
@@ -20,7 +20,7 @@
              @keyup.left="onPre"
              @keyup.down="onNext"
              @keyup.right="onNext"
-             @focus="focus = true"
+             @click.stop="onClickHandle"
              @blur="focus = false"
              v-model="search"
              ref="input"/>
@@ -87,6 +87,13 @@
         default: 150
       },
       /**
+       * @description 最大宽度
+       */
+      maxWidth: {
+        type: Number,
+        default: 250
+      },
+      /**
        * @description 下拉框尺寸
        */
       size: {
@@ -130,11 +137,15 @@
         return clazz
       },
       handleStyle () {
-        let style = {}
+        let style = {
+          'max-width': this.maxWidth + 'px'
+        }
         if (this.theme === 'normal') {
           style.width = this.width + 'px'
-        } else {
+        } else if (this.theme === 'noborder') {
           style.maxWidth = this.width + 'px'
+        } else if (this.theme === 'tag') {
+          style.minWidth = this.width + 'px'
         }
         return style
       },
@@ -170,6 +181,7 @@
        */
       onClickHandle () {
         if (this.theme === 'tag') {
+          this.focus = true
           this.$refs.input.focus()
         }
         this.$emit('click')

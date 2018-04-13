@@ -81,11 +81,18 @@
         type: [Array, Object]
       },
       /**
-       * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应
+       * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应。theme为tag，则该值为最小宽度
        */
       width: {
         type: Number,
         default: 150
+      },
+      /**
+       * @description 最大宽度
+       */
+      maxWidth: {
+        type: Number,
+        default: 250
       },
       /**
        * @description 用于展示的字段名称
@@ -474,6 +481,7 @@
                               labelField={this.labelField}
                               aliasField={this.aliasField}
                               width={this.width}
+                              maxWidth={this.maxWidth}
                               active={this.showOptions}
                               keyField={this.keyField}
                               onInput={this.syncChosen}

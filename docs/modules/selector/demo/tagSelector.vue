@@ -9,7 +9,7 @@
                    icon-field="icon"
                    theme="tag"
                    multiple
-                   :width="450"
+                   :maxWidth="450"
                    v-model="result">
       </zg-selector>
     </demo-panel>
