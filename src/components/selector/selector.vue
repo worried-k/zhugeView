@@ -400,6 +400,7 @@
             }
           })
           this.showOptions = false
+          this.$emit('input', this.chosenList[0])
           this.$emit('change', this.chosenList[0], this)
         } else {
           this.$set(this.checkedMap, data[this.keyField], checked)
