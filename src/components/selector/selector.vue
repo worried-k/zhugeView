@@ -310,14 +310,14 @@
               option[this.childrenField].forEach(child => {
                 if (child[this.keyField] === value[this.keyField]) {
                   this.checkedMap[value[this.keyField]] = true
-                  this.chosenList.push(child)
+                  if (!this.chosenList.length)this.chosenList.push(child)
                   this.$emit('input', this.chosenList[0])
                 }
               })
             } else {
               if (option[this.keyField] === value[this.keyField]) {
                 this.checkedMap[value[this.keyField]] = true
-                this.chosenList.push(option)
+                if (!this.chosenList.length)this.chosenList.push(option)
                 this.$emit('input', this.chosenList[0])
               }
             }
@@ -392,14 +392,13 @@
             if (this.childrenField) {
               option[this.childrenField].forEach(children => {
                 this.$set(this.checkedMap, children[this.keyField], children[this.keyField] === data[this.keyField])
-                if (children[this.keyField] === data[this.keyField]) this.chosenList.push(children)
+                if (children[this.keyField] === data[this.keyField] && !this.chosenList.length) this.chosenList.push(children)
               })
             } else {
               this.$set(this.checkedMap, option[this.keyField], option[this.keyField] === data[this.keyField])
-              if (option[this.keyField] === data[this.keyField]) this.chosenList.push(option)
+              if (option[this.keyField] === data[this.keyField] && !this.chosenList.length) this.chosenList.push(option)
             }
           })
-
           this.showOptions = false
           this.$emit('input', this.chosenList[0])
         } else {
