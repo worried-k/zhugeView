@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="onClick"
+    @click.stop.prevent="onClick"
     :type="nativeType"
     :disabled="disable"
     :class="buttonClass">

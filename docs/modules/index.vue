@@ -30,6 +30,7 @@ export default {
         'badge',
         'loading',
         'tab',
+        'tag',
         'message',
         'dialog',
         'charts',

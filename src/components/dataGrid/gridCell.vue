@@ -1,9 +1,6 @@
 <template>
-  <td :class="clazz" :style="style" @click="onClick" v-if="ableClick">
-    <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
-  </td>
-  <td v-else :class="clazz" :style="style">
-    <slot :data="store" :field="labelField">{{store[labelField]}}</slot>
+  <td :class="clazz" :style="style" @click="onClick">
+    <slot :data="store" :field="labelField" :row="index" :column="column">{{store[labelField]}}</slot>
   </td>
 </template>
 
@@ -19,15 +16,37 @@
         type: String,
         required: true
       },
+      /**
+       * @description 行号
+       */
       index: {
         type: Number,
         required: true
       },
-      ableClick: {
-        type: Boolean,
-        default: false
+      /**
+       * @description 宽度
+       */
+      width: null,
+      /**
+       * @description 列号
+       */
+      column: {
+        type: Number
       },
-      width: null
+      /**
+       * @description 自定义选中单元格
+       */
+      chosenCells: {
+        type: Array,
+        default () {
+          // let item = {
+          //   rule: [x1, y1, x2, y2], // x1,y1组成第一个单元格坐标,x2,y2组成最后一个单元格坐标
+          //   className: '',
+          //   ...// 可以增加其它自定义属性
+          // }
+          return []
+        }
+      }
     },
     computed: {
       style () {
@@ -39,11 +58,27 @@
         }
         return style
       },
+      chosenRules () {
+        let res = []
+        let row = this.index
+        let column = this.column
+        this.chosenCells.forEach(rule => {
+          let x1 = rule.rule[0]
+          let y1 = rule.rule[1]
+          let x2 = rule.rule[2]
+          let y2 = rule.rule[3]
+          if (row >= x1 && row <= x2 && column >= y1 && column <= y2) {
+            res.push(rule)
+          }
+        })
+        return res
+      },
       clazz () {
-        return {
-          'zg-grid-cell': true,
-          'zg-click-able': this.ableClick
-        }
+        let clazz = ['zg-grid-cell']
+        this.chosenRules.forEach(rule => {
+          clazz.push(rule.className)
+        })
+        return clazz
       }
     },
     methods: {

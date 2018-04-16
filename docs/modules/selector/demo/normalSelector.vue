@@ -8,10 +8,8 @@
                    labelField="label"
                    :disableOptions="disableList"
                    filterOption
+                   icon-field="icon"
                    v-model="result">
-        <template scope="scope">
-          <span>自定义展示{{scope.data.label}}</span>
-        </template>
       </zg-selector>
 
       <span>选中值</span>{{result}}<br>
@@ -46,7 +44,8 @@
           for (let i = 0; i < 20; i++) {
             store.push({
               id: i,
-              label: 'option_' + i
+              label: 'option_' + i,
+              icon: 'zgicon-edit'
             })
           }
           return store

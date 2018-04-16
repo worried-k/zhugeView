@@ -9,10 +9,10 @@
       <div v-if="jsFiddleName" :class="['js-fiddle']" :style="jsFiddleStyle">
         <iframe width="100%" :src="showJsFiddleUrl" frameborder="0" :style="jsFiddleIframeStyle"></iframe>
       </div>
-      <div v-if="jsFiddleName" class="demo-block-control" @click="onClickControl">
-        <span v-show="!this.showJsFiddle">显示代码</span>
-        <span v-show="this.showJsFiddle">隐藏代码</span>
-      </div>
+      <!--<div v-if="jsFiddleName" class="demo-block-control" @click="onClickControl">-->
+        <!--<span v-show="!this.showJsFiddle">显示代码</span>-->
+        <!--<span v-show="this.showJsFiddle">隐藏代码</span>-->
+      <!--</div>-->
     </div>
   </div>
 </template>

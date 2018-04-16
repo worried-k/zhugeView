@@ -1,5 +1,5 @@
 <template>
-  <div class="zg-scroll-container" @scroll="onScroll" v-resize="onScroll">
+  <div class="zg-scroll-container" @scroll="onScroll" v-resize="onScroll" ref="panel">
     <slot></slot>
   </div>
 </template>
@@ -10,6 +10,20 @@ let timer = null
 export default {
   name: 'zgScrollContainer',
   mixins: [emitter],
+  props: {
+    /**
+     * @description 纵向滚动检测比例值，当scrollBottom在总高度*bottomRatio范围时，触发bottom（触底）事件
+     */
+    bottomRatio: {
+      type: Number,
+      default: 0.05
+    }
+  },
+  data () {
+    return {
+      scrollBottom: 0
+    }
+  },
   methods: {
     onScroll () {
       if (timer) {
@@ -23,6 +37,22 @@ export default {
           }
         })
       }, 100)
+
+      this.checkInBottom()
+    },
+    /**
+     * @description 检测是否滚动到了容器底部
+     */
+    checkInBottom () {
+      const panel = this.$refs.panel
+      const height = panel.getBoundingClientRect().height
+
+      const canScrollHeight = panel.scrollHeight - height // 可滚动的总高度
+      const scrollBottom = canScrollHeight - panel.scrollTop // 未滚动的高度
+
+      if (scrollBottom <= Math.max(canScrollHeight * this.bottomRatio, height / 2)) {
+        this.$emit('bottom')
+      }
     }
   }
 }

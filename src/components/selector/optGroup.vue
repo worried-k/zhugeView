@@ -29,6 +29,19 @@
         type: String,
         required: true
       },
+      /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
+      },
+      /**
+       * @description 别名字段，设置别名后，优先展示别名
+       */
+      aliasField: {
+        type: String
+      },
       multiple: {
         type: Boolean,
         default: false
@@ -36,6 +49,17 @@
       hideHead: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 主题，目前支持的主题有：normal、noborder、tag
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder', 'tag']
+          return themes.indexOf(value) > -1
+        }
       }
     },
     data () {
@@ -63,7 +87,10 @@
                            disable={this.disableOptions.indexOf(option[this.keyField]) > -1}
                            data={option}
                            labelField={this.labelField}
+                           aliasField={this.aliasField}
+                           iconField={this.iconField}
                            multiple={this.multiple}
+                           theme={this.theme}
                            onClick={this.onClickOption}
                            scopedSlots={{default: this.$scopedSlots.default}}
                 ></zg-option>

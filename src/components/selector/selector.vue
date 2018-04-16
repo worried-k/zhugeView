@@ -3,11 +3,15 @@
   import ZgCheckbox from '../checkbox/checkbox.vue'
   import ZgOptGroup from './optGroup.vue'
   import {util} from '../../utils'
+  import ZgScrollContainer from '../scroll/scrollContainer'
+  import ZgSelectorHandle from './handle'
   export default {
     components: {
+      ZgScrollContainer,
       ZgOptGroup,
       ZgCheckbox,
-      ZgOption},
+      ZgOption,
+      ZgSelectorHandle},
     name: 'zgSelector',
     props: {
       /**
@@ -59,13 +63,13 @@
         default: 20
       },
       /**
-       * @description 主题，目前支持的主题有：normal、noborder
+       * @description 主题，目前支持的主题有：normal、noborder、tag
        */
       theme: {
         type: String,
         default: 'normal',
         validator (value) {
-          const themes = ['normal', 'noborder']
+          const themes = ['normal', 'noborder', 'tag']
           return themes.indexOf(value) > -1
         }
       },
@@ -77,11 +81,18 @@
         type: [Array, Object]
       },
       /**
-       * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应
+       * @description 下拉框宽度。如果theme为noborder，则该值为最大宽度，组件宽度在范围内自适应。theme为tag，则该值为最小宽度
        */
       width: {
         type: Number,
         default: 150
+      },
+      /**
+       * @description 最大宽度
+       */
+      maxWidth: {
+        type: Number,
+        default: 250
       },
       /**
        * @description 用于展示的字段名称
@@ -89,6 +100,19 @@
       labelField: {
         type: String,
         required: true
+      },
+      /**
+       * @description 别名字段，设置别名后，优先展示别名
+       */
+      aliasField: {
+        type: String
+      },
+      /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
       },
       /**
        * @description 默认提示文本
@@ -161,15 +185,15 @@
     data () {
       let data = {
         showOptions: false,
-        checkedMap: {},
-        chosenList: [],
+        checkedMap: {}, // 选项选中状态map集合，为了便捷option的状态显示，选中的集合与chosenList相同
+        chosenList: [], // 选中的选项集合
+        innerStore: this.store, // prop中的store，转为私有属性，因为tag模式时，可能需要向store中增加或删除元素
         renderStore: this.store.slice(0, this.pageSize),
         pageNum: 0,
-        totalCount: 0,
-        filter: '',
+        totalCount: 0, // 可展示的选项总数，有筛选条件时，则为符合条件的选项总数
+        filter: '', // 筛选条件
         filterTimeout: null,
-        noMatch: false,
-        logTime: false// 打印时间戳日志
+        noMatch: false
       }
       // 绑定默认值
       if (this.value) {
@@ -214,39 +238,8 @@
       return data
     },
     computed: {
-      arrowIcon () {
-        return {
-          'zg-select-arrow': true,
-          'zgicon-down': this.theme === 'normal',
-          'zgicon-pulldown': this.theme === 'noborder'
-        }
-      },
-      handleClass () {
-        let clazz = {
-          'zg-select-handle': true,
-          active: this.showOptions,
-          disable: this.disable,
-          noborder: this.theme === 'noborder'
-        }
-        clazz['zg-size-' + this.size] = true
-        return clazz
-      },
-      handleStyle () {
-        let style = {}
-        if (this.theme === 'normal') {
-          style.width = this.width + 'px'
-        } else {
-          style.maxWidth = this.width + 'px'
-        }
-        return style
-      },
       noData () {
-        return this.store.length === 0
-      },
-      resultLabel () {
-        return this.chosenList.map(option => {
-          return option[this.labelField]
-        }).join(',')
+        return this.innerStore.length === 0
       },
       filterClass () {
         let clazz = ['zg-select-search']
@@ -266,7 +259,7 @@
         let totalCount = 0
         let filter = this.filter
         this.renderStore = []
-        this.store.forEach(item => {
+        this.innerStore.forEach(item => {
           // 有分组
           if (this.childrenField) {
             let haveChildren = false
@@ -299,6 +292,9 @@
       }
     },
     watch: {
+      store (store) {
+        this.innerStore = store
+      },
       /**
        * 保持对v-model的双向数据绑定
        * @param value
@@ -309,7 +305,7 @@
         this.$set(this, 'checkedMap', {})
         if (!value) return
         if (!this.multiple) {
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(child => {
                 if (child[this.keyField] === value[this.keyField]) {
@@ -328,7 +324,7 @@
           })
           if (this.noData) this.$emit('input', this.chosenList[0])
         } else {
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(child => {
                 value.forEach(defaultOption => {
@@ -372,7 +368,7 @@
         if (this.customFilter) {
           flag = this.customFilter(filterReg, data, this.filter)
         } else {
-          flag = filterReg.test(data[this.labelField].toLowerCase())
+          flag = filterReg.test((data[this.aliasField] || data[this.labelField]).toLowerCase())
         }
         return flag
       },
@@ -384,7 +380,7 @@
         this.showOptions = !this.showOptions
         this.pageNum = 0
         if (this.showOptions && this.filterOption) {
-          setTimeout(() => {
+          this.$nextTick(() => {
             this.$refs.optionFilter.focus()
           })
         }
@@ -392,7 +388,7 @@
       onClickOption (checked, data) {
         if (!this.multiple) {
           this.chosenList = []
-          this.store.forEach(option => {
+          this.innerStore.forEach(option => {
             if (this.childrenField) {
               option[this.childrenField].forEach(children => {
                 this.$set(this.checkedMap, children[this.keyField], children[this.keyField] === data[this.keyField])
@@ -421,20 +417,14 @@
         }
         this.$emit('change', this.chosenList, this)
       },
-      onScroll () {
-        const panel = this.$refs.options
-        const height = panel.getBoundingClientRect().height
-        const scrollBottom = panel.scrollHeight - height - panel.scrollTop
-        if (scrollBottom === this.scrollBottom || (scrollBottom <= 20 && this.scrollBottom <= 20)) return
-        this.scrollBottom = scrollBottom
-        if (scrollBottom <= (panel.scrollHeight - height) * 0.05) {
-          let count = (this.pageNum + 1) * this.pageSize
-          if (this.totalCount > count) {
-            this.pageNum++
-          }
+      onBottom () {
+        let count = (this.pageNum + 1) * this.pageSize
+        if (this.totalCount > count) {
+          this.pageNum++
         }
       },
       onFilter (filterValue) {
+        this.showOptions = true
         if (this.filterTimeout) clearTimeout(this.filterTimeout)
         this.filterTimeout = setTimeout(() => {
           this.$refs.options.scrollTop = 0
@@ -447,62 +437,62 @@
         this.$set(this, 'checkedMap', {})
         this.$emit('input', this.chosenList)
         this.$emit('change', this.chosenList, this)
+      },
+      syncChosen (list) {
+        if (!this.multiple) {
+          this.$emit('input', list[0])
+        } else {
+          this.$emit('input', list)
+        }
+      },
+      onEnter (option) {
+        if (option) { // 输入搜索内容后回车
+          let exit = false
+          this.innerStore.forEach(item => { // 此时exit还为false
+            if (item[this.labelField] === option[this.labelField] ||
+              (this.aliasField && item[this.aliasField] === option[this.aliasField])) {
+              exit = true
+              option = item
+            }
+          })
+          if (!exit) this.innerStore = [option].concat(this.innerStore) // 如果store列表中不存在该值，则插入该值
+          if (!this.checkedMap[option[this.keyField]]) this.onClickOption(true, option)
+        } else { // 选项上下移动时回车
+          // todo 选中或者取消选中当前hover的选项
+        }
+      },
+      onDelete (option) {
+        if (option.temp) { // 临时选项，从store中真实删除
+          this.innerStore.forEach((item, i) => {
+            if (item[this.keyField] === option[this.keyField]) {
+              this.innerStore.splice(i, 1)
+            }
+          })
+        }
+        this.onClickOption(false, option)
       }
     },
     render (h) {
       return (
         <div class="zg-select" v-click-outside={this.onClickOutside}>
-          {(() => {
-            if (this.theme === 'normal') {
-              return (
-                <div ref="handle" class={this.handleClass}
-                     style={this.handleStyle}
-                     onClick={this.onClickHandle}>
-                  {(() => {
-                    if (this.$slots.default) {
-                      return this.$slots.default
-                    } else {
-                      return (
-                        <span>
-                          <span v-show={this.resultLabel} class="zg-select-label">{this.resultLabel}</span>
-                          <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
-                        </span>
-                      )
-                    }
-                  })()}
-                  <i class={this.arrowIcon}></i>
-                </div>
-              )
-            } else {
-              return (
-                <div ref="handle" class={this.handleClass}
-                     style={this.handleStyle}
-                     onClick={this.onClickHandle}
-                     slot="handle">
-                  <span class="zg-label">
-                    {(() => {
-                      if (this.$slots.default) {
-                        return this.$slots.default
-                      } else {
-                        return (
-                          <span>
-                            <span v-show={this.resultLabel} class="zg-value">{this.resultLabel}</span>
-                            <span v-show={!this.resultLabel} class="zgselect-label zg-placeholder">{this.placeholder}</span>
-                            <span class="zg-count" v-show={this.chosenList.length > 1}>({this.chosenList.length})</span>
-                          </span>
-                        )
-                      }
-                    })()}
-                  </span>
-                  <i class={this.arrowIcon}></i>
-                </div>
-              )
-            }
-          })()}
+          <zg-selector-handle value={this.chosenList}
+                              theme={this.theme}
+                              placeholder={this.placeholder}
+                              labelField={this.labelField}
+                              aliasField={this.aliasField}
+                              width={this.width}
+                              maxWidth={this.maxWidth}
+                              active={this.showOptions}
+                              keyField={this.keyField}
+                              onInput={this.syncChosen}
+                              onSearch={this.onFilter}
+                              onEnter={this.onEnter}
+                              onDelete={this.onDelete}
+                              onClick={this.onClickHandle}></zg-selector-handle>
 
           <transition enter-active-class="animated slideInDown">
             <ul v-show={this.showOptions} class="zg-drop-panel" ref="dropPanel">
-              <div class="zg-fixed">
+              <div class="zg-fixed" v-show={this.theme !== 'tag'}>
                 {(() => {
                   if (this.filterOption) {
                     return (
@@ -519,7 +509,7 @@
                 </li>
               </div>
 
-              <div class="zg-content" ref="options" onScroll={this.onScroll}>
+              <zg-scroll-container class="zg-content" ref="options" onBottom={this.onBottom}>
                 {this.renderStore.map(option => {
                   if (this.childrenField) {
                     return (
@@ -531,7 +521,10 @@
                                     disableOptions={this.disableOptions}
                                     keyField={this.keyField}
                                     labelField={this.labelField}
+                                    aliasField={this.aliasField}
+                                    iconField={this.iconField}
                                     multiple={this.multiple}
+                                    theme={this.theme}
                                     hideHead={this.hiddenGroupMap[option[this.keyField]]}
                                     onClick={this.onClickOption}
                                     scopedSlots={{
@@ -547,7 +540,10 @@
                                  disable={this.disableOptions.indexOf(option[this.keyField]) > -1}
                                  data={option}
                                  labelField={this.labelField}
+                                 aliasField={this.aliasField}
+                                 iconField={this.iconField}
                                  multiple={this.multiple}
+                                 theme={this.theme}
                                  onClick={this.onClickOption}
                                  scopedSlots={{default: this.$scopedSlots.default}}></zg-option>
                     )
@@ -559,7 +555,7 @@
                 <li v-show={this.noMatch} class="zg-option zg-error">
                   {this.noMatchText}
                 </li>
-              </div>
+              </zg-scroll-container>
             </ul>
           </transition>
           <div style="display: none">{this.showMap.count}</div>

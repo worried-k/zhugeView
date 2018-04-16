@@ -1,5 +1,6 @@
 <template>
   <div>
+    <chosen-cells></chosen-cells>
     <normal-grid></normal-grid>
     <fix-left></fix-left>
     <cols-header></cols-header>
@@ -18,8 +19,10 @@
   import dataGridJson from './dataGrid.json'
   import gridColumnJson from './gridColumn.json'
   import PaginationGrid from './demo/paginationGrid.vue'
+  import ChosenCells from './demo/chosenCells'
   export default {
     components: {
+      ChosenCells,
       PaginationGrid,
       DocMarkdown,
       ColsHeader,

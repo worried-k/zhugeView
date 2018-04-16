@@ -14,7 +14,7 @@ dom.on(window, 'resize', function () {
   }
   timeout = setTimeout(() => {
     callStack.forEach(item => {
-      item.handle.call(item.context)
+      if (!item.context.context._isDestroyed) item.handle.call(item.context)
     })
   }, 66)
 })

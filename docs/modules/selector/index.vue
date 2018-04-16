@@ -4,7 +4,7 @@
     <group-selector></group-selector>
     <normal-big-data-selector></normal-big-data-selector>
     <group-big-data-selector></group-big-data-selector>
-
+    <tag-selector></tag-selector>
     <doc-markdown :api="api.select" title="select"></doc-markdown>
     <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>
     <doc-markdown :api="api.option" title="option"></doc-markdown>
@@ -21,8 +21,10 @@
   import NormalBigDataSelector from './demo/normalBigDataSelector.vue'
   import GroupBigDataSelector from './demo/groupBigDataSelector.vue'
   import selectApi from './selector.json'
+  import TagSelector from './demo/tagSelector'
   export default {
     components: {
+      TagSelector,
       GroupBigDataSelector,
       NormalBigDataSelector,
       GroupSelector,

@@ -67,9 +67,30 @@
         type: Number,
         default: 1
       },
+      /**
+       * @description 表头合并单元格数
+       */
       headerRowspan: {
         type: Number,
         default: 1
+      },
+      /**
+       * @description 自定义选中单元格
+       */
+      chosenCells: {
+        type: Array,
+        default () {
+          // let item = {
+          //   rule: [x1, y1, x2, y2], // x1,y1组成第一个单元格坐标,x2,y2组成最后一个单元格坐标
+          //   className: '',
+          //   ...// 可以增加其它自定义属性
+          // }
+          return []
+        }
+      },
+      startColumnIndex: {
+        type: Number,
+        default: 0
       }
     },
     computed: {
@@ -170,16 +191,24 @@
                         <zg-grid-cell store={{index: i}}
                                       labelField="index"
                                       index={i}
+                                      chosenCells={this.chosenCells}
+                                      column={this.startColumnIndex + -1}
                         ></zg-grid-cell>
                       )
                     }
                   })()}
-                  {this.structureParser.bodyStructure.map(column => {
+                  {this.structureParser.bodyStructure.map((column, j) => {
+                    let clazz = {
+                      'zg-click-able': column.clickCell
+                    }
                     return (
                       <zg-grid-cell store={item}
                                     labelField={column.field}
                                     width={column.width}
                                     index={i}
+                                    column={this.startColumnIndex + j}
+                                    class={clazz}
+                                    chosenCells={this.chosenCells}
                                     scopedSlots={{default: column.cellFormatter}}
                                     ableClick={column.clickCell ? true : false}
                                     onClick={column.clickCell || listeners.clickCell}

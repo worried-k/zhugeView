@@ -1,12 +1,12 @@
 <template>
   <li class="zg-option" :class="className" @click="onClick">
-    <slot v-if="!multiple" :data="data" :active="active" :disable="disable">
-      <span>{{data[labelField]}}</span>
+    <slot v-if="!multiple || theme == 'tag'" :data="data" :active="active" :disable="disable">
+      <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
     </slot>
 
     <zg-checkbox v-else @change="onClick" v-model="active" :disable="disable">
       <slot :data="data" :active="active" :disable="disable">
-        <span>{{data[labelField]}}</span>
+        <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
       </slot>
     </zg-checkbox>
   </li>
@@ -42,6 +42,19 @@
         required: true
       },
       /**
+       * @description 别名字段，设置别名后，优先展示别名
+       */
+      aliasField: {
+        type: String
+      },
+      /**
+       * @description 图标
+       */
+      iconField: {
+        type: String,
+        default: ''
+      },
+      /**
        * @description 禁用选项
        */
       disable: {
@@ -54,6 +67,17 @@
       multiple: {
         type: Boolean,
         default: false
+      },
+      /**
+       * @description 主题，目前支持的主题有：normal、noborder、tag
+       */
+      theme: {
+        type: String,
+        default: 'normal',
+        validator (value) {
+          const themes = ['normal', 'noborder', 'tag']
+          return themes.indexOf(value) > -1
+        }
       }
     },
     data () {
@@ -65,8 +89,15 @@
       className () {
         return {
           disable: this.disable,
-          active: this.active && !this.multiple
+          active: this.active && (!this.multiple || this.theme === 'tag')
         }
+      },
+      iconClass () {
+        let clazz = {
+          'zg-icon': true
+        }
+        clazz[this.data[this.iconField]] = true
+        return clazz
       }
     },
     watch: {
@@ -77,7 +108,7 @@
     methods: {
       onClick () {
         if (this.disable) return
-        if (this.multiple) {
+        if (this.multiple && this.theme !== 'tag') {
           this.$emit('click', this.active, this.data)
         } else if (!this.active) {
           this.active = !this.active
