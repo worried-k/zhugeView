@@ -310,14 +310,14 @@
               option[this.childrenField].forEach(child => {
                 if (child[this.keyField] === value[this.keyField]) {
                   this.checkedMap[value[this.keyField]] = true
-                  this.chosenList.push(child)
+                  if (!this.chosenList.length)this.chosenList.push(child)
                   this.$emit('input', this.chosenList[0])
                 }
               })
             } else {
               if (option[this.keyField] === value[this.keyField]) {
                 this.checkedMap[value[this.keyField]] = true
-                this.chosenList.push(option)
+                if (!this.chosenList.length)this.chosenList.push(option)
                 this.$emit('input', this.chosenList[0])
               }
             }
