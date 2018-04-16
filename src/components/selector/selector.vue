@@ -401,7 +401,6 @@
           })
           this.showOptions = false
           this.$emit('input', this.chosenList[0])
-          this.$emit('change', this.chosenList[0], this)
         } else {
           this.$set(this.checkedMap, data[this.keyField], checked)
           if (checked) {
@@ -414,8 +413,8 @@
             })
           }
           this.$emit('input', this.chosenList)
-          this.$emit('change', this.chosenList, this)
         }
+        this.$emit('change', this.chosenList, this)
       },
       onBottom () {
         let count = (this.pageNum + 1) * this.pageSize
