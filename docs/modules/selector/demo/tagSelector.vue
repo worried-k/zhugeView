@@ -1,6 +1,7 @@
 <template>
   <div>
     <demo-panel subtitle="tag模式">
+      <zg-selector :store="[]" labelField="label" keyField="key"></zg-selector>
       <zg-selector keyField="id"
                    :store="store"
                    placeholder="单选"

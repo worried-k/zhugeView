@@ -248,6 +248,13 @@
         }
         return clazz.join(' ')
       },
+      selectStyle () {
+        let style = {}
+        if (this.theme === 'tag') {
+          style['vertical-align'] = 'top'
+        }
+        return style
+      },
       /**
        * 用于处理数据分页
        */
@@ -473,7 +480,7 @@
     },
     render (h) {
       return (
-        <div class="zg-select" v-click-outside={this.onClickOutside}>
+        <div class="zg-select" style={this.selectStyle} v-click-outside={this.onClickOutside}>
           <zg-selector-handle value={this.chosenList}
                               theme={this.theme}
                               placeholder={this.placeholder}
