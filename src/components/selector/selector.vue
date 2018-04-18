@@ -551,7 +551,7 @@
                 <li v-show={this.noData} class="zg-option zg-error">
                   {this.noDataText}
                 </li>
-                <li v-show={this.noMatch} class="zg-option zg-error">
+                <li v-show={!this.noData && this.noMatch} class="zg-option zg-error">
                   {this.noMatchText}
                 </li>
               </zg-scroll-container>
