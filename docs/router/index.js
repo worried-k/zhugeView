@@ -17,6 +17,7 @@ import reload from '../modules/reload/index.vue'
 import radio from '../modules/radio/index'
 import scroll from '../modules/scroll/index'
 import tag from '../modules/tag/index'
+import overview from '../modules/overview/index'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       component: Index,
       redirect: 'button',
       children: [
+        {
+          path: '/overview',
+          name: 'overview',
+          component: overview
+        },
         {
           path: '/button',
           name: 'button',
