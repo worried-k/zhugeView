@@ -5,8 +5,10 @@
   import {util} from '../../utils'
   import ZgScrollContainer from '../scroll/scrollContainer'
   import ZgSelectorHandle from './handle'
+  import ZgLoading from '../loading/loading'
   export default {
     components: {
+      ZgLoading,
       ZgScrollContainer,
       ZgOptGroup,
       ZgCheckbox,
@@ -152,6 +154,13 @@
         default: false
       },
       /**
+       * @description 搜索回调处理
+       * @tip 返回值需要是Promise实例
+       */
+      search: {
+        type: Function
+      },
+      /**
        * @description 多选模式
        */
       multiple: {
@@ -187,7 +196,8 @@
         totalCount: 0, // 可展示的选项总数，有筛选条件时，则为符合条件的选项总数
         filter: '', // 筛选条件
         filterTimeout: null,
-        noMatch: false
+        noMatch: false,
+        loading: false
       }
       // 绑定默认值
       if (this.value) {
@@ -423,10 +433,16 @@
         this.showOptions = true
         if (this.filterTimeout) clearTimeout(this.filterTimeout)
         this.filterTimeout = setTimeout(() => {
-          // todo 支持远程搜索
-          this.$refs.options.scrollTop = 0
-          this.pageNum = 0
-          this.filter = filterValue
+          if (this.search) {
+            this.loading = true
+            this.search(filterValue).finally(() => {
+              this.loading = false
+            })
+          } else {
+            this.$refs.options.scrollTop = 0
+            this.pageNum = 0
+            this.filter = filterValue
+          }
         }, 100)
       },
       clean () {
@@ -507,6 +523,7 @@
               </div>
 
               <zg-scroll-container class="zg-content" ref="options" onBottom={this.onBottom}>
+                <zg-loading v-show={this.loading} size="small" tip="loading"></zg-loading>
                 {this.renderStore.map(option => {
                   if (this.childrenField) {
                     return (
