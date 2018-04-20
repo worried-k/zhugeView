@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!--<normal-selector></normal-selector>-->
+    <normal-selector></normal-selector>
     <!--<group-selector></group-selector>-->
     <!--<normal-big-data-selector></normal-big-data-selector>-->
     <!--<group-big-data-selector></group-big-data-selector>-->

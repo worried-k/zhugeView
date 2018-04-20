@@ -501,7 +501,9 @@
                               onSearch={this.onFilter}
                               onEnter={this.onEnter}
                               onDelete={this.onDelete}
-                              onClick={this.onClickHandle}></zg-selector-handle>
+                              onClick={this.onClickHandle}>
+            {this.$slots.default}
+          </zg-selector-handle>
 
           <transition enter-active-class="animated slideInDown">
             <ul v-show={this.showOptions} class="zg-drop-panel" ref="dropPanel">
