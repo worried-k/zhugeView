@@ -21,7 +21,7 @@
              @keyup.down="onNext"
              @keyup.right="onNext"
              @click.stop="onClickHandle"
-             @blur="focus = false"
+             @blur="onBlur"
              v-model="search"
              ref="input"/>
       <span class="zg-temp" ref="search">{{search}}</span>
@@ -122,7 +122,8 @@
       return {
         search: '',
         inputWidth: 15,
-        focus: false
+        focus: false,
+        dirtySearch: false // 脏数据，输入框失去焦点时，输入框内的文本
       }
     },
     computed: {
@@ -172,7 +173,8 @@
         this.$nextTick(() => {
           this.inputWidth = Math.max(this.$refs.search.offsetWidth, 10) + 5
         })
-        this.$emit('search', val)
+        if (!this.dirtySearch) this.$emit('search', val)
+        this.dirtySearch = false
       }
     },
     methods: {
@@ -215,6 +217,11 @@
       },
       onNext () {
         this.$emit('next')
+      },
+      onBlur () {
+        this.focus = false
+        this.dirtySearch = true
+        this.search = ''
       }
     }
   }

@@ -174,12 +174,6 @@
       disable: {
         type: Boolean,
         default: false
-      },
-      /**
-       * @description 自定义筛选
-       */
-      customFilter: {
-        type: Function
       }
     },
     data () {
@@ -372,11 +366,7 @@
       filterData (data) {
         let filterReg = util.getRegExp(this.filter.toLowerCase())
         let flag = true
-        if (this.customFilter) {
-          flag = this.customFilter(filterReg, data, this.filter)
-        } else {
-          flag = filterReg.test((data[this.aliasField] || data[this.labelField]).toLowerCase())
-        }
+        flag = filterReg.test((data[this.aliasField] || data[this.labelField]).toLowerCase())
         return flag
       },
       onClickOutside () {
@@ -433,6 +423,7 @@
         this.showOptions = true
         if (this.filterTimeout) clearTimeout(this.filterTimeout)
         this.filterTimeout = setTimeout(() => {
+          // todo 支持远程搜索
           this.$refs.options.scrollTop = 0
           this.pageNum = 0
           this.filter = filterValue
