@@ -12,6 +12,7 @@
                 @focus="onFocus"
                 v-model="value">
       </zg-input>
+      <zg-input type="password" clear-able></zg-input>
       <span>输入值：{{value}}</span>
     </demo-panel>
   </div>

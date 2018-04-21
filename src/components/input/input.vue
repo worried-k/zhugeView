@@ -9,17 +9,28 @@
       <template slot="tooltip">
         <slot name="tooltip">{{message}}</slot>
       </template>
-      <input ref="input"
+      <input ref="input" v-if="type === 'text'"
              class="zg-input-input"
-             :type="type"
+             type="text"
              :style="inputStyle"
              :placeholder="placeholder"
              v-model="inputValue"
              :readonly="readOnly"
              @focus="_onFocus"
              @blur="_onBlur"
-             @keydown="_onKey"
-      />
+             @keydown="_onKey"/>
+
+      <input ref="input" v-if="type === 'password'"
+             class="zg-input-input"
+             type="password"
+             :style="inputStyle"
+             :placeholder="placeholder"
+             v-model="inputValue"
+             :readonly="readOnly"
+             @focus="_onFocus"
+             @blur="_onBlur"
+             @keydown="_onKey"/>
+      
       <span class="temp" ref="temp">{{inputValue}}</span>
     </zg-tooltip>
     <i v-if="clearAble && inputValue"
