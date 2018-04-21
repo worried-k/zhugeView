@@ -11,7 +11,7 @@
       </template>
       <input ref="input"
              class="zg-input-input"
-             type="text"
+             :type="type"
              :style="inputStyle"
              :placeholder="placeholder"
              v-model="inputValue"
