@@ -305,6 +305,11 @@
     watch: {
       store (store) {
         this.innerStore = store
+        if (this.multiple) {
+          this.$emit('input', [])
+        } else {
+          this.$emit('input', null)
+        }
       },
       /**
        * 保持对v-model的双向数据绑定
