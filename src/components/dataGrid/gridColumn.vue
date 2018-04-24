@@ -51,6 +51,7 @@
           field: this.field,
           title: this.title,
           colspan: 0,
+          headFormatter: this.$scopedSlots.header,
           children: []
         }
         this.$slots.default.forEach(slot => {
