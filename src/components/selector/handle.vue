@@ -182,11 +182,12 @@
        * @description handle点击处理
        */
       onClickHandle () {
+        this.$emit('click')
         if (this.theme === 'tag') {
           this.focus = true
+          this.$emit('search', this.search)
           this.$refs.input.focus()
         }
-        this.$emit('click')
       },
       /**
        * @description 删除键处理

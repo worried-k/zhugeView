@@ -386,7 +386,7 @@
         if (this.disable) return
         this.showOptions = !this.showOptions
         this.pageNum = 0
-        if (this.showOptions && this.filterOption) {
+        if (this.showOptions && this.filterOption && this.theme !== 'tag') {
           this.$nextTick(() => {
             this.$refs.optionFilter.focus()
           })
