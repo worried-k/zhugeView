@@ -1,5 +1,5 @@
 <template>
-  <li class="zg-option" :class="className" @click="onClick">
+  <li class="zg-option" :class="className" @click="onClick" v-show="theme !== 'tag' || !active">
     <slot v-if="!multiple || theme == 'tag'" :data="data" :active="active" :disable="disable">
       <i v-if="iconField" :class="iconClass"></i><span>{{data[aliasField] || data[labelField]}}</span>
     </slot>
