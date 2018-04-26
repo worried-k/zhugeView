@@ -368,6 +368,12 @@
     updated () {
       const dropPanel = this.$refs.dropPanel
       const panelRect = dropPanel.getBoundingClientRect()
+      const bottomHeight = window.innerHeight - panelRect.top - 7
+      if (bottomHeight < 325) {
+        dropPanel.style.height = bottomHeight + 'px'
+      } else {
+        dropPanel.style.height = '325px'
+      }
       if ((panelRect.width + panelRect.left) > window.innerWidth) {
         dropPanel.style.right = '0px'
       }
