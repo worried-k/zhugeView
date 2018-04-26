@@ -1,5 +1,5 @@
 import {util} from "../../src/utils"
-import event from "./event"
+import eventUtil from "./event"
 
 let messageCallback = {}
 
@@ -22,7 +22,7 @@ let jsFiddle = {
   }
 }
 
-event.addMessageListener((event) => {
+eventUtil.addMessageListener((event) => {
   let eventName = event.data[0]
   let data = event.data[1] || {}
   if (eventName === 'embed' || eventName === 'resultsFrame') {

@@ -1,9 +1,7 @@
 import {util} from "../../src/utils"
-
 let callbacks = {
   message: []
 }
-
 let eventListener = {
   onMessage (event) {
     callbacks.message.forEach((item) => {

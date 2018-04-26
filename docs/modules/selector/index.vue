@@ -1,9 +1,9 @@
 <template>
   <div>
     <normal-selector></normal-selector>
-    <!--<group-selector></group-selector>-->
-    <!--<normal-big-data-selector></normal-big-data-selector>-->
-    <!--<group-big-data-selector></group-big-data-selector>-->
+    <group-selector></group-selector>
+    <normal-big-data-selector></normal-big-data-selector>
+    <group-big-data-selector></group-big-data-selector>
     <tag-selector></tag-selector>
     <doc-markdown :api="api.select" title="select"></doc-markdown>
     <doc-markdown :api="api.bigSelect" title="bigSelect"></doc-markdown>

@@ -78,6 +78,7 @@ export default {
     border-right: 1px solid #D1D1D1
     background: #FAFAFA
     text-align: center
+    overflow-y: auto
     ul li
       list-style: none
     .router-link

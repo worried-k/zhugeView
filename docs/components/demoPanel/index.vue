@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import jsFiddle from "../../common/jsFiddle"
+// import jsFiddle from "../../common/jsFiddle"
 export default {
   name: 'demoPanel',
   props: {
@@ -42,10 +42,10 @@ export default {
     }
   },
   created () {
-    jsFiddle.addMessageListener({
-      slug: this.jsFiddleName,
-      callback: this.onMessage
-    })
+    // jsFiddle.addMessageListener({
+    //   slug: this.jsFiddleName,
+    //   callback: this.onMessage
+    // })
   },
   methods: {
     onMessage (height) {
