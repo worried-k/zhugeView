@@ -222,7 +222,7 @@
       onBlur () {
         this.focus = false
         this.dirtySearch = true
-        this.search = ''
+        this.onEnter() // 失去焦点自动生效
       }
     }
   }
