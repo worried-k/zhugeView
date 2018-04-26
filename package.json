@@ -1,6 +1,6 @@
 {
   "name": "zhugeview",
-  "version": "0.9.55",
+  "version": "0.9.56",
   "description": "诸葛io VUE组件库",
   "scripts": {
     "start": "node build/dev-server.js",
