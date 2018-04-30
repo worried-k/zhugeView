@@ -2,8 +2,9 @@
 .zg-button
   display: inline-block
   cursor: pointer
-  padding: 0.85em 1.5em
-  line-height: 1
+  padding: 0 1.5em
+  height: 32px
+  line-height: 32px
   font-size: 14px
   border-radius: 3px
   white-space: nowrap
@@ -12,17 +13,19 @@
   .zg-icon
     margin-right: .5em
   &.zg-button-icon
-    padding: 0.5em!important
+    padding: 0 0.5em!important
     .zg-icon
       margin: 0
   &.zg-button-size-small
     font-size: $size-font-tip
-    padding-left: 1em
-    padding-right: 1em
+    height: 24px
+    line-height: 24px
+    padding: 0 1em
   &.zg-button-size-large
     font-size: $size-font-subtitle-small
-    padding-left: 3em
-    padding-right: 3em
+    height: 36px
+    line-height: 36px
+    padding: 0 3em
 
   &.zg-button-normal-normal
     border: 1px solid $color-border-normal
