@@ -3,8 +3,8 @@
     <div class="line-panel">
       <span>普通文本</span>
       <zg-selector :store="[]" labelField="label" keyField="id"></zg-selector>
-      <zg-button size="small">button</zg-button>
       <zg-button>button</zg-button>
+      <zg-button size="small">button</zg-button>
       <zg-button size="large">button</zg-button>
       <zg-input></zg-input>
       <zg-checkbox>fdfd</zg-checkbox>
