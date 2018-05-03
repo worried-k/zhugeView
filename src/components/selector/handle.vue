@@ -127,6 +127,8 @@
         default () {
           return {
             maxLength: 12,
+            beginLength: 10,
+            endLength: 0,
             replaceStr: '...'
           }
         }
@@ -239,7 +241,7 @@
         this.onEnter() // 失去焦点自动生效
       },
       getTagText (str) {
-        return this.splitStr ? util.splitString(str, this.splitStrFormat).str : str
+        return this.splitStr ? util.strMiddleSplit(str, this.splitStrFormat) : str
       }
     }
   }

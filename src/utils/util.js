@@ -103,34 +103,6 @@ let util = {
     return new RegExp(words.join(''))
   },
   /**
-   * 区分中英文截取字符串长度
-   * @param str
-   * @param config
-   * @returns {{str: string, len: number}}
-   */
-  splitString (str, config = {
-    maxLength: 20,
-    replaceStr: '...'
-  }) {
-    let resString = ''
-    let len = 0
-    let reg = new RegExp(/[^\x00-\xff]/)
-    let isOverflow = false
-    for (let i = 0; i < str.length; i++) {
-      let char = str.charAt(i)
-      len += (reg.test(char) ? 2 : 1)
-      if (len <= config.maxLength) {
-        resString += char
-      } else {
-        isOverflow = true
-      }
-    }
-    return {
-      str: isOverflow ? (resString + config.replaceStr) : resString,
-      len: len
-    }
-  },
-  /**
    * 从中间拆分字符串,长度超出的话，解析为xxx...xxx
    * @param str
    * @param config
@@ -138,7 +110,7 @@ let util = {
    */
   strMiddleSplit (str, config = {
     maxLength: 20,
-    begenLength: 8,
+    beginLength: 8,
     endLength: 8,
     replaceStr: '...'
   }) {
@@ -160,7 +132,7 @@ let util = {
       let strArr = str.match(reg.anyChars)
 
       strArr.forEach(char => {
-        if (beginLength >= config.begenLength) return
+        if (beginLength >= config.beginLength) return
         let len = reg.fullCharReg.test(char) ? 2 : 1
         beginLength += len
         beginArr.push(char)

@@ -193,6 +193,8 @@
         default () {
           return {
             maxLength: 12,
+            beginLength: 10,
+            endLength: 0,
             replaceStr: '...'
           }
         }
