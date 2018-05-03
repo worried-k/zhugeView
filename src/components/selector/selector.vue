@@ -192,9 +192,7 @@
         type: Object,
         default () {
           return {
-            maxLength: 20,
-            begenLength: 8,
-            endLength: 8,
+            maxLength: 12,
             replaceStr: '...'
           }
         }

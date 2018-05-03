@@ -8,7 +8,7 @@
     </slot>
     <template v-else>
       <span v-show="!value.length && !focus && !active" class="zg-placeholder">{{placeholder}}</span>
-      <zg-tag v-for="item in value"
+      <zg-tag :title="item[aliasField] || item[labelField]" v-for="item in value"
               :key="item[keyField]" closeable @close="onDel(item)">
         {{getTagText(item[aliasField] || item[labelField])}}
       </zg-tag>
@@ -126,9 +126,7 @@
         type: Object,
         default () {
           return {
-            maxLength: 20,
-            begenLength: 8,
-            endLength: 8,
+            maxLength: 12,
             replaceStr: '...'
           }
         }
@@ -241,7 +239,7 @@
         this.onEnter() // 失去焦点自动生效
       },
       getTagText (str) {
-        return this.splitStr ? util.strMiddleSplit(str, this.splitStrFormat) : str
+        return this.splitStr ? util.splitString(str, this.splitStrFormat).str : str
       }
     }
   }
