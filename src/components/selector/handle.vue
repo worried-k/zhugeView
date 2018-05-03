@@ -10,7 +10,7 @@
       <span v-show="!value.length && !focus && !active" class="zg-placeholder">{{placeholder}}</span>
       <zg-tag v-for="item in value"
               :key="item[keyField]" closeable @close="onDel(item)">
-        {{item[aliasField] || item[labelField]}}
+        {{getTagText(item[aliasField] || item[labelField])}}
       </zg-tag>
       <input type="text"
              :style="inputStyle"
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+  import {util} from '../../utils/index'
   import ZgTag from '../tag/tag'
 
   export default {
@@ -116,6 +117,21 @@
       active: {
         type: Boolean,
         default: false
+      },
+      splitStr: {
+        type: Boolean,
+        default: true
+      },
+      splitStrFormat: {
+        type: Object,
+        default () {
+          return {
+            maxLength: 20,
+            begenLength: 8,
+            endLength: 8,
+            replaceStr: '...'
+          }
+        }
       }
     },
     data () {
@@ -223,6 +239,9 @@
         this.focus = false
         this.dirtySearch = true
         this.onEnter() // 失去焦点自动生效
+      },
+      getTagText (str) {
+        return this.splitStr ? util.strMiddleSplit(str, this.splitStrFormat) : str
       }
     }
   }

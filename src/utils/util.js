@@ -101,6 +101,54 @@ let util = {
       }
     })
     return new RegExp(words.join(''))
+  },
+  /**
+   * 从中间拆分字符串,长度超出的话，解析为xxx...xxx
+   * @param str
+   * @param config
+   * @returns {string}
+   */
+  strMiddleSplit (str, config = {
+    maxLength: 20,
+    begenLength: 8,
+    endLength: 8,
+    replaceStr: '...'
+  }) {
+    str += ''
+    let reg = {
+      fullCharReg: /[^\x00-\xff]/,
+      fullCharsReg: /[^\x00-\xff]/g,
+      anyChars: /[\S\s]{1}/g
+    }
+
+    let fullCharLength = (str.match(reg.fullCharsReg) || []).length
+    let fullLength = str.length + fullCharLength
+    let beginArr = []
+    let beginLength = 0
+    let endArr = []
+    let endLength = 0
+
+    if (fullLength > config.maxLength) {
+      let strArr = str.match(reg.anyChars)
+
+      strArr.forEach(char => {
+        if (beginLength >= config.begenLength) return
+        let len = reg.fullCharReg.test(char) ? 2 : 1
+        beginLength += len
+        beginArr.push(char)
+      })
+
+      strArr.reverse().forEach(char => {
+        if (endLength >= config.endLength) return
+        let len = reg.fullCharReg.test(char) ? 2 : 1
+        endLength += len
+        endArr.push(char)
+      })
+
+      return beginArr.join('') + config.replaceStr + endArr.reverse().join('')
+    }
+
+    return str
   }
 }
 

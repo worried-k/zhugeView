@@ -183,6 +183,21 @@
       disable: {
         type: Boolean,
         default: false
+      },
+      splitStr: {
+        type: Boolean,
+        default: true
+      },
+      splitStrFormat: {
+        type: Object,
+        default () {
+          return {
+            maxLength: 20,
+            begenLength: 8,
+            endLength: 8,
+            replaceStr: '...'
+          }
+        }
       }
     },
     data () {
@@ -495,6 +510,8 @@
                               placeholder={this.placeholder}
                               labelField={this.labelField}
                               aliasField={this.aliasField}
+                              splitStr={this.splitStr}
+                              splitStrFormat={this.splitStrFormat}
                               width={this.width}
                               maxWidth={this.maxWidth}
                               active={this.showOptions}
