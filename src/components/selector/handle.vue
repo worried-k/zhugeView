@@ -180,7 +180,7 @@
       },
       inputStyle () {
         return {
-          width: this.inputWidth + 'px'
+          width: Math.min(this.inputWidth, (this.maxWidth - 30)) + 'px'
         }
       }
     },
