@@ -1,6 +1,6 @@
 # zhugeView
 
-> A Vue.js project
+> A ZG-IO project
 
 ## Build Setup
 
