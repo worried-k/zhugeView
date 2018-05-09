@@ -103,18 +103,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/struggling-bird/zhugeView.git"
+    "url": "git+https://github.com/zhugeFE/zhugeView.git"
   },
   "keywords": [
     "vue",
     "components"
   ],
-  "author": "yqdong",
+  "author": "zhugefe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/struggling-bird/zhugeView/issues"
+    "url": "https://github.com/zhugeFE/zhugeView/issues"
   },
-  "homepage": "https://github.com/struggling-bird/zhugeView#readme",
+  "homepage": "https://github.com/zhugeFE/zhugeView#readme",
   "dependencies": {
     "echarts": "^4.0.2"
   }
