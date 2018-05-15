@@ -382,6 +382,7 @@
     },
     updated () {
       const dropPanel = this.$refs.dropPanel
+      if (!dropPanel) return
       const panelRect = dropPanel.getBoundingClientRect()
       const bottomHeight = window.innerHeight - panelRect.top - 7
       dropPanel.style.maxHeight = Math.min(325, bottomHeight) + 'px'
