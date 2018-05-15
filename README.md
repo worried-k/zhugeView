@@ -1,6 +1,6 @@
 # zhugeView
 
-> A ZG-IO project
+> A zhugeio-FE project
 
 ## Build Setup
 
