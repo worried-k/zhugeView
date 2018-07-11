@@ -13,8 +13,6 @@
   </div>
 </template>
 <script>
-import button from './button'
-import select from './selector'
 export default {
   name: 'index',
   data () {
@@ -36,7 +34,8 @@ export default {
         'dialog',
         'charts',
         'reload',
-        'scroll'
+        'scroll',
+        'tree'
       ]
     }
   },

@@ -15,6 +15,7 @@ import radio from './components/radio'
 import {scrollContainer, scrollLazyPanel} from './components/scroll'
 import {charts} from './components/echarts'
 import tag from './components/tag'
+import tree from './components/tree'
 
 import msg from './components/message'
 
@@ -41,7 +42,7 @@ const components = [
   scrollContainer,
   scrollLazyPanel,
   tag,
-
+  tree,
   charts
 ]
 

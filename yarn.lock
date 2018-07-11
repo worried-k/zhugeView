@@ -6968,3 +6968,7 @@ yeast@0.1.2:
 zrender@4.0.4:
   version "4.0.4"
   resolved "http://registry.npm.taobao.org/zrender/download/zrender-4.0.4.tgz#910e60d888f00c9599073f23758dd23345fe48fd"
+
+zrender@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npmjs.org/zrender/-/zrender-4.0.4.tgz#910e60d888f00c9599073f23758dd23345fe48fd"
