@@ -26,6 +26,12 @@ export default {
         let rules = ['top-bottom', 'bottom-top', 'left-right', 'right-left']
         return rules.includes(value)
       }
+    },
+    getRectBackground: {
+      type: Function,
+      default: (name) => {
+        return '#fae692'
+      }
     }
   },
   data () {
@@ -189,7 +195,8 @@ export default {
             },
             onClick: this.onTreeNodeClick,
             onMouseover: this.onNodeMouseOver,
-            onMouseout: this.onNodeMouseOut
+            onMouseout: this.onNodeMouseOut,
+            getRectBackground: this.getRectBackground
           })
           node.addTo(this.zr)
           let line = new TreeLine({
@@ -217,13 +224,14 @@ export default {
           },
           onClick: this.onTreeNodeClick,
           onMouseover: this.onNodeMouseOver,
-          onMouseout: this.onNodeMouseOut
+          onMouseout: this.onNodeMouseOut,
+          getRectBackground: this.getRectBackground
         })
         node.addTo(this.zr)
       })
     },
-    onNodeMouseOver (position, text) {
-      if (!position || !position.x || !text) return
+    onNodeMouseOver (position, text, showTip) {
+      if (!position || !position.x || !text || !showTip) return
       this.tooltipText = text
       this.tooltipStyle = {
         overflow: 'hidden'

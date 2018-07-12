@@ -1,21 +1,20 @@
 import zrender from 'zrender'
 import {util} from '../../utils'
 
-const backgroundColors = ['#FFCEA3', '#FAE692', '#C0F5A2', '#78EBA8', '#8CEBDB', '#9EE0FF', '#C4C2FF', '#ECB4F4', '#FFA3D1', '#FEB1B1',
-  '#FFAEAB', '#F0C673', '#74D681', '#85D6B8', '#8BB6E0', '#7E9BE0', '#AA8BE0', '#EB88D7', '#F08BA9', '#E87984']
-
 const textColor = ['#333333', '#858585']
 
 const defaultColor = {
   fill: '#ffffff',
   stroke: '#dadada'
 }
+const hoverColor = {
+  fill: '#fafafa',
+  stroke: '#dadada'
+}
 const disabledStyle = {
   fill: '#fafafa',
   stroke: '#dadada'
 }
-let nameColorMap = {}
-let usedColorIndex = null
 export default class {
   constructor (options) {
     this._options = util.mergeObject({
@@ -34,13 +33,15 @@ export default class {
       data: {},
       onMouseout: () => {},
       onMouseover: () => {},
-      onClick: () => {}
+      onClick: () => {},
+      getRectBackground: () => {}
     }, options)
 
     this._treeNode = null
     this._text = null
     this._active = !!this._options.defaultActive
-    this._activeColor = this._getColor()
+    this._activeBackground = this._options.getRectBackground(this._options.name)
+    this._showText = this._options.name
 
     this._init()
   }
@@ -68,16 +69,28 @@ export default class {
 
   _activeStyle () {
     this._treeNode.setStyle({
-      stroke: this._activeColor,
-      fill: this._activeColor
+      stroke: this._activeBackground,
+      fill: this._activeBackground
     })
     this._text.setStyle({
       fill: textColor[1]
     })
   }
 
+  _hoverStyle () {
+    if (this._active) return
+    this._treeNode.setStyle(hoverColor)
+    this._text.setStyle({
+      fill: textColor[1]
+    })
+  }
+
   _onMouseout () {
-    this._resetStyle()
+    if (this._active) {
+      this._activeStyle()
+    } else {
+      this._resetStyle()
+    }
     if (util.isFunction(this._options.onMouseout)) {
       this._options.onMouseout()
     }
@@ -85,9 +98,10 @@ export default class {
 
   _onMouseover () {
     if (this._options.silence) return
-    this._activeStyle()
+    this._hoverStyle()
     if (util.isFunction(this._options.onMouseover)) {
-      this._options.onMouseover(this.getPosition(), this._options.name)
+      let name = this._options.name
+      this._options.onMouseover(this.getPosition(), name, name !== this._showText)
     }
   }
 
@@ -103,25 +117,6 @@ export default class {
         event: event
       })
     }
-  }
-
-  _getColor () {
-    let name = this._options.name
-    if (nameColorMap[name]) {
-      return nameColorMap[name]
-    }
-    let color = ''
-    if (usedColorIndex === null) {
-      color = backgroundColors[0]
-      usedColorIndex = 0
-    } else {
-      let next = usedColorIndex + 1
-      next = next >= backgroundColors.length ? 0 : next
-      color = backgroundColors[next]
-      usedColorIndex = next
-    }
-    nameColorMap[name] = color
-    return color
   }
 
   /**
@@ -163,14 +158,15 @@ export default class {
 
   _initTitle () {
     const textLength = Math.floor((this._options.width + 30) / 14)
+    this._showText = util.strMiddleSplit(this._options.name, {
+      maxLength: textLength,
+      beginLength: (textLength / 2) - 1,
+      endLength: (textLength / 2) - 1,
+      replaceStr: '...'
+    })
     this._text = new zrender.Text({
       style: {
-        text: util.strMiddleSplit(this._options.name, {
-          maxLength: textLength,
-          beginLength: (textLength / 2) - 1,
-          endLength: (textLength / 2) - 1,
-          replaceStr: '...'
-        }),
+        text: this._showText,
         textFill: this._options.silence ? textColor[1] : textColor[0],
         textFont: '14px sans-serif',
         textBaseline: 'top'

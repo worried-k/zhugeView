@@ -12,13 +12,19 @@ export default class {
 
     this._style = {
       lineWidth: 1,
-      stroke: '#dadada'
+      stroke: '#f0f0f0'
+    }
+    this._textStyle = {
+      color: '#bcbec2'
     }
     if (this._options.active) {
       this._style = {
         lineWidth: 3,
-        stroke: '#f5bf49',
+        stroke: '#f0c348',
         color: '#333333'
+      }
+      this._textStyle = {
+        color: '#354052'
       }
     }
 
@@ -36,23 +42,27 @@ export default class {
   }
 
   /**
-   * 设置innerGraph相对于outerGraph居中
+   * 设置innerGraph相对于outerGraph的对齐方式
    * @param inner
    * @param outer
    * @private
    */
-  _makeGrahpCenter (inner, outer) {
+  _makeGrahpPosition (inner, outer) {
+    let direction = this._options.direction
     const innerShape = inner.getBoundingRect()
     const outerShape = outer.getBoundingRect()
-    const position = {
-      x: (outerShape.width - innerShape.width) / 2 + outerShape.x,
+    let position = {
       y: (outerShape.height - innerShape.height) / 2 + outerShape.y
     }
+    if (direction === 'left-right') {
+      position.x = outerShape.x + (outerShape.width - innerShape.width)
+    } else if (direction === 'right-left') {
+      position.x = outerShape.x
+    } else {
+      position.x = (outerShape.width - innerShape.width) / 2 + outerShape.x
+    }
 
-    inner.setStyle({
-      x: position.x,
-      y: position.y
-    })
+    inner.setStyle(position)
   }
 
   _initTreeLine () {
@@ -78,18 +88,18 @@ export default class {
         y = shape.y2 + 3
         break
       case 'left-right':
-        x = shape.x2 - 40
+        x = shape.x2 - 45
         y = shape.y2 - 10
         break
       case 'right-left':
-        x = shape.x2 + 10
+        x = shape.x2 + 5
         y = shape.y2 - 10
         break
     }
 
     this._lineTextBackground = new zrender.Rect({
       shape: {
-        width: 30,
+        width: 40,
         height: 20,
         x: x,
         y: y
@@ -104,14 +114,14 @@ export default class {
         x: x,
         y: y,
         text: this._options.text,
-        textFill: '#858585',
+        textFill: this._textStyle.color,
         textFont: '14px sans-serif',
         textBaseline: 'top'
       },
       cursor: 'default',
       z: 1
     })
-    this._makeGrahpCenter(this._lineText, this._lineTextBackground)
+    this._makeGrahpPosition(this._lineText, this._lineTextBackground)
   }
 
   addTo (zr) {
