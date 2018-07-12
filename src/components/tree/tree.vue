@@ -36,7 +36,8 @@ export default {
       containerStyle: {},
       firstPadding: 20,
       tooltipStyle: {},
-      tooltipText: ''
+      tooltipText: '',
+      maxLevelNum: 1
     }
   },
   methods: {
@@ -79,14 +80,18 @@ export default {
         }
       } else {
         let x = 0
-        if (this.direction === 'left-right') {
-          x = this.firstPadding + (this.style.width * 1.5) * level
-        } else {
-          x = this.containerStyle.width - this.firstPadding - this.style.width - (this.style.width * 1.5) * level
-        }
         let marginTop = this.style.height
+        let marginLeft = this.style.height * 1.5
+        let maxWidth = (this.style.width + marginLeft) * (this.maxLevelNum + 1) - marginLeft
         let maxHeight = (this.style.height + marginTop) * length - marginTop
+        let startX = (this.containerStyle.width - maxWidth) / 2
         let startY = (this.containerStyle.height - maxHeight) / 2
+        if (this.direction === 'left-right') {
+          x = startX + (this.style.width + marginLeft) * level
+        } else {
+          x = startX + (this.style.width + marginLeft) * (this.maxLevelNum - level)
+        }
+
         for (let i = 0; i < length; i++) {
           result.push({
             ...this.style,
@@ -160,6 +165,9 @@ export default {
           if (obj.data && level > obj.data.level) {
             this.activeNode[level] = undefined
           }
+        }
+        if (obj.data.children.length) {
+          this.maxLevelNum = obj.data.level + 1
         }
         this.init()
         return
@@ -235,6 +243,18 @@ export default {
       this.zr.clear()
       this.initStyle()
       this.renderTreeNode()
+    }
+  },
+  watch: {
+    dataList () {
+      if (this.dataList.length && this.dataList[0].children.length) {
+        this.maxLevelNum = 1
+      } else {
+        this.maxLevelNum = 0
+      }
+      if (this.zr) {
+        this.init()
+      }
     }
   },
   created () {

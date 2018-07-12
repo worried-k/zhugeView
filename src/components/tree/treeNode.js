@@ -14,6 +14,8 @@ const disabledStyle = {
   fill: '#fafafa',
   stroke: '#dadada'
 }
+let nameColorMap = {}
+let usedColorIndex = null
 export default class {
   constructor (options) {
     this._options = util.mergeObject({
@@ -104,9 +106,22 @@ export default class {
   }
 
   _getColor () {
-    let maxLen = backgroundColors.length
-    let index = this._options.index
-    return backgroundColors[maxLen > index ? index : index % maxLen]
+    let name = this._options.name
+    if (nameColorMap[name]) {
+      return nameColorMap[name]
+    }
+    let color = ''
+    if (usedColorIndex === null) {
+      color = backgroundColors[0]
+      usedColorIndex = 0
+    } else {
+      let next = usedColorIndex + 1
+      next = next >= backgroundColors.length ? 0 : next
+      color = backgroundColors[next]
+      usedColorIndex = next
+    }
+    nameColorMap[name] = color
+    return color
   }
 
   /**

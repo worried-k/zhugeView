@@ -78,11 +78,11 @@ export default class {
         y = shape.y2 + 3
         break
       case 'left-right':
-        x = shape.x2 - 35
+        x = shape.x2 - 40
         y = shape.y2 - 10
         break
       case 'right-left':
-        x = shape.x2 + 5
+        x = shape.x2 + 10
         y = shape.y2 - 10
         break
     }
