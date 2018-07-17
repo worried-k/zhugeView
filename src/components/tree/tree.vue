@@ -175,6 +175,7 @@ export default {
         if (obj.data.children.length) {
           this.maxLevelNum = obj.data.level + 1
         }
+        this.$emit('nodeClick', obj.data)
         this.init()
         return
       }
@@ -191,6 +192,7 @@ export default {
             defaultActive: this.activeNode[level] === index,
             data: {
               children: item.children,
+              name: item.name,
               level: level
             },
             onClick: this.onTreeNodeClick,

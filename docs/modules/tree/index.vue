@@ -9,7 +9,7 @@
                     @click="scope.onClick">{{scope.data.value}}</zg-button>
       </template>
     </zg-radio-button>
-    <zg-tree v-if="showTree" :dataList="list" :direction="radioValue"></zg-tree>
+    <zg-tree v-if="showTree" :dataList="list" :direction="radioValue" @nodeClick="onNodeClick"></zg-tree>
   </div>
 </template>
 
@@ -53,6 +53,9 @@ export default {
         })
       }
       return result
+    },
+    onNodeClick (obj) {
+      console.log(obj)
     }
   },
   watch: {
